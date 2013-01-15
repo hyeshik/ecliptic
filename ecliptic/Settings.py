@@ -1,6 +1,6 @@
 #
-# ecliptic.Paths
-#  - Path configurations
+# ecliptic.Settings
+#  - global settings
 #
 #
 # Copyright (C) 2013 Hyeshik Chang
@@ -27,33 +27,12 @@
 import os
 
 __all__ = [
-    'Paths', 'WORK_SUBDIRS', 'WORK_SYMLINKS',
+    'settings'
 ]
 
-WORK_SUBDIRS = ['sequences', 'alignments', 'annotations']
-WORK_SYMLINKS = [('.', 'original'), ('PAIRS', 'PAIRS'), ('SAMPLES', 'SAMPLES')]
+SETTINGS_MODULE = os.environ.get('ECLIPTIC_SETTINGS', 'settings.py')
+exec(open(SETTINGS_MODULE).read())
 
-def pathgetter(name):
-    def __getter(self, join=os.path.join):
-        return join(self.basedir, name)
-    return property(__getter)
-
-# Singleton object for path configurations
-class Paths:
-
-    def __init__(self, basedir=None):
-        # basedir may be reconfigured in later step of initialization
-        self.basedir = basedir if basedir is not None else os.getcwd()
-
-    @property
-    def topdir(self):
-        return self.basedir
-
-    workdir         = pathgetter('work')
-    datasourcedir   = pathgetter('originals')
-    templatesdir    = pathgetter('templates')
-    toolsdir        = pathgetter('tools')
-    resourcesdir    = pathgetter('resources')
-
-
-Paths = Paths()
+settings = {
+    'sample': default_sample_settings,
+}

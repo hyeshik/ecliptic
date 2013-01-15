@@ -1,6 +1,6 @@
 #
-# ecliptic.Paths
-#  - Path configurations
+# ecliptic.TemplateFilters
+#  - Support filters for script generators
 #
 #
 # Copyright (C) 2013 Hyeshik Chang
@@ -24,36 +24,17 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 
-import os
+from jinja2 import Template, FileSystemLoader, Environment
 
 __all__ = [
-    'Paths', 'WORK_SUBDIRS', 'WORK_SYMLINKS',
+    'register_filters', 'ftk_quality',
 ]
 
-WORK_SUBDIRS = ['sequences', 'alignments', 'annotations']
-WORK_SYMLINKS = [('.', 'original'), ('PAIRS', 'PAIRS'), ('SAMPLES', 'SAMPLES')]
-
-def pathgetter(name):
-    def __getter(self, join=os.path.join):
-        return join(self.basedir, name)
-    return property(__getter)
-
-# Singleton object for path configurations
-class Paths:
-
-    def __init__(self, basedir=None):
-        # basedir may be reconfigured in later step of initialization
-        self.basedir = basedir if basedir is not None else os.getcwd()
-
-    @property
-    def topdir(self):
-        return self.basedir
-
-    workdir         = pathgetter('work')
-    datasourcedir   = pathgetter('originals')
-    templatesdir    = pathgetter('templates')
-    toolsdir        = pathgetter('tools')
-    resourcesdir    = pathgetter('resources')
+def ftk_quality(value):
+    return '-Q{}'.format(value['quality_scale'])
 
 
-Paths = Paths()
+def register_filters(env):
+    for name in "ftk_quality".split():
+        env.filters[name] = eval(name)
+

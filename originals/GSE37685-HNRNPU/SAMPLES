@@ -1,4 +1,67 @@
-SRR390466	GSM850170	hsa	CLIP	Exp	1	36	Q33	+	TCGTATGCCGTCTTCTGCTTG	GSM850170: Hela_hnRNPU_CLIP_rep1; Homo sapiens; OTHER
-SRR390467	GSM850171	hsa	CLIP	Exp	1	36	Q33	+	TCGTATGCCGTCTTCTGCTTG	GSM850171: Hela_hnRNPU_CLIP_rep2; Homo sapiens; OTHER
-SRR390468	GSM850172	hsa	RNAseq	KDCtl	1	75	Q33	-	none	GSM850172: Hela_hnRNPU_RNAseq_control; Homo sapiens; RNA-Seq
-SRR390469	GSM850173	hsa	RNAseq	KDExp	1	75	Q33	-	none	GSM850173: Hela_hnRNPU_RNAseq_knockdown; Homo sapiens; RNA-Seq
+CLIP1:
+    SRAno:          SRR390466
+    GEOno:          GSM850170
+    species:        hsa
+    type:           CLIP
+    role:           Exp
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM850170: Hela_hnRNPU_CLIP_rep1; Homo sapiens; OTHER"
+CLIP2:
+    SRAno:          SRR390467
+    GEOno:          GSM850171
+    species:        hsa
+    type:           CLIP
+    role:           Exp
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM850171: Hela_hnRNPU_CLIP_rep2; Homo sapiens; OTHER"
+CLIPCtl:
+    SRAno:          SRR390468
+    GEOno:          GSM850172
+    species:        hsa
+    type:           RNAseq
+    role:           CLIPCtl
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         "-"
+    threep_adapter: ""
+    description:    "GSM850172: Hela_hnRNPU_RNAseq_control; Homo sapiens; RNA-Seq"
+RNACtl:
+    SRAno:          SRR390468
+    GEOno:          GSM850172
+    species:        hsa
+    type:           RNAseq
+    role:           KDCtl
+    first_base:     1
+    last_base:      75
+    minimum_length: 20
+    quality_scale:  33
+    strand:         "-"
+    threep_adapter: ""
+    description:    "GSM850172: Hela_hnRNPU_RNAseq_control; Homo sapiens; RNA-Seq"
+RNAKD:
+    SRAno:          SRR390469
+    GEOno:          GSM850173
+    species:        hsa
+    type:           RNAseq
+    role:           KDExp
+    first_base:     1
+    last_base:      75
+    minimum_length: 20
+    quality_scale:  33
+    strand:         "-"
+    threep_adapter: ""
+    description:    "GSM850173: Hela_hnRNPU_RNAseq_knockdown; Homo sapiens; RNA-Seq"
+
+# ex: syntax=yaml et sts=4 sw=4

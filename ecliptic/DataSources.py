@@ -26,21 +26,15 @@
 
 import os
 import csv
+import yaml
+from weakref import proxy
 from .Utils import TokensDictParser, iter_tab_separated
 from .Paths import Paths
+from .Settings import settings
 
 __all__ = [
     'DataSources', 'Project',
 ]
-
-
-parse_samples_line = TokensDictParser(
-    fields=['SRRno', 'GSMno', 'species', 'type', 'role', 'first_base', 'last_base',
-            'quality_scale', 'strand', '3p_adapter', 'description'],
-    intfields=['first_base', 'last_base'],
-    nullstrfields=['3p_adapter']
-)
-
 
 class DataSources:
 
@@ -64,23 +58,9 @@ class Project:
     def __init__(self, name, datadir):
         self.name = name
         self.datadir = datadir
-        self.samples = {}
-        self.pairs = {}
 
-        self.scan()
-
-    def scan(self):
-        self.scan_samples()
-        self.scan_pairs()
-
-    def scan_samples(self):
-        samples_list_fn = os.path.join(self.datadir, 'SAMPLES')
-
-        for record in iter_tab_separated(open(samples_list_fn), parse_samples_line):
-            self.samples[record['SRRno']] = record
-
-    def scan_pairs(self):
-        pass
+        self.samples = Sample.scan_samples(self, datadir)
+        self.pairs = None #self.scan_pairs()
 
     def __repr__(self):
         return '<Project at=%s nsamples=%d>' % (repr(self.datadir), len(self.samples))
@@ -88,6 +68,36 @@ class Project:
     @property
     def workdir(self):
         return os.path.join(Paths.workdir, self.name)
+
+
+class Sample:
+
+    attribute_names = [
+        'label', 'SRRno', 'GSMno', 'species', 'type', 'role', 'first_base', 'last_base',
+        'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description'
+    ]
+
+    def __init__(self, project, **attrs):
+        self.project = proxy(project)
+
+        for attrname, defaultvalue in settings['sample'].items():
+            setattr(self, attrname, defaultvalue)
+
+        for attrname in self.attribute_names:
+            if attrname in attrs:
+                setattr(self, attrname, attrs[attrname])
+
+        # TODO: check if any mandatory attribute is missing here.
+
+    @classmethod
+    def scan_samples(cls, project, datadir):
+        samples_list_fn = os.path.join(datadir, 'SAMPLES')
+
+        samples = {}
+        for label, record in yaml.load(open(samples_list_fn)).items():
+            samples[label] = cls(project, label=label, **record)
+
+        return samples
 
 
 if __name__ == '__main__':
