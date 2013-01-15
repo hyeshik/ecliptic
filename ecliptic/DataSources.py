@@ -73,7 +73,7 @@ class Project:
 class Sample:
 
     attribute_names = [
-        'label', 'SRRno', 'GSMno', 'species', 'type', 'role', 'first_base', 'last_base',
+        'label', 'SRAno', 'GEOno', 'species', 'routes', 'first_base', 'last_base',
         'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description'
     ]
 

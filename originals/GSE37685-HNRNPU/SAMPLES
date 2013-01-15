@@ -2,8 +2,7 @@ CLIP1:
     SRAno:          SRR390466
     GEOno:          GSM850170
     species:        hsa
-    type:           CLIP
-    role:           Exp
+    routes:         [CLIP]
     first_base:     1
     last_base:      36
     minimum_length: 20
@@ -15,8 +14,7 @@ CLIP2:
     SRAno:          SRR390467
     GEOno:          GSM850171
     species:        hsa
-    type:           CLIP
-    role:           Exp
+    routes:         [CLIP]
     first_base:     1
     last_base:      36
     minimum_length: 20
@@ -28,8 +26,7 @@ CLIPCtl:
     SRAno:          SRR390468
     GEOno:          GSM850172
     species:        hsa
-    type:           RNAseq
-    role:           CLIPCtl
+    routes:         [CLIP] # process after trimming for this long RNA-seq library
     first_base:     1
     last_base:      36
     minimum_length: 20
@@ -41,8 +38,7 @@ RNACtl:
     SRAno:          SRR390468
     GEOno:          GSM850172
     species:        hsa
-    type:           RNAseq
-    role:           KDCtl
+    routes:         [RNAseq]
     first_base:     1
     last_base:      75
     minimum_length: 20
@@ -54,8 +50,7 @@ RNAKD:
     SRAno:          SRR390469
     GEOno:          GSM850173
     species:        hsa
-    type:           RNAseq
-    role:           KDExp
+    routes:         [RNAseq]
     first_base:     1
     last_base:      75
     minimum_length: 20

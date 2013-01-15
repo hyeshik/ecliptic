@@ -1,0 +1,75 @@
+CLIP-ES-r1:
+    SRAno:          SRR531463
+    GEOno:          GSM980593
+    species:        hsa
+    routes:         [CLIP]
+    first_base:     1
+    last_base:      40
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM980593: LIN28ES CLIPseq; Homo sapiens; RNA-Seq"
+CLIP-ES-r2:
+    SRAno:          SRR531464
+    GEOno:          GSM980593
+    species:        hsa
+    routes:         [CLIP]
+    first_base:     1
+    last_base:      40
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM980593: LIN28ES CLIPseq; Homo sapiens; RNA-Seq"
+CLIP-293V5:
+    SRAno:          SRR531465
+    GEOno:          GSM980594
+    species:        hsa
+    routes:         [CLIP]
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM980594: LIN28V5 CLIPseq; Homo sapiens; RNA-Seq"
+RNAseq-ES-uninfected:
+    SRAno:          SRR531466
+    GEOno:          GSM980595
+    species:        hsa
+    routes:         [CLIP, RNAseq]
+    first_base:     1
+    last_base:      50
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM980595: uninfected H9 RNAseq; Homo sapiens; RNA-Seq"
+RNAseq-ES-siLin28a:
+    SRAno:          SRR531467
+    GEOno:          GSM980596
+    species:        hsa
+    routes:         [RNAseq]
+    first_base:     1
+    last_base:      50
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM980596: LIN28KD H9 RNAseq; Homo sapiens; RNA-Seq"
+RNAseq-ES-siCtrl:
+    SRAno:          SRR531468
+    GEOno:          GSM980597
+    species:        hsa
+    routes:         [RNAseq]
+    first_base:     1
+    last_base:      50
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM980597: ControlKD H9 RNAseq; Homo sapiens; RNA-Seq"
+
+# SRR5314{69,70,71} are small RNA libraries.
+# ex: syntax=yaml et sts=4 sw=4

@@ -25,16 +25,16 @@
 #
 
 from jinja2 import Template, FileSystemLoader, Environment
+import re
 
 __all__ = [
-    'register_filters', 'ftk_quality',
+    'register_filters', 'rule_name',
 ]
 
-def ftk_quality(value):
-    return '-Q{}'.format(value['quality_scale'])
-
+def rule_name(value, illegal=re.compile('[^A-Za-z0-9_]')):
+    return illegal.sub('_', value)
 
 def register_filters(env):
-    for name in "ftk_quality".split():
+    for name in "rule_name".split():
         env.filters[name] = eval(name)
 

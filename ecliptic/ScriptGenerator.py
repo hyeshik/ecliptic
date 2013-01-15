@@ -98,7 +98,10 @@ class ScriptGenerator:
         for orig, name in WORK_SYMLINKS:
             linktarget = os.path.join(project.workdir, name)
             linksource = os.path.abspath(os.path.join(project.datadir, orig))
-            os.unlink(linktarget)
+            try:
+                os.unlink(linktarget)
+            except OSError:
+                pass
             os.symlink(linksource, linktarget)
 
     unallowed_letters_in_name = re.compile('[^A-Za-z0-9_]')
