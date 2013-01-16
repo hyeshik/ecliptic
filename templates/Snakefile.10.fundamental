@@ -1,0 +1,44 @@
+{# ecliptic: work #}
+{% extends "Snakefile.base" %}
+{% block rules %}
+rule all:
+    input: expand('sequences/{sample}.filtered.fa', sample="
+                {%- for sample_name in SAMPLES %}{( sample_name )} {% endfor %}".split())
+
+{% for sample_name, sample in SAMPLES.items() %}
+rule prepare_processed_sequences_{( sample_name|rule_name )}:
+    input: "original/{( sample.SRAno )}.fq.gz"
+    output: "sequences/{( sample_name )}.primary.fa"
+    threads: {% if sample.threep_adapter %}{( THREADS )}{% else %}2{% endif %}
+    shell: "zcat {input} | \
+                {%- if sample.threep_adapter %}
+                echidna -p{threads} fastx_clipper -n -Q{( sample.quality_scale )} \
+                    -a {( sample.threep_adapter )} -l {( sample.minimum_length )} | \
+                {%- endif %}
+                fastx_trimmer -Q{( sample.quality_scale )} -f {( sample.first_base )} \
+                    -l {( sample.last_base )} | \
+                fastq_quality_filter -Q{( sample.quality_scale )} \
+                    -q {( sample.quality_threshold)} -p {( sample.quality_percentage )} | \
+                fastx_collapser -Q{( sample.quality_scale )} | \
+                fastx_artifacts_filter > {output}"
+
+rule align_to_contaminants_{( sample_name|rule_name )}:
+    input: "sequences/{( sample_name )}.primary.fa"
+    output: "alignments/{( sample_name )}.contaminants.sam.gz"
+    threads: {( THREADS )}
+    shell: "gsnap -D resources/{( sample.species )} -d contaminants -B 4 -A sam -m 0.05 \
+            -t {threads} {input} | gzip -c - > {output}"
+
+rule filter_reads_{( sample_name|rule_name )}:
+    input: alignment="alignments/{( sample_name )}.contaminants.sam.gz", \
+           orig_fasta="sequences/{( sample_name )}.primary.fa"
+    output: idlist=temp("alignments/{( sample_name )}.contaminants.idlist"), \
+            final_fasta="sequences/{( sample_name )}.filtered.fa"
+    run:
+        shell("zgrep -v '^@' {input.alignment} | \
+               awk -F'\t' '{{ if ($2 != 4) print $1 }}' > {output.idlist}")
+        shell("faSomeRecords -exclude {input.orig_fasta} {output.idlist} {output.final_fasta}")
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+import os
+
+#---
+# directories
+
+TOP_DIR = '{( Paths.topdir )}'
+RESOURCE_DIR = '{( Paths.resourcesdir )}'
+TOOLS_DIR = '{( Paths.toolsdir )}'
+WORK_DIR = '{( Paths.workdir )}'
+
+#---
+# internal tools
+
+_cmd = lambda cmd: 'env PYTHONPATH="%s" %s' % (TOP_DIR, os.path.join(TOOLS_DIR, cmd))
+{( INTERNAL_TOOLS )}
+
+{% block rules %}{% endblock %}
