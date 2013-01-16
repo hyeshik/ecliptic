@@ -1,0 +1,56 @@
+import os
+
+GENOMES = ['mm10', 'hg19']
+GENOME2SPECIES = {'mm10': 'Mus musculus', 'hg19': 'Homo sapiens'}
+SUBDIRS = ['downloaded', 'tmp']
+
+RFAM_FASTA_URL = 'ftp://ftp.sanger.ac.uk/pub/databases/Rfam/CURRENT/Rfam.fasta.gz'
+
+GENBANK_EFETCH_URL = (
+    'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore'
+    '&id={gi}&rettype=fasta&retmode=text')
+RDNA_GENBANK_URLS = {
+    'Mus musculus': GENBANK_EFETCH_URL.format(gi=38176281),
+    'Homo sapiens': GENBANK_EFETCH_URL.format(gi=555853),
+}
+
+# create directories when missing
+for genome in GENOMES:
+    for subdir in SUBDIRS:
+        dirpath = os.path.join('genomes', genome, subdir)
+        if not os.path.isdir(dirpath):
+            os.makedirs(dirpath)
+
+rule all:
+    input: expand('genomes/{genome}/contaminants/contaminants.genomecomp', genome=GENOMES)
+
+rule download_rfam_fasta:
+    output: 'genomes/{genome}/downloaded/Rfam.fasta.gz'
+    shell: 'wget -O {output} {RFAM_FASTA_URL}'
+
+rule download_rDNA:
+    output: 'genomes/{genome}/downloaded/rDNA.fa'
+    run:
+        url = RDNA_GENBANK_URLS[GENOME2SPECIES[wildcards.genome]]
+        shell('wget -O "{output}" "{url}"')
+
+rule rfam_rRNA_seq_names:
+    input: 'genomes/{genome}/downloaded/Rfam.fasta.gz'
+    output: 'genomes/{genome}/tmp/Rfam-rRNA-names'
+    run:
+        species = GENOME2SPECIES[wildcards.genome]
+        shell("zgrep '^>.*rRNA.*{species}' {input} | sed -e 's,^>\([^ ]*\).*,\\1,g' > {output}")
+
+rule make_contaminants_fasta:
+    input: rDNA_fasta='genomes/{genome}/downloaded/rDNA.fa', \
+           rfam_ids='genomes/{genome}/tmp/Rfam-rRNA-names', \
+           rfam_fasta='genomes/{genome}/downloaded/Rfam.fasta.gz'
+    output: 'genomes/{genome}/contaminants.fa'
+    shell: 'faSomeRecords {input.rfam_fasta} {input.rfam_ids} {output} && \
+                (cat {input.rDNA_fasta} files/illumina.fa >> {output})'
+
+rule build_contaminants_gsnap_index:
+    input: 'genomes/{genome}/contaminants.fa'
+    output: 'genomes/{genome}/contaminants/contaminants.genomecomp'
+    shell: 'gmap_build -D genomes/{wildcards.genome} -d contaminants -k 12 -b 12 -q 1 {input}'
+

@@ -47,7 +47,10 @@ class ScriptGenerator:
         template_global_variables = {
             'Paths': Paths,
         }
-        self.env = Environment(loader=FileSystemLoader(templatedir))
+        # change variable block markers to enable escaped braces "{{ }}" in str.format strings
+        self.env = Environment(loader=FileSystemLoader(templatedir),
+                               variable_start_string='{(',
+                               variable_end_string=')}')
         self.env.globals.update(template_global_variables)
         register_filters(self.env)
 
@@ -97,7 +100,10 @@ class ScriptGenerator:
 
         for orig, name in WORK_SYMLINKS:
             linktarget = os.path.join(project.workdir, name)
+            if callable(orig):
+                orig = orig()
             linksource = os.path.abspath(os.path.join(project.datadir, orig))
+
             try:
                 os.unlink(linktarget)
             except OSError:

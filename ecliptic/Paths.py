@@ -57,3 +57,7 @@ class Paths:
 
 
 Paths = Paths()
+
+WORK_SYMLINKS.extend([
+    (Paths.resourcesdir, 'resources'),
+])
