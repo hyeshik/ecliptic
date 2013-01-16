@@ -1,0 +1,121 @@
+RNAseq-uninfected-1:
+    SRAno:          SRR458753
+    GEOno:          GSM910950
+    species:        mmu
+    routes:         [CLIP, RNAseq]
+    first_base:     1
+    last_base:      54
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM910950: A3-1 PolyA+ RNA-seq - untreated; Mus musculus; RNA-Seq"
+RNAseq-siLuc-1:
+    SRAno:          SRR458754
+    GEOno:          GSM910951
+    species:        mmu
+    routes:         [RNAseq]
+    first_base:     1
+    last_base:      54
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM910951: A3-1 PolyA+ RNA-seq - siLuc; Mus musculus; RNA-Seq"
+RNAseq-siLin28a-1:
+    SRAno:          SRR458755
+    GEOno:          GSM910952
+    species:        mmu
+    routes:         [RNAseq]
+    first_base:     1
+    last_base:      54
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM910952: A3-1 PolyA+ RNA-seq - siLin28a; Mus musculus; RNA-Seq"
+RNAseqRPFCtl-siLuc-1:
+    SRAno:          SRR458754
+    GEOno:          GSM910951
+    species:        mmu
+    routes:         [RPF]
+    first_base:     1
+    last_base:      27
+    minimum_length: 27
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ""
+    description:    "GSM910951: A3-1 PolyA+ RNA-seq - siLuc; Mus musculus; RNA-Seq"
+RNAseqRPFCtl-siLin28a-1:
+    SRAno:          SRR458755
+    GEOno:          GSM910952
+    species:        mmu
+    routes:         [RPF]
+    first_base:     1
+    last_base:      27
+    minimum_length: 27
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ""
+    description:    "GSM910952: A3-1 PolyA+ RNA-seq - siLin28a; Mus musculus; RNA-Seq"
+RPF-siLuc-1:
+    SRAno:          SRR458756
+    GEOno:          GSM910953
+    species:        mmu
+    routes:         [RPF]
+    first_base:     1
+    last_base:      27
+    minimum_length: 27
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ""
+    description:    "GSM910953: A3-1 Ribosome profiling - siLuc; Mus musculus; OTHER"
+RPF-siLin28a-1:
+    SRAno:          SRR458757
+    GEOno:          GSM910954
+    species:        mmu
+    routes:         [RPF]
+    first_base:     1
+    last_base:      27
+    minimum_length: 27
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ""
+    description:    "GSM910954: A3-1 Ribosome profiling - siLin28a; Mus musculus; OTHER"
+CLIP-35L33G:
+    SRAno:          SRR458758
+    GEOno:          GSM910955
+    species:        mmu
+    routes:         [CLIP]
+    first_base:     1
+    last_base:      78
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM910955: A3-1 LIN28A CLIP - 35L33G (mAb); Mus musculus; OTHER"
+CLIP-2J3:
+    SRAno:          SRR458759
+    GEOno:          GSM910956
+    species:        mmu
+    routes:         [CLIP]
+    first_base:     1
+    last_base:      78
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM910956: A3-1 LIN28A CLIP - 2J3 (mAb); Mus musculus; OTHER"
+CLIP-46020:
+    SRAno:          SRR458760
+    GEOno:          GSM910957
+    species:        mmu
+    routes:         [CLIP]
+    first_base:     1
+    last_base:      78
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM910957: A3-1 LIN28A CLIP - polyclonal; Mus musculus; OTHER"
+# ex: syntax=yaml et sts=4 sw=4
