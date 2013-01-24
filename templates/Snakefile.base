@@ -14,4 +14,8 @@ WORK_DIR = '{( Paths.workdir )}'
 _cmd = lambda cmd: 'env PYTHONPATH="%s" %s' % (TOP_DIR, os.path.join(TOOLS_DIR, cmd))
 {( INTERNAL_TOOLS )}
 
+#---
+# common paths
+GSNAP_SPLICE_INDEX = 'resources/{species}/genome/genome.maps/genome.splicesites.iit'
+
 {% block rules %}{% endblock %}

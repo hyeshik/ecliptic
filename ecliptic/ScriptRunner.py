@@ -56,8 +56,11 @@ class ScriptRunner:
 
         return sorted(scripts)
 
-    def run(self):
+    def run(self, jobs=None):
         for prio, step, _, proj, snakefile in self.scan_scripts():
+            if jobs is not None and proj.name not in jobs:
+                continue
+
             if Fore is not None:
                 tokens = snakefile.rsplit(os.path.sep, 2)
                 tokens[-2] = (Style.BRIGHT + Fore.RED + tokens[-2] +
@@ -70,7 +73,7 @@ class ScriptRunner:
 
             ret = os.system('cd "{}" && snakemake -s "{}" -j'.format(proj.workdir, snakefile))
             if ret != 0:
-                print('Error code {}. Terminating.', file=sys.stderr)
+                print('Error code {}. Terminating.'.format(ret), file=sys.stderr)
                 sys.exit(1)
 
         print('\ndone.')

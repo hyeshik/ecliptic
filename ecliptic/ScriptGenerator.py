@@ -133,9 +133,10 @@ class ScriptGenerator:
         variables['SAMPLES'] = project.samples
         variables['PAIRS'] = project.pairs
         variables['NAME'] = project.name
+        variables['REFERENCES'] = project.references
         variables['DATADIR'] = project.datadir
         variables['WORKDIR'] = project.workdir
-        variables['THREADS'] = 8 # XXX: change this to detect machine configuration
+        variables['THREADS'] = 24 # XXX: change this to detect machine configuration
 
         return variables
 

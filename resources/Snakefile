@@ -5,6 +5,9 @@ GENOME2SPECIES = {'mm10': 'Mus musculus', 'hg19': 'Homo sapiens'}
 SUBDIRS = ['downloaded', 'tmp']
 
 RFAM_FASTA_URL = 'ftp://ftp.sanger.ac.uk/pub/databases/Rfam/CURRENT/Rfam.fasta.gz'
+GENOME_2BIT_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/bigZips/{genome}.2bit'
+REFGENE_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/refGene.txt.gz'
+KNOWNGENE_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/knownGene.txt.gz'
 
 GENBANK_EFETCH_URL = (
     'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore'
@@ -22,7 +25,8 @@ for genome in GENOMES:
             os.makedirs(dirpath)
 
 rule all:
-    input: expand('genomes/{genome}/contaminants/contaminants.genomecomp', genome=GENOMES)
+    input: expand('genomes/{genome}/contaminants/contaminants.genomecomp', genome=GENOMES), \
+           expand('genomes/{genome}/genome/genome.maps/genome.splicesites.iit', genome=GENOMES)
 
 rule download_rfam_fasta:
     output: 'genomes/{genome}/downloaded/Rfam.fasta.gz'
@@ -53,4 +57,39 @@ rule build_contaminants_gsnap_index:
     input: 'genomes/{genome}/contaminants.fa'
     output: 'genomes/{genome}/contaminants/contaminants.genomecomp'
     shell: 'gmap_build -D genomes/{wildcards.genome} -d contaminants -k 12 -b 12 -q 1 {input}'
+
+rule download_genome_sequence:
+    output: twobit='genomes/{genome}/genome.2bit', fasta='genomes/{genome}/genome.fa', \
+            fasta_index='genomes/{genome}/genome.fa.fai'
+    run:
+        genome = wildcards.genome
+        shell('wget -O {output.twobit} ' + GENOME_2BIT_URL)
+        shell('twoBitToFa {output.twobit} {output.fasta}')
+        shell('samtools faidx {output.fasta}')
+
+rule build_gsnap_genome_index:
+    input: 'genomes/{genome}/genome.fa'
+    output: 'genomes/{genome}/genome/genome.genomecomp'
+    threads: 100 # never run multiple builds
+    shell: 'gmap_build -D genomes/{wildcards.genome} -d genome -k 12 -b 12 -q 1 {input}'
+
+rule download_refgene:
+    output: 'genomes/{genome}/downloaded/refGene.txt.gz'
+    run:
+        url = REFGENE_URL.format(genome=wildcards.genome)
+        shell('wget -O {output} {url}')
+
+rule download_knowngene:
+    output: 'genomes/{genome}/downloaded/knownGene.txt.gz'
+    run:
+        url = KNOWNGENE_URL.format(genome=wildcards.genome)
+        shell('wget -O {output} {url}')
+
+rule build_gsnap_splice_index:
+    input: refgene='genomes/{genome}/downloaded/refGene.txt.gz', \
+           knowngene='genomes/{genome}/downloaded/knownGene.txt.gz', \
+           gsnapidx='genomes/{genome}/genome/genome.genomecomp'
+    output: 'genomes/{genome}/genome/genome.maps/genome.splicesites.iit'
+    shell: '(zcat {input.refgene} | psl_splicesites -s 1; \
+             zcat {input.knowngene} | psl_splicesites) | iit_store -o {output}'
 

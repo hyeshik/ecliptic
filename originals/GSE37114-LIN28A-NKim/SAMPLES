@@ -2,7 +2,8 @@ RNAseq-uninfected-1:
     SRAno:          SRR458753
     GEOno:          GSM910950
     species:        mmu
-    routes:         [CLIP, RNAseq]
+    routes:         [CLIP, RNAseq, SNPreference]
+    source:         A3-1
     first_base:     1
     last_base:      54
     minimum_length: 20
@@ -14,7 +15,8 @@ RNAseq-siLuc-1:
     SRAno:          SRR458754
     GEOno:          GSM910951
     species:        mmu
-    routes:         [RNAseq]
+    routes:         [RNAseq, SNPreference]
+    source:         A3-1
     first_base:     1
     last_base:      54
     minimum_length: 20
@@ -26,7 +28,8 @@ RNAseq-siLin28a-1:
     SRAno:          SRR458755
     GEOno:          GSM910952
     species:        mmu
-    routes:         [RNAseq]
+    routes:         [RNAseq, SNPreference]
+    source:         A3-1
     first_base:     1
     last_base:      54
     minimum_length: 20
@@ -39,6 +42,7 @@ RNAseqRPFCtl-siLuc-1:
     GEOno:          GSM910951
     species:        mmu
     routes:         [RPF]
+    source:         A3-1
     first_base:     1
     last_base:      27
     minimum_length: 27
@@ -51,6 +55,7 @@ RNAseqRPFCtl-siLin28a-1:
     GEOno:          GSM910952
     species:        mmu
     routes:         [RPF]
+    source:         A3-1
     first_base:     1
     last_base:      27
     minimum_length: 27
@@ -63,6 +68,7 @@ RPF-siLuc-1:
     GEOno:          GSM910953
     species:        mmu
     routes:         [RPF]
+    source:         A3-1
     first_base:     1
     last_base:      27
     minimum_length: 27
@@ -75,6 +81,7 @@ RPF-siLin28a-1:
     GEOno:          GSM910954
     species:        mmu
     routes:         [RPF]
+    source:         A3-1
     first_base:     1
     last_base:      27
     minimum_length: 27
@@ -87,6 +94,7 @@ CLIP-35L33G:
     GEOno:          GSM910955
     species:        mmu
     routes:         [CLIP]
+    source:         A3-1
     first_base:     1
     last_base:      78
     minimum_length: 20
@@ -99,6 +107,7 @@ CLIP-2J3:
     GEOno:          GSM910956
     species:        mmu
     routes:         [CLIP]
+    source:         A3-1
     first_base:     1
     last_base:      78
     minimum_length: 20
@@ -111,6 +120,7 @@ CLIP-46020:
     GEOno:          GSM910957
     species:        mmu
     routes:         [CLIP]
+    source:         A3-1
     first_base:     1
     last_base:      78
     minimum_length: 20
@@ -118,4 +128,5 @@ CLIP-46020:
     strand:         +
     threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
     description:    "GSM910957: A3-1 LIN28A CLIP - polyclonal; Mus musculus; OTHER"
+
 # ex: syntax=yaml et sts=4 sw=4

@@ -3,6 +3,7 @@ CLIP1:
     GEOno:          GSM850170
     species:        hsa
     routes:         [CLIP]
+    source:         HeLa
     first_base:     1
     last_base:      36
     minimum_length: 20
@@ -15,6 +16,7 @@ CLIP2:
     GEOno:          GSM850171
     species:        hsa
     routes:         [CLIP]
+    source:         HeLa
     first_base:     1
     last_base:      36
     minimum_length: 20
@@ -27,6 +29,7 @@ CLIPCtl:
     GEOno:          GSM850172
     species:        hsa
     routes:         [CLIP] # process after trimming for this long RNA-seq library
+    source:         HeLa
     first_base:     1
     last_base:      36
     minimum_length: 20
@@ -38,7 +41,8 @@ RNACtl:
     SRAno:          SRR390468
     GEOno:          GSM850172
     species:        hsa
-    routes:         [RNAseq]
+    routes:         [RNAseq, SNPreference]
+    source:         HeLa
     first_base:     1
     last_base:      75
     minimum_length: 20
@@ -50,7 +54,8 @@ RNAKD:
     SRAno:          SRR390469
     GEOno:          GSM850173
     species:        hsa
-    routes:         [RNAseq]
+    routes:         [RNAseq, SNPreference]
+    source:         HeLa
     first_base:     1
     last_base:      75
     minimum_length: 20

@@ -28,6 +28,7 @@ import os
 import csv
 import yaml
 from weakref import proxy
+from collections import defaultdict
 from .Utils import TokensDictParser, iter_tab_separated
 from .Paths import Paths
 from .Settings import settings
@@ -69,11 +70,20 @@ class Project:
     def workdir(self):
         return os.path.join(Paths.workdir, self.name)
 
+    @property
+    def references(self):
+        refsamples = defaultdict(list)
+
+        for sample in self.samples.values():
+            if 'SNPreference' in sample.routes:
+                refsamples[sample.source].append(sample)
+
+        return refsamples
 
 class Sample:
 
     attribute_names = [
-        'label', 'SRAno', 'GEOno', 'species', 'routes', 'first_base', 'last_base',
+        'label', 'SRAno', 'GEOno', 'species', 'routes', 'source', 'first_base', 'last_base',
         'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description'
     ]
 

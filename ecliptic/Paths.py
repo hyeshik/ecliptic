@@ -30,7 +30,7 @@ __all__ = [
     'Paths', 'WORK_SUBDIRS', 'WORK_SYMLINKS',
 ]
 
-WORK_SUBDIRS = ['sequences', 'alignments', 'annotations']
+WORK_SUBDIRS = ['sequences', 'alignments', 'annotations', 'bg_variations']
 WORK_SYMLINKS = [('.', 'original'), ('PAIRS', 'PAIRS'), ('SAMPLES', 'SAMPLES')]
 
 def pathgetter(name):
