@@ -1,12 +1,18 @@
 import os
 
 #---
+# tunable parameters
+
+SNPCALL_MINIMUM_DEPTH = 20
+
+
+#---
 # directories
 
 TOP_DIR = '{( Paths.topdir )}'
 RESOURCE_DIR = '{( Paths.resourcesdir )}'
 TOOLS_DIR = '{( Paths.toolsdir )}'
-WORK_DIR = '{( Paths.workdir )}'
+WORK_DIR = '{( Paths.workdir )}/{( NAME )}'
 
 #---
 # internal tools

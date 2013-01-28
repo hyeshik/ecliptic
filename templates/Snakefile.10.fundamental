@@ -16,9 +16,9 @@ SOURCE_SPECIES = {
 }
 
 rule all:
-    input: expand('sequences/{sample}.filtered.fa', sample="
+    input: expand('alignments/{sample}.bam', sample="
                 {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split()),
-           expand('bg_variations/{source}.sorted.bam', source="
+           expand('bg_variations/genome.genomecomp.{source}.snpmap', source="
                 {%- for source in REFERENCES %}{(source)} {% endfor %}".split())
 
 
@@ -96,5 +96,53 @@ rule sort_sam:
     run:
         outprefix = output[0].replace('.bam', '')
         shell('samtools sort {input} {outprefix}')
+
+rule call_variants:
+    input: 'bg_variations/{source}.sorted.bam'
+    output: 'bg_variations/{source}.vcf'
+    run:
+        species = SOURCE_SPECIES[wildcards.source]
+        shell('samtools mpileup -uf resources/{species}/genome.fa {input} | \
+               bcftools view -cvg - > {output}')
+
+rule generate_gsnap_snp_index:
+    input: 'bg_variations/{source}.vcf'
+    output: snpout='bg_variations/genome.genomecomp.{source}.snpmap', \
+            iitout=temp('bg_variations/{source}.iit')
+    run:
+        species = SOURCE_SPECIES[wildcards.source]
+        shell("vcfutils.pl varFilter -d{SNPCALL_MINIMUM_DEPTH} {input} | \
+               awk -F'\t' '/^[^#]/ {{ \
+                 n++; \
+                 if (length($4) == 1) {{ \
+                   if (length($5) > 1) {{ genotype=\"N\"; }} \
+                   else {{ genotype=$5; }}; \
+                   printf \">gc%d %s:%d %s%s\\n\", n, $1, $2, $4, genotype; \
+                 }} \
+               }}' | iit_store -o {output.iitout}")
+
+        shell("snpindex -D resources/{species} -d genome -V bg_variations \
+                -v {wildcards.source}.snpmap {output.iitout}")
+
+
+{% for sample_name, sample in SAMPLES.items() %}
+
+rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
+    input: fasta='sequences/{(sample_name)}.filtered.fa'
+            {%- if sample.source -%}
+              , snpindex='bg_variations/genome.genomecomp.{(sample.source)}.snpmap'
+            {%- endif %}
+    output: 'alignments/{(sample_name)}.bam'
+    threads: {(THREADS)}
+    run:
+        species = '{(sample.species)}'
+        splice_index = GSNAP_SPLICE_INDEX.format(species=species)
+        snp_index = '{% if sample.source %}-V bg_variations -v {(sample.source)}.snpmap {% endif %}'
+        shell('gsnap -D resources/{species} -d genome -B 4 -O -A sam -m 0.1 --gunzip \
+                    -t {threads} --terminal-threshold=9999 -s {splice_index} \
+                    {snp_index} {input.fasta} | \
+               {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
+
+{% endfor %}
 
 {% endblock %}

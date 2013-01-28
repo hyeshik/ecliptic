@@ -29,7 +29,7 @@ CLIP-293V5:
     GEOno:          GSM980594
     species:        hsa
     routes:         [CLIP]
-    source:         "293"
+    source:         "" # 293, no reference RNA-seq.
     first_base:     1
     last_base:      36
     minimum_length: 20
