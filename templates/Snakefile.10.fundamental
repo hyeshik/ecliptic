@@ -16,10 +16,8 @@ SOURCE_SPECIES = {
 }
 
 rule all:
-    input: expand('alignments/{sample}.bam', sample="
-                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split()),
-           expand('bg_variations/genome.genomecomp.{source}.snpmap', source="
-                {%- for source in REFERENCES %}{(source)} {% endfor %}".split())
+    input: expand('annotations/{sample}.anno.gz', sample="
+                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split())
 
 
 
@@ -144,5 +142,28 @@ rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
                {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
 
 {% endfor %}
+
+
+rule annotate_reads:
+    input: 'alignments/{sample}.bam'
+    output: 'annotations/{sample}.bedintersect.gz'
+    threads: 2
+    run:
+        species = SAMPLE_SPECIES[wildcards.sample]
+        shell('bedtools intersect -bed -abam {input} \
+                 -b resources/{species}/annotations.bed.gz -wa -wb | \
+               gzip -c - > {output}')
+
+
+rule summarize_annotation:
+    input: bam='alignments/{sample}.bam', \
+           bedintersect='annotations/{sample}.bedintersect.gz'
+    output: 'annotations/{sample}.anno.gz'
+    threads: 2
+    run:
+        species = SAMPLE_SPECIES[wildcards.sample]
+        shell('{SUMMARIZE_ANNOTATIONS_CMD} {input.bam} {input.bedintersect} | \
+               gzip -c - > {output}')
+
 
 {% endblock %}

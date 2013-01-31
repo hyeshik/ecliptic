@@ -1,0 +1,23 @@
+{# ecliptic: work #}
+{% extends "Snakefile.base" %}
+
+{% block rules %}
+
+
+rule all:
+    input: expand('stats/classprop.{sample}.csv', sample="
+                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split())
+
+
+
+rule read_count_stats:
+    input: anno='annotations/{sample}.anno.gz', \
+           contaminants='alignments/{sample}.contaminants.sam.gz'
+    output: 'stats/classprop.{sample}.csv'
+    shell: "{STATS_READ_CLASS_PROPORTION_CMD} {input.anno} \
+              rRNA:`zcat {input.contaminants} | \
+                awk -F'\t' '{{ if ($2 != 4) {{ print $0; }} }}' | \
+                grep -v SRA | cut -f1 | uniq | wc -l` > {output}"
+
+
+{% endblock %}
