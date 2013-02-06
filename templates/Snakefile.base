@@ -1,4 +1,6 @@
 import os
+import tempfile
+import shutil
 
 #---
 # tunable parameters
@@ -23,5 +25,20 @@ _cmd = lambda cmd: 'env PYTHONPATH="%s" %s' % (TOP_DIR, os.path.join(TOOLS_DIR, 
 #---
 # common paths
 GSNAP_SPLICE_INDEX = 'resources/{species}/genome/genome.maps/genome.splicesites.iit'
+
+
+class TemporaryDirectory(object):
+    def __init__(self, dir='.'):
+        self.dir = dir
+        self.path = None
+
+    def __enter__(self):
+        self.path = tempfile.mkdtemp(dir=self.dir)
+        return self.path
+
+    def __exit__(self, type, value, traceback):
+        if self.path is not None:
+            shutil.rmtree(self.path)
+
 
 {% block rules %}{% endblock %}

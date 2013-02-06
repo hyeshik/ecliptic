@@ -1,0 +1,41 @@
+CLIP-N:
+    SRAno:          SRR492994
+    GEOno:          GSM925601
+    species:        mmu
+    routes:         [CLIP]
+    source:         NIH3T3
+    first_base:     1
+    last_base:      38
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM925601: N-Term-CIRBP CLIP RNA; Mus musculus; RNA-Seq"
+CLIP-C:
+    SRAno:          SRR492995
+    GEOno:          GSM925602
+    species:        mmu
+    routes:         [CLIP]
+    source:         NIH3T3
+    first_base:     1
+    last_base:      38
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM925602: C-Term-CIRBP CLIP RNA; Mus musculus; RNA-Seq"
+RNAseq-siCtrl: # SRX145381
+    SRAno:          [SRR492996, SRR492997, SRR492998, SRR492999, SRR493000, SRR493001]
+    GEOno:          GSM980595
+    species:        mmu
+    routes:         [CLIP, SNPreference]
+    source:         NIH3T3
+    first_base:     1
+    last_base:      79
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM925603: SiCtrl Total RNA; Mus musculus; RNA-Seq"
+
+# ex: syntax=yaml et sts=4 sw=4

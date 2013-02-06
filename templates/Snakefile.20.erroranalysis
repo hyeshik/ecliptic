@@ -1,0 +1,23 @@
+{# ecliptic: work #}
+{% extends "Snakefile.base" %}
+
+{% block rules %}
+
+rule all:
+    input: expand('erroranalysis/{sample}.gspace/done', sample="
+                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split())
+
+
+rule build_genome_positional_db:
+    input: 'alignments/{sample}.bam'
+    output: 'erroranalysis/{sample}.gspace/done'
+    threads: {( THREADS )} # consider memory limit
+    run:
+        outputdir = os.path.dirname(output[0])
+        threads = 8 # limit number of parallel processes for memory limit
+
+        with TemporaryDirectory(outputdir) as bamtmpdir:
+            shell('bamtools split -in {input} -reference -stub "{bamtmpdir}/" -refPrefix ""')
+            shell('{BUILD_POSITIONALDB_GENOME_CMD} {threads} {bamtmpdir} {outputdir}')
+
+{% endblock %}

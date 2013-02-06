@@ -24,19 +24,20 @@ rule all:
 {% for sample_name, sample in SAMPLES.items() %}
 
 rule prepare_processed_sequences_{(sample_name|rule_name)}:
-    input: "original/{( sample.SRAno )}.fq.gz"
+    input: "{% for acc in sample.SRAno %}original/{(acc)}.fq.gz {% endfor %}".split()
     output: "sequences/{( sample_name )}.primary.fq.gz"
     threads: {% if sample.threep_adapter %}{( THREADS )}{% else %}2{% endif %}
     shell: "zcat {input} | \
-                fastx_trimmer -Q{( sample.quality_scale )} -f {( sample.first_base )} \
-                    -l {( sample.last_base )} | \
+                echidna -p{threads} -c \"fastx_trimmer -Q{( sample.quality_scale )} \
+                    -f {( sample.first_base )} -l {( sample.last_base )} | \
                 {%- if sample.threep_adapter %}
-                echidna -p{threads} fastx_clipper -n -Q{( sample.quality_scale )} \
+                fastx_clipper -n -Q{( sample.quality_scale )} \
                     -a {( sample.threep_adapter )} -l {( sample.minimum_length )} | \
                 {%- endif %}
                 fastq_quality_filter -Q{( sample.quality_scale )} \
                     -q {( sample.quality_threshold)} -p {( sample.quality_percentage )} | \
-                fastx_artifacts_filter -Q{( sample.quality_scale )} | gzip -c - > {output}"
+                fastx_artifacts_filter -Q{( sample.quality_scale )}\" | \
+                pigz -p4 -c - > {output}"
 
 rule collapse_filtered_fastq_{(sample_name|rule_name)}:
     input: 'sequences/{( sample_name )}.filtered.fq.gz'

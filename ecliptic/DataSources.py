@@ -97,6 +97,8 @@ class Sample:
             if attrname in attrs:
                 setattr(self, attrname, attrs[attrname])
 
+        if isinstance(self.SRAno, str):
+            self.SRAno = [self.SRAno]
         # TODO: check if any mandatory attribute is missing here.
 
     @classmethod
