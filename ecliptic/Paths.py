@@ -32,7 +32,7 @@ __all__ = [
 
 WORK_SUBDIRS = [
     'sequences', 'alignments', 'annotations', 'bg_variations', 'stats',
-    'erroranalysis',
+    'quantitations',
 ]
 WORK_SYMLINKS = [('.', 'original'), ('PAIRS', 'PAIRS'), ('SAMPLES', 'SAMPLES')]
 

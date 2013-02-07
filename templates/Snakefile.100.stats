@@ -5,9 +5,8 @@
 
 
 rule all:
-    input: expand('stats/classprop.{sample}.csv', sample="
-                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split())
-
+    input: expand('stats/classprop.{sample}.csv',
+                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES))
 
 
 rule read_count_stats:

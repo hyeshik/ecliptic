@@ -2,7 +2,7 @@ CLIP-ES-r1:
     SRAno:          SRR531463
     GEOno:          GSM980593
     species:        hsa
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         H9
     first_base:     1
     last_base:      40
@@ -15,7 +15,7 @@ CLIP-ES-r2:
     SRAno:          SRR531464
     GEOno:          GSM980593
     species:        hsa
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         H9
     first_base:     1
     last_base:      40
@@ -28,7 +28,7 @@ CLIP-293V5:
     SRAno:          SRR531465
     GEOno:          GSM980594
     species:        hsa
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         "" # 293, no reference RNA-seq.
     first_base:     1
     last_base:      36
@@ -41,7 +41,7 @@ RNAseq-ES-uninfected:
     SRAno:          SRR531466
     GEOno:          GSM980595
     species:        hsa
-    routes:         [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq, SNPreference]
     source:         H9
     first_base:     11
     last_base:      50
@@ -54,7 +54,7 @@ RNAseq-ES-siLin28a:
     SRAno:          SRR531467
     GEOno:          GSM980596
     species:        hsa
-    routes:         [RNAseq, SNPreference]
+    workflows:      [RNAseq, SNPreference]
     source:         H9
     first_base:     11
     last_base:      50
@@ -67,7 +67,7 @@ RNAseq-ES-siCtrl:
     SRAno:          SRR531468
     GEOno:          GSM980597
     species:        hsa
-    routes:         [RNAseq, SNPreference]
+    workflows:      [RNAseq, SNPreference]
     source:         H9
     first_base:     11
     last_base:      50

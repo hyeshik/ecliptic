@@ -75,7 +75,7 @@ class Project:
         refsamples = defaultdict(list)
 
         for sample in self.samples.values():
-            if 'SNPreference' in sample.routes:
+            if 'SNPreference' in sample.workflows:
                 refsamples[sample.source].append(sample)
 
         return refsamples
@@ -83,7 +83,7 @@ class Project:
 class Sample:
 
     attribute_names = [
-        'label', 'SRAno', 'GEOno', 'species', 'routes', 'source', 'first_base', 'last_base',
+        'label', 'SRAno', 'GEOno', 'species', 'workflows', 'source', 'first_base', 'last_base',
         'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description'
     ]
 

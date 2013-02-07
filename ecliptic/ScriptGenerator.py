@@ -28,6 +28,7 @@ from jinja2 import Template, FileSystemLoader, Environment
 import os
 import re
 import time
+from itertools import chain
 from .Paths import Paths, WORK_SUBDIRS, WORK_SYMLINKS
 from .DataSources import *
 from .TemplateFilters import register_filters
@@ -132,6 +133,8 @@ class ScriptGenerator:
 
         variables['SAMPLES'] = project.samples
         variables['PAIRS'] = project.pairs
+        variables['WORKFLOWS'] = set(chain(*[sample.workflows
+                                     for sample in project.samples.values()]))
         variables['NAME'] = project.name
         variables['REFERENCES'] = project.references
         variables['DATADIR'] = project.datadir

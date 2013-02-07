@@ -2,7 +2,7 @@ RNAseq-uninfected-1:
     SRAno:          SRR458753
     GEOno:          GSM910950
     species:        mmu
-    routes:         [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq, SNPreference]
     source:         A3-1
     first_base:     1
     last_base:      54
@@ -15,7 +15,7 @@ RNAseq-siLuc-1:
     SRAno:          SRR458754
     GEOno:          GSM910951
     species:        mmu
-    routes:         [RNAseq, SNPreference]
+    workflows:      [RNAseq, SNPreference]
     source:         A3-1
     first_base:     1
     last_base:      54
@@ -28,7 +28,7 @@ RNAseq-siLin28a-1:
     SRAno:          SRR458755
     GEOno:          GSM910952
     species:        mmu
-    routes:         [RNAseq, SNPreference]
+    workflows:      [RNAseq, SNPreference]
     source:         A3-1
     first_base:     1
     last_base:      54
@@ -41,7 +41,7 @@ RNAseqRPFCtl-siLuc-1:
     SRAno:          SRR458754
     GEOno:          GSM910951
     species:        mmu
-    routes:         [RPF]
+    workflows:      [RPF]
     source:         A3-1
     first_base:     1
     last_base:      27
@@ -54,7 +54,7 @@ RNAseqRPFCtl-siLin28a-1:
     SRAno:          SRR458755
     GEOno:          GSM910952
     species:        mmu
-    routes:         [RPF]
+    workflows:      [RPF]
     source:         A3-1
     first_base:     1
     last_base:      27
@@ -67,7 +67,7 @@ RPF-siLuc-1:
     SRAno:          SRR458756
     GEOno:          GSM910953
     species:        mmu
-    routes:         [RPF]
+    workflows:      [RPF]
     source:         A3-1
     first_base:     1
     last_base:      27
@@ -80,7 +80,7 @@ RPF-siLin28a-1:
     SRAno:          SRR458757
     GEOno:          GSM910954
     species:        mmu
-    routes:         [RPF]
+    workflows:      [RPF]
     source:         A3-1
     first_base:     1
     last_base:      27
@@ -93,7 +93,7 @@ CLIP-35L33G:
     SRAno:          SRR458758
     GEOno:          GSM910955
     species:        mmu
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         A3-1
     first_base:     1
     last_base:      78
@@ -106,7 +106,7 @@ CLIP-2J3:
     SRAno:          SRR458759
     GEOno:          GSM910956
     species:        mmu
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         A3-1
     first_base:     1
     last_base:      78
@@ -119,7 +119,7 @@ CLIP-46020:
     SRAno:          SRR458760
     GEOno:          GSM910957
     species:        mmu
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         A3-1
     first_base:     1
     last_base:      78

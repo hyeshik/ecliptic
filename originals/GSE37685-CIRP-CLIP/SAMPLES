@@ -2,7 +2,7 @@ CLIP-N:
     SRAno:          SRR492994
     GEOno:          GSM925601
     species:        mmu
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         NIH3T3
     first_base:     1
     last_base:      38
@@ -15,7 +15,7 @@ CLIP-C:
     SRAno:          SRR492995
     GEOno:          GSM925602
     species:        mmu
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         NIH3T3
     first_base:     1
     last_base:      38
@@ -28,7 +28,7 @@ RNAseq-siCtrl: # SRX145381
     SRAno:          [SRR492996, SRR492997, SRR492998, SRR492999, SRR493000, SRR493001]
     GEOno:          GSM980595
     species:        mmu
-    routes:         [CLIP, SNPreference]
+    workflows:      [CLIP, SNPreference]
     source:         NIH3T3
     first_base:     1
     last_base:      79

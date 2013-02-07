@@ -1,6 +1,7 @@
 import os
 import tempfile
 import shutil
+from itertools import *
 
 #---
 # tunable parameters
@@ -39,6 +40,30 @@ class TemporaryDirectory(object):
     def __exit__(self, type, value, traceback):
         if self.path is not None:
             shutil.rmtree(self.path)
+
+
+# Sample translation tables
+
+ALL_SAMPLES = set("""{%- for name in SAMPLES -%}{(name)} {% endfor %}""".split())
+CLIP_SAMPLES = RNAseq_SAMPLES = SNPreference_SAMPLES = set() # safeguard for unused workflows
+{% for workflow in WORKFLOWS -%}
+{(workflow)}_SAMPLES = set("""
+{%- for sample_name, sample in SAMPLES.items() -%}
+{%- if workflow in sample.workflows %}{(sample_name)} {% endif %}
+{%- endfor %}""".split())
+{% endfor %}
+
+SAMPLE_SPECIES = {
+{%- for sample_name, sample in SAMPLES.items() %}
+    '{(sample_name)}': '{(sample.species)}',
+{%- endfor %}
+}
+
+SOURCE_SPECIES = {
+{%- for source, refsamples in REFERENCES.items() %}
+    '{(source)}': '{(refsamples[0].species)}',
+{%- endfor %}
+}
 
 
 {% block rules %}{% endblock %}

@@ -3,22 +3,9 @@
 
 {% block rules %}
 
-SAMPLE_SPECIES = {
-{%- for sample_name, sample in SAMPLES.items() %}
-    '{(sample_name)}': '{(sample.species)}',
-{%- endfor %}
-}
-
-SOURCE_SPECIES = {
-{%- for source, refsamples in REFERENCES.items() %}
-    '{(source)}': '{(refsamples[0].species)}',
-{%- endfor %}
-}
-
 rule all:
-    input: expand('annotations/{sample}.anno.gz', sample="
-                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split())
-
+    input: expand('annotations/{sample}.anno.gz',
+                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES))
 
 
 {% for sample_name, sample in SAMPLES.items() %}

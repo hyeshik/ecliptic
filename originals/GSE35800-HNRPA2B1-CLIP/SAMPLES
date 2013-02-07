@@ -2,7 +2,7 @@ CLIP1:
     SRAno:          SRR408236
     GEOno:          GSM875073
     species:        hsa
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         "" #"MDA-MB-231"
     first_base:     6
     last_base:      51
@@ -15,7 +15,7 @@ CLIP2:
     SRAno:          SRR408237
     GEOno:          GSM875074
     species:        hsa
-    routes:         [CLIP]
+    workflows:      [CLIP]
     source:         "" #"MDA-MB-231"
     first_base:     6
     last_base:      51

@@ -4,13 +4,13 @@
 {% block rules %}
 
 rule all:
-    input: expand('erroranalysis/{sample}.gspace/done', sample="
-                {%- for sample_name in SAMPLES %}{(sample_name)} {% endfor %}".split())
+    input: expand('quantitations/{sample}.gspace/refseq.pickle',
+                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES))
 
 
 rule build_genome_positional_db:
     input: 'alignments/{sample}.bam'
-    output: 'erroranalysis/{sample}.gspace/done'
+    output: 'quantitations/{sample}.gspace/done'
     threads: {( THREADS )} # consider memory limit
     run:
         outputdir = os.path.dirname(output[0])
@@ -19,5 +19,14 @@ rule build_genome_positional_db:
         with TemporaryDirectory(outputdir) as bamtmpdir:
             shell('bamtools split -in {input} -reference -stub "{bamtmpdir}/" -refPrefix ""')
             shell('{BUILD_POSITIONALDB_GENOME_CMD} {threads} {bamtmpdir} {outputdir}')
+
+rule count_refseq_in_gspace:
+    input: 'quantitations/{sample}.gspace/done'
+    output: 'quantitations/{sample}.gspace/refseq.pickle'
+    run:
+        gspacedir = os.path.dirname(input[0])
+        refseqdb = 'resources/{species}/nrRefSeq.db'.format(species=SAMPLE_SPECIES[wildcards.sample])
+        shell('{COUNT_REFSEQ_IN_GSPACE_CMD} {output} {refseqdb} {gspacedir}')
+
 
 {% endblock %}
