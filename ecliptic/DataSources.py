@@ -111,6 +111,10 @@ class Sample:
 
         return samples
 
+    @property
+    def maximum_length(self):
+        return self.last_base - self.first_base + 1
+
 
 if __name__ == '__main__':
     ds = DataSources('originals')

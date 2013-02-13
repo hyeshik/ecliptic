@@ -5,6 +5,8 @@
 
 rule all:
     input: expand('annotations/{sample}.anno.gz',
+                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES)), \
+           expand('alignments/{sample}.split/done',
                   sample=list(CLIP_SAMPLES|RNAseq_SAMPLES))
 
 
@@ -130,6 +132,21 @@ rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
                {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
 
 {% endfor %}
+
+rule split_alignments_by_chromosome:
+    input: 'alignments/{sample}.bam'
+    output: 'alignments/{sample}.split/done'
+    run:
+        outputdir = os.path.dirname(output[0])
+        makedir(outputdir, empty=True)
+        shell('bamtools split -in {input} -reference -stub "{outputdir}/" -refPrefix ""')
+
+        import glob
+        for path in glob.glob(os.path.join(outputdir, '.*.bam')):
+            newpath = os.path.join(os.path.dirname(path), os.path.basename(path)[1:])
+            os.rename(path, newpath)
+
+        open(output[0], 'w').close()
 
 
 rule annotate_reads:

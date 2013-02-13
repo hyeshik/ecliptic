@@ -25,7 +25,7 @@
 >>> calculate_cigar_length('11M')
 (11, 11)
 >>> calculate_cigar_length('3S11M2S')
-(16, 16)
+(11, 16)
 >>> calculate_cigar_length('5M2I7M')
 (12, 14)
 >>> calculate_cigar_length('11M2D5M3I5M')
@@ -42,6 +42,17 @@
 
 >>> get_read_refalign('AAAATTCTCCTAACAGTGGACGAGA', '13M1D12M')
 'AAAATTCTCCTAADCAGTGGACGAGA'
+
+>>> cigar_replace_softclips(('chr1', 10, 20, '+', 0, '10M'))
+('chr1', 10, 20, '+', 0, '10M')
+>>> cigar_replace_softclips(('chr1', 12, 20, '+', 0, '2S8M'))
+('chr1', 10, 20, '+', 2, '10M')
+>>> cigar_replace_softclips(('chr1', 12, 20, '+', 1, '2S1I8M'))
+('chr1', 10, 20, '+', 3, '2M1I8M')
+>>> cigar_replace_softclips(('chr1', 12, 20, '-', 0, '2S8M'))
+('chr1', 10, 20, '-', 2, '10M')
+>>> cigar_replace_softclips(('chr1', 12, 20, '-', 0, '2S8M4S'))
+('chr1', 10, 24, '-', 6, '14M')
 """
 
 __all__ = [
@@ -79,7 +90,7 @@ def calculate_cigar_length(cigar):
         size, action = match.groups()
         size = int(size)
 
-        if action in 'MSPDN':
+        if action in 'MPDN': # was:MSPDN
             lengths[0] += size
         if action in 'MSPI':
             lengths[1] += size
@@ -202,8 +213,43 @@ class QueueableLineReader(object):
         self.queue.appendleft(line)
 
 
+def cigar_replace_softclips(args):
+    chrom, start, stop, strand, editdist, cigarstr = args
+    if 'S' not in cigarstr:
+        return args
+
+    cigar = cigar_pattern.findall(cigarstr)
+
+    # convert left soft clipping
+    if cigar[0][1] == 'S':
+        clipsize = int(cigar[0][0])
+        start -= clipsize
+        editdist += clipsize
+        if cigar[1][1] == 'M':
+            del cigar[0]
+            cigar[0] = str(int(cigar[0][0]) + clipsize), 'M'
+        else:
+            cigar[0] = cigar[0][0], 'M'
+
+    # convert right soft clipping
+    if cigar[-1][1] == 'S':
+        cigar[-1] = cigar[-1][0], 'M'
+        clipsize = int(cigar[-1][0])
+        stop += clipsize
+        editdist += clipsize
+        if cigar[-2][1] == 'M':
+            del cigar[-1]
+            cigar[-1] = str(int(cigar[-1][0]) + clipsize), 'M'
+        else:
+            cigar[-1] = cigar[-1][0], 'M'
+
+    cigarstr = ''.join(cnt+cmd for cnt, cmd in cigar)
+
+    return (chrom, start, stop, strand, editdist, cigarstr)
+
+
 class SAMParser(object):
-    def __init__(self, samfile, seqfile=None, zerobase=False, use_slider=False):
+    def __init__(self, samfile, seqfile=None, use_slider=False):
         if isinstance(samfile, basestring):
             self.samfile = open(samfile)
         else:
@@ -217,7 +263,6 @@ class SAMParser(object):
         self.seqfile = seqfile
         if seqfile is not None:
             self.seqidx = GiantFASTAFile(seqfile)
-        self.zerobase = zerobase
         self.seqlen = {}
 
     def getsubseq(self, name, seqfrom, seqto): # [from, to) both 0-base
@@ -229,8 +274,7 @@ class SAMParser(object):
     def __iter__(self):
         return self.iteralignments()
 
-    # WARNING: 'mapped' coordiates are 1-based, both side inclusive by default
-    def iteralignments(self, strands='+-', withref=False):
+    def iteralignments(self, strands='+-', withref=False, repl_softclip=False):
         geteditdist= lambda x: x[4]
 
         for line in self.samfile:
@@ -248,7 +292,7 @@ class SAMParser(object):
             flags = int(fields[1])
             rname = fields[2]
             try:
-                pos = int(fields[3]) # 1-based leftmost
+                pos = int(fields[3]) - 1
             except:
                 print "ERROR:", line
                 raise
@@ -269,20 +313,20 @@ class SAMParser(object):
                 mapped = []
             else:
                 reflen, _ = calculate_cigar_length(cigar)
-                stop = pos + reflen - 1
-                start = pos - 1 if self.zerobase else pos
+                stop = pos + reflen
+                start = pos
                 mapped = [(rname, start, stop, strand, editdist, cigar)]
 
             for altmatch in options.get('XA', 'Z:')[2:].split(';')[:-1]:
                 altfields = altmatch.split(',')
                 strand = altfields[1][0]
-                pos = int(altfields[1][1:])
+                pos = int(altfields[1][1:]) - 1
                 rname = altfields[0]
                 cigar = altfields[2]
                 editdist = int(altfields[3])
                 reflen, _ = calculate_cigar_length(cigar)
-                stop = pos + reflen - 1
-                start = pos - 1 if self.zerobase else pos
+                stop = pos + reflen
+                start = pos
 
                 if strand in strands:
                     mapped.append((rname, start, stop, strand, editdist,
@@ -298,7 +342,7 @@ class SAMParser(object):
                     break
 
                 altrname = altfields[2]
-                altpos = int(altfields[3]) # 1-based leftmost
+                altpos = int(altfields[3]) - 1
                 altmapq = int(altfields[4]) # phred-scaled
                 altcigar = altfields[5]
                 altseq = altfields[9]
@@ -314,17 +358,20 @@ class SAMParser(object):
 
                 if altrname != '*' and altstrand in strands:
                     altreflen, _ = calculate_cigar_length(altcigar)
-                    altstop = altpos + altreflen - 1
-                    altstart = altpos - 1 if self.zerobase else altpos
+                    altstop = altpos + altreflen
+                    altstart = altpos
                     mapped.append((altrname, altstart, altstop, altstrand,
                                    alteditdist, altcigar))
+
+            if repl_softclip:
+                mapped = map(cigar_replace_softclips, mapped)
 
             mapped.sort(key=geteditdist)
 
             if withref:
                 newmapped = []
                 for m in mapped:
-                    subseq = self.getsubseq(m[0], m[1]-1, m[2])
+                    subseq = self.getsubseq(m[0], m[1], m[2])
                     if m[3] == '-':
                         subseq = reverse_complement(subseq)
                     newmapped.append(m + (subseq,))
@@ -336,8 +383,9 @@ class SAMParser(object):
                 'mapq': mapq,
                 'seq': seq,
                 'options': options,
-                'mapped': mapped, # positions are 1-based
+                'mapped': mapped,
             }
+
 
 
 def _test():

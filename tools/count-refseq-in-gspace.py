@@ -22,14 +22,16 @@ BLOCKDEFS = {
         ('CDS', 'cdsBlocks'),
         ('5UTR', 'leftUtrBlocks'),
         ('3UTR', 'rightUtrBlocks'),
+        ('Intron', 'intronBlocks'),
     ],
     ('NM', '-'): [
         ('CDS', 'cdsBlocks'),
         ('5UTR', 'rightUtrBlocks'),
         ('3UTR', 'leftUtrBlocks'),
+        ('Intron', 'intronBlocks'),
     ],
-    ('NR', '+'): [('Exon', 'exonBlocks')],
-    ('NR', '-'): [('Exon', 'exonBlocks')],
+    ('NR', '+'): [('Exon', 'exonBlocks'), ('Intron', 'intronBlocks')],
+    ('NR', '-'): [('Exon', 'exonBlocks'), ('Intron', 'intronBlocks')],
 }
 
 def process(refdb, arr):

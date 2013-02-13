@@ -66,4 +66,14 @@ SOURCE_SPECIES = {
 }
 
 
+# Utility functions
+
+def makedir(path, empty=False):
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    elif empty:
+        shutil.rmtree(path)
+        os.makedirs(path)
+
+
 {% block rules %}{% endblock %}

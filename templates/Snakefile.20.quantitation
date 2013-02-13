@@ -4,21 +4,23 @@
 {% block rules %}
 
 rule all:
-    input: expand('quantitations/{sample}.gspace/refseq.pickle',
-                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES))
+    input: expand('erroranalyses/{sample}.errorprof.pickle',
+                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES)),
 
 
 rule build_genome_positional_db:
-    input: 'alignments/{sample}.bam'
+    input: 'alignments/{sample}.split/done'
     output: 'quantitations/{sample}.gspace/done'
     threads: {( THREADS )} # consider memory limit
     run:
+        inputdir = os.path.dirname(input[0])
         outputdir = os.path.dirname(output[0])
         threads = 8 # limit number of parallel processes for memory limit
 
-        with TemporaryDirectory(outputdir) as bamtmpdir:
-            shell('bamtools split -in {input} -reference -stub "{bamtmpdir}/" -refPrefix ""')
-            shell('{BUILD_POSITIONALDB_GENOME_CMD} {threads} {bamtmpdir} {outputdir}')
+        #with TemporaryDirectory(outputdir) as bamtmpdir:
+        #    shell('bamtools split -in {input} -reference -stub "{bamtmpdir}/" -refPrefix ""')
+        shell('{BUILD_POSITIONALDB_GENOME_CMD} {threads} {inputdir} {outputdir}')
+
 
 rule count_refseq_in_gspace:
     input: 'quantitations/{sample}.gspace/done'

@@ -129,15 +129,21 @@ def add_mRNA_block_annotation(entry):
 
     if name.startswith('NM_'):
         split_blocks(entry)
-        lenleft= block_length(entry['leftUtrBlocks'])
+        lenleft = block_length(entry['leftUtrBlocks'])
         lenright = block_length(entry['rightUtrBlocks'])
         lencds = block_length(entry['cdsBlocks'])
+
         if entry['strand'] == '+':
             entry['partLengths'] = (lenleft, lencds, lenright)
         else:
             entry['partLengths'] = (lenright, lencds, lenleft)
 
     entry['totalLength'] = block_length(entry['exonBlocks'])
+
+    entry['intronBlocks'] = [
+        (leftend, rightstart) for (_, leftend), (rightstart, _)
+        in zip(entry['exonBlocks'][:-1], entry['exonBlocks'][1:])]
+    entry['intronLength'] = block_length(entry['intronBlocks'])
 
 
 if __name__ == '__main__':

@@ -5,6 +5,7 @@ import sys
 import random
 import futures
 import gzip
+import glob
 import re
 import os
 from ecliptic.support import sam
@@ -83,7 +84,7 @@ def genrefblks(readseq, chrom, start, stop, strand, cigar, nreads):
 def translate_sam(infile, strand):
     filteropt = '-f 16' if strand == '-' else '-F 16'
     inpf = os.popen('samtools view %s "%s"' % (filteropt, infile))
-    insam = sam.SAMParser(inpf, zerobase=True)
+    insam = sam.SAMParser(inpf)
 
     for aln in insam:
         nreads = int(aln['qname'].split('-')[1])
@@ -129,14 +130,14 @@ def run_jobs(flatdir, dbdir, maxworkers):
     allfutures = []
 
     with futures.ProcessPoolExecutor(maxworkers) as executor:
-        files = os.listdir(flatdir)
+        files = glob.glob(os.path.join(flatdir, '*.bam'))
         random.shuffle(files) # randomize order to balance memory loads
 
-        for f in files:
-            inputfile = os.path.join(flatdir, f)
+        for inputfile in files:
+            f = os.path.basename(inputfile)
 
             for strand in '+-':
-                outputprefix = os.path.join(dbdir, f.split('.')[1] + strand)
+                outputprefix = os.path.join(dbdir, f.split('.')[0] + strand)
                 fobj = executor.submit(process, inputfile, outputprefix, strand)
                 allfutures.append(fobj)
 
