@@ -4,7 +4,7 @@
 {% block rules %}
 
 rule all:
-    input: expand('erroranalyses/{sample}.errorprof.pickle',
+    input: expand('quantitations/{sample}.gspace/refseq.pickle',
                   sample=list(CLIP_SAMPLES|RNAseq_SAMPLES)),
 
 
