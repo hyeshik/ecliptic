@@ -1,0 +1,54 @@
+CLIP_D8_1:
+    SRAno:          SRR518495
+    GEOno:          GSM955510
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293T
+    first_base:     1
+    last_base:      40
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM955510: D8.1 (endogenous DGCR8 IP); Homo sapiens; RNA-Seq"
+CLIP_T7_1:
+    SRAno:          SRR518496
+    GEOno:          GSM955511
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293T
+    first_base:     1
+    last_base:      40
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM955511: T7.1 (overexpressed DGCR8 IP); Homo sapiens; RNA-Seq"
+CLIP_D8_2:
+    SRAno:          SRR518497
+    GEOno:          GSM955512
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293T
+    first_base:     1
+    last_base:      49
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM955512: D8.2 (overexpressed DGCR8 IP); Homo sapiens; RNA-Seq"
+CLIP_T7_2:
+    SRAno:          SRR518498
+    GEOno:          GSM955513
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293T
+    first_base:     1
+    last_base:      49
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM955513: T7.2 (endogenous DGCR8 IP); Homo sapiens; RNA-Seq"
+
+# ex: syntax=yaml et sts=4 sw=4

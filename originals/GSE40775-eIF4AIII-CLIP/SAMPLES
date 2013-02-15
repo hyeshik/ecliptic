@@ -1,0 +1,41 @@
+CLIP1:
+    SRAno:          SRR567525
+    GEOno:          GSM1001330
+    species:        hsa
+    workflows:      [CLIP]
+    source:         HeLa
+    first_base:     1
+    last_base:      80
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM1001330: HeLa eIF4AIII CLIP-seq 1; Homo sapiens; OTHER"
+CLIP2:
+    SRAno:          SRR567526
+    GEOno:          GSM1001331
+    species:        hsa
+    workflows:      [CLIP]
+    source:         HeLa
+    first_base:     1
+    last_base:      80
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM1001331: HeLa eIF4AIII CLIP-seq 2; Homo sapiens; OTHER"
+CLIPCtl:
+    SRAno:          SRR567527
+    GEOno:          GSM850172
+    species:        hsa
+    workflows:      [CLIP, SNPreference]
+    source:         HeLa
+    first_base:     1
+    last_base:      100
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM1001332: HeLa mRNA-seq; Homo sapiens; RNA-Seq"
+
+# ex: syntax=yaml et sts=4 sw=4
