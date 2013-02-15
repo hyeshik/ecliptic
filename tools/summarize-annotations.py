@@ -87,7 +87,7 @@ def open_bam(filepath):
 
 def process(alnfile, annofile):
     iterintersection = IntersectBedIterator(gzip.open(annofile))
-    alninp  = sam.SAMParser(open_bam(alnfile), zerobase=True)
+    alninp  = sam.SAMParser(open_bam(alnfile))
 
     for aln in alninp:
         seqname = aln['qname']
