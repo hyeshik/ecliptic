@@ -15,7 +15,9 @@ rule all:
 rule prepare_processed_sequences_{(sample_name|rule_name)}:
     input: "{% for acc in sample.SRAno %}original/{(acc)}.fq.gz {% endfor %}".split()
     output: "sequences/{( sample_name )}.primary.fq.gz"
-    threads: {% if sample.threep_adapter %}{( THREADS )}{% else %}2{% endif %}
+    #threads: {% if sample.threep_adapter %}{( THREADS )}{% else %}2{% endif %}
+    # temporarily lowered due to suspected bug in echidna
+    threads: 3
     shell: "zcat {input} | \
                 echidna -p{threads} -c \"fastx_trimmer -Q{( sample.quality_scale )} \
                     -f {( sample.first_base )} -l {( sample.last_base )} | \
