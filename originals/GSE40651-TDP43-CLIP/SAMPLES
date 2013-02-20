@@ -80,7 +80,7 @@ RNAseq-ctl-r1-2:
     SRAno:          SRR556768
     GEOno:          GSM998877
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -106,7 +106,7 @@ RNAseq-ctl-r2-2:
     SRAno:          SRR556770
     GEOno:          GSM998879
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -119,7 +119,7 @@ RNAseq-ctl-r2-3:
     SRAno:          SRR556771
     GEOno:          GSM998880
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -145,7 +145,7 @@ RNAseq-ctl-r3-2:
     SRAno:          SRR556773
     GEOno:          GSM998882
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -158,7 +158,7 @@ RNAseq-ctl-r3-3:
     SRAno:          SRR556774
     GEOno:          GSM998883
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -184,7 +184,7 @@ RNAseq-ctl-r4-2:
     SRAno:          SRR556776
     GEOno:          GSM998885
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -197,7 +197,7 @@ RNAseq-ctl-r4-3:
     SRAno:          SRR556777
     GEOno:          GSM998886
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -210,7 +210,7 @@ RNAseq-fustls-r1-1:
     SRAno:          SRR556778
     GEOno:          GSM998887
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -223,7 +223,7 @@ RNAseq-fustls-r1-2:
     SRAno:          SRR556779
     GEOno:          GSM998888
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -236,7 +236,7 @@ RNAseq-fustls-r2-1:
     SRAno:          SRR556780
     GEOno:          GSM998889
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -249,7 +249,7 @@ RNAseq-fustls-r2-2:
     SRAno:          SRR556781
     GEOno:          GSM998890
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -262,7 +262,7 @@ RNAseq-fustls-r3-1:
     SRAno:          SRR556782
     GEOno:          GSM998891
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -275,7 +275,7 @@ RNAseq-fustls-r4-1:
     SRAno:          SRR556783
     GEOno:          GSM998892
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72
@@ -288,7 +288,7 @@ RNAseq-fustls-r4-2:
     SRAno:          SRR556784
     GEOno:          GSM998893
     species:        mmu
-    workflows:      [CLIP, RNAseq, SNPreference]
+    workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
     first_base:     1
     last_base:      72

@@ -1,11 +1,7 @@
-{# ecliptic: work #}
-{% extends "Snakefile.base" %}
+# Snakefile.30.erroranalysis
 
-{% block rules %}
-
-rule all:
-    input: expand('erroranalyses/{sample}.errorprof.pickle',
-                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES)),
+targets(expand('erroranalyses/{sample}.errorprof.pickle',
+               sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)))
 
 
 {% for sample_name, sample in SAMPLES.items() %}
@@ -18,5 +14,3 @@ rule count_errors_{(sample_name|rule_name)}:
         shell('{COLLECT_ERROR_COUNTS_CMD} {bamdir} resources/{(sample.species)}/genome.fa \
                  {output} {(sample.maximum_length + 1)} {threads}')
 {% endfor %}
-
-{% endblock %}

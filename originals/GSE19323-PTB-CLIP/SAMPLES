@@ -1,0 +1,54 @@
+CLIP-M1:
+    SRAno:          SRR034466
+    GEOno:          GSM480476
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HeLa
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM480476: Human_PTB_CLIP-seq_M1"
+CLIP-M2:
+    SRAno:          SRR034467
+    GEOno:          GSM480477
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HeLa
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM480477: Human_PTB_CLIP-seq_M2"
+CLIP-D1:
+    SRAno:          SRR034468
+    GEOno:          GSM480478
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HeLa
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM480478: Human_PTB_CLIP-seq_D1"
+CLIP-D2:
+    SRAno:          SRR034469
+    GEOno:          GSM480479
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HeLa
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM480479: Human_PTB_CLIP-seq_D2"
+
+# ex: syntax=yaml et sts=4 sw=4

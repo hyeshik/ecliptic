@@ -48,16 +48,20 @@ class ScriptRunner:
         scripts = []
 
         for project in self.datasources.projects.values():
-            scriptpattern = os.path.join(project.workdir, 'Snakefile.*.*')
+            scriptpattern = os.path.join(project.workdir, 'Snakefile*')
             for filename in glob.glob(scriptpattern):
-                _, priority, stepname  = os.path.basename(filename).split('.', 2)
-                scripts.append((int(priority), stepname, project.name,
-                                project, filename))
+                tokens = os.path.basename(filename).split('.', 2)
+                if len(tokens) >= 2 and tokens[1].isdigit():
+                    priority = int(tokens.pop(1))
+                else:
+                    priority = float('inf') # lowest priority for unprioritized tasks
+
+                scripts.append((priority, project.name, tuple(tokens), project, filename))
 
         return sorted(scripts)
 
     def run(self, jobs=None):
-        for prio, step, _, proj, snakefile in self.scan_scripts():
+        for prio, _, _, proj, snakefile in self.scan_scripts():
             if jobs is not None and proj.name not in jobs:
                 continue
 

@@ -1,13 +1,9 @@
-{# ecliptic: work #}
-{% extends "Snakefile.base" %}
+# Snakefile.10.fundamental
 
-{% block rules %}
-
-rule all:
-    input: expand('annotations/{sample}.anno.gz',
-                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES)), \
-           expand('alignments/{sample}.split/done',
-                  sample=list(CLIP_SAMPLES|RNAseq_SAMPLES))
+targets(expand('annotations/{sample}.anno.gz',
+               sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)) +
+        expand('alignments/{sample}.split/done',
+               sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)))
 
 
 {% for sample_name, sample in SAMPLES.items() %}
@@ -171,6 +167,3 @@ rule summarize_annotation:
         species = SAMPLE_SPECIES[wildcards.sample]
         shell('{SUMMARIZE_ANNOTATIONS_CMD} {input.bam} {input.bedintersect} | \
                gzip -c - > {output}')
-
-
-{% endblock %}
