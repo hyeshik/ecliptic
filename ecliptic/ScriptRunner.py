@@ -75,7 +75,8 @@ class ScriptRunner:
 
             print("==> {}".format(snakefile_printing))
 
-            ret = os.system('cd "{}" && snakemake -s "{}" -j'.format(proj.workdir, snakefile))
+            ret = os.system('cd "{}" && snakemake -s "{}" {} -j'.format(
+                            proj.workdir, snakefile, 'all'))
             if ret != 0:
                 print('Error code {}. Terminating.'.format(ret), file=sys.stderr)
                 sys.exit(1)

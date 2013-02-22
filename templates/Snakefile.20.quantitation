@@ -1,13 +1,13 @@
 # Snakefile.20.quantitation
 
-targets(expand('quantitations/{sample}.gspace/refseq.pickle',
-               sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)))
+targets(expand('quantitations/{sample}.gspace/refseq.pickle', sample=list(CLIP_SAMPLES)))
 
 
 rule build_genome_positional_db:
     input: 'alignments/{sample}.split/done'
     output: 'quantitations/{sample}.gspace/done'
     threads: {( THREADS )} # consider memory limit
+    version: "1"
     run:
         inputdir = os.path.dirname(input[0])
         outputdir = os.path.dirname(output[0])
@@ -21,6 +21,7 @@ rule build_genome_positional_db:
 rule count_refseq_in_gspace:
     input: 'quantitations/{sample}.gspace/done'
     output: 'quantitations/{sample}.gspace/refseq.pickle'
+    version: "1"
     run:
         gspacedir = os.path.dirname(input[0])
         refseqdb = 'resources/{species}/nrRefSeq.db'.format(species=SAMPLE_SPECIES[wildcards.sample])

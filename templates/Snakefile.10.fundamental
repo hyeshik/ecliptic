@@ -14,6 +14,7 @@ rule prepare_processed_sequences_{(sample_name|rule_name)}:
     #threads: {% if sample.threep_adapter %}{( THREADS )}{% else %}2{% endif %}
     # temporarily lowered due to suspected bug in echidna
     threads: 3
+    version: "1"
     shell: "zcat {input} | \
                 echidna -p{threads} -c \"fastx_trimmer -Q{( sample.quality_scale )} \
                     -f {( sample.first_base )} -l {( sample.last_base )} | \
@@ -29,6 +30,7 @@ rule prepare_processed_sequences_{(sample_name|rule_name)}:
 rule collapse_filtered_fastq_{(sample_name|rule_name)}:
     input: 'sequences/{( sample_name )}.filtered.fq.gz'
     output: 'sequences/{( sample_name )}.filtered.fa'
+    version: "1"
     shell: 'zcat {input} | fastx_collapser -Q{( sample.quality_scale )} > {output}'
 
 {% endfor %}
@@ -38,6 +40,7 @@ rule align_to_contaminants:
     input: "sequences/{sample}.primary.fq.gz"
     output: "alignments/{sample}.contaminants.sam.gz"
     threads: {( THREADS )}
+    version: "1"
     run:
         species = SAMPLE_SPECIES[wildcards.sample]
         shell("gsnap -D resources/{species} --gunzip -d contaminants -B 4 -O -A sam -m 0.05 \
@@ -47,6 +50,7 @@ rule align_to_contaminants:
 rule filter_reads:
     input: "alignments/{sample}.contaminants.sam.gz"
     output: "sequences/{sample}.filtered.fq.gz"
+    version: "1"
     shell: "zcat {input} | awk -F'\t' '/^@/ {{ print $0; }} \
                 /^[^@]/ {{ if ($2 == 4) {{ print $0; }} }}' | bam2fastx -qsA - | \
                 gzip -c - > {output}"
@@ -59,6 +63,7 @@ rule generate_reference_reads_{(source|rule_name)}:
             {%- for sample in refsamples %}{(sample.label)} {% endfor %}".split())
     output: 'bg_variations/{(source)}.fq.gz'
     threads: {(THREADS)}
+    version: "1"
     run:
         ref_fastq_files = ' '.join(input)
         shell('zcat {ref_fastq_files} | pigz -p{threads} -c - > {output}')
@@ -69,6 +74,7 @@ rule align_reference_reads_to_genome:
     input: 'bg_variations/{source}.fq.gz'
     output: 'bg_variations/{source}.bam'
     threads: {(THREADS)}
+    version: "1"
     run:
         species = SOURCE_SPECIES[wildcards.source]
         splice_index = GSNAP_SPLICE_INDEX.format(species=species)
@@ -79,6 +85,7 @@ rule align_reference_reads_to_genome:
 rule sort_sam:
     input: '{name}.bam'
     output: '{name}.sorted.bam'
+    version: "1"
     run:
         outprefix = output[0].replace('.bam', '')
         shell('samtools sort {input} {outprefix}')
@@ -86,6 +93,7 @@ rule sort_sam:
 rule call_variants:
     input: 'bg_variations/{source}.sorted.bam'
     output: 'bg_variations/{source}.vcf'
+    version: "1"
     run:
         species = SOURCE_SPECIES[wildcards.source]
         shell('samtools mpileup -uf resources/{species}/genome.fa {input} | \
@@ -95,6 +103,7 @@ rule generate_gsnap_snp_index:
     input: 'bg_variations/{source}.vcf'
     output: snpout='bg_variations/genome.genomecomp.{source}.snpmap', \
             iitout=temp('bg_variations/{source}.iit')
+    version: "1"
     run:
         species = SOURCE_SPECIES[wildcards.source]
         shell("vcfutils.pl varFilter -d{SNPCALL_MINIMUM_DEPTH} {input} | \
@@ -120,6 +129,7 @@ rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
             {%- endif %}
     output: 'alignments/{(sample_name)}.bam'
     threads: {(THREADS)}
+    version: "1"
     run:
         species = '{(sample.species)}'
         splice_index = GSNAP_SPLICE_INDEX.format(species=species)
@@ -134,6 +144,7 @@ rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
 rule split_alignments_by_chromosome:
     input: 'alignments/{sample}.bam'
     output: 'alignments/{sample}.split/done'
+    version: "1"
     run:
         outputdir = os.path.dirname(output[0])
         makedir(outputdir, empty=True)
@@ -151,6 +162,7 @@ rule annotate_reads:
     input: 'alignments/{sample}.bam'
     output: 'annotations/{sample}.bedintersect.gz'
     threads: 2
+    version: "1"
     run:
         species = SAMPLE_SPECIES[wildcards.sample]
         shell('bedtools intersect -bed -abam {input} \
@@ -163,7 +175,9 @@ rule summarize_annotation:
            bedintersect='annotations/{sample}.bedintersect.gz'
     output: 'annotations/{sample}.anno.gz'
     threads: 2
+    version: "1"
     run:
         species = SAMPLE_SPECIES[wildcards.sample]
         shell('{SUMMARIZE_ANNOTATIONS_CMD} {input.bam} {input.bedintersect} | \
                gzip -c - > {output}')
+

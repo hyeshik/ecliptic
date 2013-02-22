@@ -6,12 +6,14 @@
 all_targets = []
 targets = all_targets.extend
 
-rule all:
-    input: all_targets
-
 {% include "Snakefile.10.fundamental" %}
 {% include "Snakefile.20.quantitation" %}
 {% include "Snakefile.30.erroranalysis" %}
 {% include "Snakefile.100.stats" %}
+
+rule all:
+    input: all_targets
+    run:
+        pass
 
 {% endblock %}
