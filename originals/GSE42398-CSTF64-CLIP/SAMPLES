@@ -1,0 +1,30 @@
+CLIP1:
+    SRAno:          SRR618490
+    GEOno:          GSM1039197
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" #C2C12
+    first_base:     1
+    last_base:      70
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM1039197: CLIP-seq Cstf64 replicate 1 (CLIP-seq); Mus musculus; RNA-Seq"
+CLIP2:
+    SRAno:          SRR618491
+    GEOno:          GSM1039198
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" #C2C12
+    first_base:     1
+    last_base:      70
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
+    description:    "GSM1039198: CLIP-seq Cstf64 replicate 2 (CLIP-seq); Mus musculus; RNA-Seq"
+
+# the rest of samples are from 3'READS.
+
+# ex: syntax=yaml et sts=4 sw=4

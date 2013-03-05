@@ -24,19 +24,20 @@ CLIP2_35:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM581052: hnRNPH_CLIPSeq 2 (35nt reads)"
-CLIP2_39:
-    SRAno:          [SRR065542, SRR065543]
-    GEOno:          GSM581052
-    species:        hsa
-    workflows:      [CLIP]
-    source:         "" #HEK293T
-    first_base:     1
-    last_base:      39
-    minimum_length: 20
-    quality_scale:  33
-    strand:         +
-    threep_adapter: TCGTATGCCGTCTTCTGCTTG
-    description:    "GSM581052: hnRNPH_CLIPSeq 2 (39nt reads)"
+# These runs have too low quality that no sequence passes 90% of phred 25.
+#CLIP2_39:
+#    SRAno:          [SRR065542, SRR065543]
+#    GEOno:          GSM581052
+#    species:        hsa
+#    workflows:      [CLIP]
+#    source:         "" #HEK293T
+#    first_base:     1
+#    last_base:      39
+#    minimum_length: 20
+#    quality_scale:  33
+#    strand:         +
+#    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+#    description:    "GSM581052: hnRNPH_CLIPSeq 2 (39nt reads)"
 
 # the rest of samples are from a mouse cell line.
 

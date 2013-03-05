@@ -1,0 +1,194 @@
+AdultCortex-1:
+    SRAno:          SRR053640
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # mouse adult cortex treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult cortex 1 HITS-CLIP"
+AdultCortex-2:
+    SRAno:          SRR053641
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # mouse adult cortex treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult cortex 2 HITS-CLIP"
+AdultCortex-3:
+    SRAno:          SRR053642
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # mouse adult cortex treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult cortex 3 HITS-CLIP"
+AdultCortex-4:
+    SRAno:          SRR053643
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # mouse adult cortex treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult cortex 4 HITS-CLIP"
+AdultCortex-5:
+    SRAno:          SRR053644
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # mouse adult cortex treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult cortex 5 HITS-CLIP"
+P10Cortex:
+    SRAno:          SRR053660
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # P10 brain
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "P10 cortex HITS-CLIP"
+P16Brain-1:
+    SRAno:          SRR053661
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # P16 brain
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "P16 brain 1 HITS-CLIP"
+P16Brain-2:
+    SRAno:          SRR053662
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # P16 brain
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "P16 brain 2 HITS-CLIP"
+P16Brain-3:
+    SRAno:          SRR053663
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # P16 brain
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "P16 brain 3 HITS-CLIP"
+AdultHippocampus-1:
+    SRAno:          [SRR053646, SRR053647, SRR053648]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # adult mouse brain treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult hippocampus 1 HITS-CLIP"
+AdultHippocampus-2:
+    SRAno:          [SRR053649, SRR053650]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # adult mouse brain treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult hippocampus 2 HITS-CLIP"
+AdultHippocampus-3:
+    SRAno:          [SRR053651, SRR053652]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # adult mouse brain treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult hippocampus 3 HITS-CLIP"
+AdultHippocampus-4:
+    SRAno:          [SRR053653, SRR053654, SRR053655]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # adult mouse brain treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult hippocampus 4 HITS-CLIP"
+AdultHippocampus-5:
+    SRAno:          [SRR053656, SRR053657]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # adult mouse brain treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult hippocampus 5 HITS-CLIP"
+AdultHippocampus-6:
+    SRAno:          [SRR053658, SRR053659]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         "" # adult mouse brain treated with pilocarpine
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "Adult hippocampus 6 HITS-CLIP"
+NOVA-all:
+    SRAno:          [SRR053640, SRR053641, SRR053642, SRR053643, SRR053644, SRR053645, SRR053646, SRR053647, SRR053648, SRR053649, SRR053650, SRR053651, SRR053652, SRR053653, SRR053654, SRR053655, SRR053656, SRR053657, SRR053658, SRR053659, SRR053660, SRR053661, SRR053662, SRR053663, SRR053664]
+    species:        mmu
+    workflows:      [CLIP]
+    source:         ""
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: GTGTCAGTCACTTCCAGCGG
+    description:    "All NOVA HITS-CLIP libraries"
+
+# ex: syntax=yaml et sts=4 sw=4
