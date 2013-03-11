@@ -1,0 +1,23 @@
+CC = "gcc"
+SFMT_CFLAGS = "-O3 -finline-functions -fomit-frame-pointer -DNDEBUG \
+               -fno-strict-aliasing --param max-inline-insns-single=1800 \
+               -Wmissing-prototypes -Wall  -std=c99 -DSFMT_MEXP=19937"
+SFMT_SUBDIR = "SFMT-src-1.4"
+CLIPSIM_CFLAGS = "-O3 -Wall -DNDEBUG -I. -I{}".format(SFMT_SUBDIR)
+#CLIPSIM_CFLAGS=        -O0 -Wall -ggdb -DNDEBUG -I. -I${SFMT_SUBDIR}
+CLIPSIM_LIBS = "-lm -lpthread -lz"
+
+
+rule all:
+    input: 'crossfest'
+
+rule compile_crossfest:
+    input: cfsrc='crossfest.c', cstsrc='clipstatstree.c', sfmtobj='SFMT.o'
+    output: 'crossfest'
+    shell: '{CC} -o {output} {CLIPSIM_CFLAGS} {input} {CLIPSIM_LIBS}'
+
+rule compile_sfmt:
+    input: SFMT_SUBDIR + '/SFMT.c'
+    output: 'SFMT.o'
+    shell: '{CC} {SFMT_CFLAGS} -c -o {output} {input}'
+
