@@ -100,10 +100,12 @@ typedef struct {
     uint32_t seqlength;     /* sequence length in bytes of this window (=nucleotides) */
 } READCLUSTER_HEADER;
 
+#pragma pack(1)
 typedef struct {
     uint32_t nreads;        /* number of duplicate reads (instances) */
     uint8_t nfragments;     /* number of fragments (>= 2 for spliced exons) */
 } MAPPING_HEADER;
+#pragma pack()
 
 typedef struct {
     uint32_t start;
@@ -475,9 +477,9 @@ simulate_sequencing(gzFile *inputf, READ_QUEUE_SET *queueset, CLIPSTATS_TREES *t
             }
 
             if (mappingheader.nfragments > MAXFRAGNUM) {
-                fprintf(stderr, "Too many fragments for a mapping in `%s:%u-%u'\n",
-                        header.name, header.start, header.end);
-                goto onError;
+                fprintf(stderr, "Too many fragments (%d) for a mapping in `%s:%u-%u'\n",
+                        mappingheader.nfragments, header.name, header.start, header.end);
+                continue;
             }
 
             if (gzread(inputf, mapping, sizeof(MAPPING_FRAGMENT) * mappingheader.nfragments) <
@@ -889,7 +891,7 @@ main(int argc, char *argv[])
         "%.2f Gb.\n\n", iterations, totalbases / 1000000000. * iterations);
 
     if (iterations < 1 || iterations > 10000) {
-        fprintf(stderr, "Number of iterations is determined abnormally.\n");
+        fprintf(stderr, "Number of iterations is determined abnormally: %d\n", iterations);
         return 1;
     }
 
