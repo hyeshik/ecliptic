@@ -121,9 +121,10 @@ def process(inputfile, prefix, strand):
     except:
         import traceback
         traceback.print_exc()
-        raise
+        return 1
 
     #print "%s finished." % os.path.basename(prefix)
+    return 0
 
 
 def run_jobs(flatdir, dbdir, maxworkers):
@@ -141,12 +142,13 @@ def run_jobs(flatdir, dbdir, maxworkers):
                 fobj = executor.submit(process, inputfile, outputprefix, strand)
                 allfutures.append(fobj)
 
-        futures.wait(allfutures)
+        nfailures = sum(f.result() for f in allfutures)
 
-        if all(f.done() for f in allfutures):
+        if all(f.done() for f in allfutures) and nfailures < 1:
             open('%s/done' % dbdir, 'w')
         else:
             print >> sys.stderr, "Error on processing something."
+            sys.exit(1)
 
 
 if __name__ == '__main__':

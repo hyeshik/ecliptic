@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # emulates H. Guo's mapping strategy
-from rnarry.sequtils import GiantFASTAFile
+from ecliptic.support.sequtils import GiantFASTAFile
 import re
 import numpy as np
 
@@ -24,7 +24,7 @@ def read_sam_blks(inpf):
 
 def get_alignment_mismatches(fields):
     clipping = sum(int(num)
-             for num, tok in cigarpat.findall(fields[5]) if tok in 'HSID')
+             for num, tok in cigarpat.findall(fields[5]) if tok in 'HS')
                 # gsnap underestimates mismatches excluding all of those things
     nm = [int(tok.split(':')[2])
           for tok in fields[11:] if tok.startswith('NM:i:')]
@@ -40,7 +40,7 @@ def process(inpf, maxmm=1):
 
         if len(blk) == 1:
             if blk[0][2] != '*': # ignore unmapped reads
-                if get_alignment_mismatches(blk[0]) <= 1:
+                if get_alignment_mismatches(blk[0]) <= maxmm:
                     print '\t'.join(blk[0])
             continue
 

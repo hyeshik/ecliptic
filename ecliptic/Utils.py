@@ -25,9 +25,13 @@
 #
 
 import csv
+import tempfile
+import shutil
+import os
+
 
 __all__ = [
-    'TokensDictParser', 'iter_tab_separated',
+    'TokensDictParser', 'iter_tab_separated', 'TemporaryDirectory',
 ]
 
 
@@ -53,4 +57,18 @@ class TokensDictParser:
 def iter_tab_separated(file, parser):
     for line in csv.reader(file, dialect='excel-tab'):
         yield parser(line)
+
+
+class TemporaryDirectory(object):
+    def __init__(self, dir='.'):
+        self.dir = dir
+        self.path = None
+
+    def __enter__(self):
+        self.path = tempfile.mkdtemp(dir=self.dir)
+        return self.path
+
+    def __exit__(self, type, value, traceback):
+        if self.path is not None:
+            shutil.rmtree(self.path)
 

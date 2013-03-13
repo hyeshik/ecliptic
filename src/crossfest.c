@@ -43,7 +43,7 @@
 #define TIMEVAL_DIFF(b, a) \
     ((double)((a).tv_sec - (b).tv_sec) + ((a).tv_usec - (b).tv_usec) * 0.000001)
 
-#define MAXSEQLEN       524288  /* change this if larger sequence is found */
+#define MAXSEQLEN       1048576 /* change this if you see a larger cluster */
 #define MAXFRAGNUM      32      /* change this if more spliced reads are read */
 #define NUMBASES        5
 #define BASEDELETION    4

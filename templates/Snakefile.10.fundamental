@@ -43,7 +43,7 @@ rule align_to_contaminants:
     version: "1"
     run:
         species = SAMPLE_SPECIES[wildcards.sample]
-        shell("gsnap -D resources/{species} --gunzip -d contaminants -B 4 -O -A sam -m 0.05 \
+        shell("gsnap -D resources/{species} --gunzip -d contaminants -B 4 -A sam -m 0.05 \
                 -t {threads} {input} | gzip -c - > {output}")
 
 
@@ -51,9 +51,7 @@ rule filter_reads:
     input: "alignments/{sample}.contaminants.sam.gz"
     output: "sequences/{sample}.filtered.fq.gz"
     version: "1"
-    shell: "zcat {input} | awk -F'\t' '/^@/ {{ print $0; }} \
-                /^[^@]/ {{ if ($2 == 4) {{ print $0; }} }}' | bam2fastx -qsA - | \
-                gzip -c - > {output}"
+    shell: "samtools view -hSf 4 {input} | bam2fastx -qsA - | gzip -c - > {output}"
 
 
 {% for source, refsamples in REFERENCES.items() %}
@@ -78,7 +76,7 @@ rule align_reference_reads_to_genome:
     run:
         species = SOURCE_SPECIES[wildcards.source]
         splice_index = GSNAP_SPLICE_INDEX.format(species=species)
-        shell('gsnap -D resources/{species} -d genome -B 4 -O -A sam -m 0.05 --gunzip \
+        shell('gsnap -D resources/{species} -d genome -B 4 -A sam -m 0.05 --gunzip \
                     -t {threads} --terminal-threshold=9999 -s {splice_index} {input} | \
                {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
 

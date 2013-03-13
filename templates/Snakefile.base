@@ -1,12 +1,18 @@
 import os
 import tempfile
 import shutil
+import pickle
 from itertools import *
 
 #---
 # tunable parameters
 
 SNPCALL_MINIMUM_DEPTH = 20
+
+# Number of iterations will be determined based on the original base coverage
+CROSSFEST_MINIMUM_ITERATION = 100
+CROSSFEST_MAXIMUM_ITERATION = 10000
+CROSSFEST_OBJECTIVE_DEPTH = 2000 # Gb
 
 
 #---
@@ -20,7 +26,12 @@ WORK_DIR = '{( Paths.workdir )}/{( NAME )}'
 #---
 # internal tools
 
-_cmd = lambda cmd: 'env PYTHONPATH="%s" %s' % (TOP_DIR, os.path.join(TOOLS_DIR, cmd))
+def _cmd(cmd):
+    if cmd.endswith('.py'):
+        return 'env PYTHONPATH="%s" %s' % (TOP_DIR, os.path.join(TOOLS_DIR, cmd))
+    else:
+        return cmd
+
 {( INTERNAL_TOOLS )}
 
 #---
@@ -66,6 +77,15 @@ SOURCE_SPECIES = {
 }
 
 
+# Data logic
+
+def crossfest_determine_simulation_depth(read_depth):
+    niterations = CROSSFEST_OBJECTIVE_DEPTH * 1000000000. / read_depth
+    valid_niter = min(max(CROSSFEST_MINIMUM_ITERATION, niterations),
+                      CROSSFEST_MAXIMUM_ITERATION)
+    return int(valid_niter * read_depth / 1000000000.)
+
+
 # Utility functions
 
 def makedir(path, empty=False):
@@ -74,6 +94,15 @@ def makedir(path, empty=False):
     elif empty:
         shutil.rmtree(path)
         os.makedirs(path)
+
+def unpickle(filename):
+    # unpickle from a file, which may be pickled in Python 2.x.
+    # http://stackoverflow.com/questions/11305790/pickle-incompatability-of-numpy-arrays-between-python-2-and-3
+
+    with open(filename, 'rb') as f:
+        u = pickle._Unpickler(f)
+        u.encoding = 'latin1'
+        return u.load()
 
 
 # Fail if any intermediate process failed in pipelined commands

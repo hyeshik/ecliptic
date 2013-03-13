@@ -1,3 +1,7 @@
+import os
+
+TOOLS_DIR = "../tools"
+
 CC = "gcc"
 SFMT_CFLAGS = "-O3 -finline-functions -fomit-frame-pointer -DNDEBUG \
                -fno-strict-aliasing --param max-inline-insns-single=1800 \
@@ -9,11 +13,11 @@ CLIPSIM_LIBS = "-lm -lpthread -lz"
 
 
 rule all:
-    input: 'crossfest'
+    input: os.path.join(TOOLS_DIR, 'crossfest')
 
 rule compile_crossfest:
     input: cfsrc='crossfest.c', cstsrc='clipstatstree.c', sfmtobj='SFMT.o'
-    output: 'crossfest'
+    output: os.path.join(TOOLS_DIR, 'crossfest')
     shell: '{CC} -o {output} {CLIPSIM_CFLAGS} {input} {CLIPSIM_LIBS}'
 
 rule compile_sfmt:
