@@ -139,7 +139,7 @@ class ScriptGenerator:
         variables['REFERENCES'] = project.references
         variables['DATADIR'] = project.datadir
         variables['WORKDIR'] = project.workdir
-        variables['THREADS'] = 24 # XXX: change this to detect machine configuration
+        variables['THREADS'] = 32 # XXX: change this to detect machine configuration
 
         return variables
 
