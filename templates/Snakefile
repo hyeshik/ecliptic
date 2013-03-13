@@ -6,6 +6,9 @@
 all_targets = []
 targets = all_targets.extend
 
+rule _dummy:
+    shell: 'echo "==>>> Invoke snakemake with target \`all\`."'
+
 {% include "Snakefile.10.fundamental" %}
 {% include "Snakefile.20.quantitation" %}
 {% include "Snakefile.30.erroranalysis" %}
