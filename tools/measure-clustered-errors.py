@@ -184,7 +184,7 @@ def run_job(samfile, refseqfile, outputprefix, strand):
 
 def merge_outputs(tmpdir, outputprefix, threads=8):
     # merge nonzero position dumps
-    os.system("(cd '{tmpdir}' && zcat *-nonzero) | sort --parallel={threads} -k1,2 -k3,3n -k4,4 "
+    os.system("(cd '{tmpdir}' && zcat *-nonzero) | sort -k1,2 -k3,3n -k4,4 "
               "| pigz -p {threads} -c > '{output}'".format(
                 tmpdir=tmpdir, threads=threads, output=outputprefix+'nonzero.real.gz'))
 
