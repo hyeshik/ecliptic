@@ -3,7 +3,12 @@
 targets(expand('erroranalyses/{sample}.del.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.mod.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.moddel.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.entropy.perm.gz', sample=list(CLIP_SAMPLES)))
+        expand('erroranalyses/{sample}.entropy.perm.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.nonzero.real.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.mod.real.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.moddel.real.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.del.real.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.entropy.real.gz', sample=list(CLIP_SAMPLES)))
 
 
 {% for sample_name, sample in SAMPLES.items() %}
@@ -49,4 +54,20 @@ rule run_alnerror_simulation:
         simulation_depth = crossfest_determine_simulation_depth(read_depth)
         shell('{CROSSFEST_CMD} -i {input.readpool} -e {input.errorprofile_array} \
                -o {outputprefix} -t {threads} -d {simulation_depth}')
+
+rule measure_error_rates:
+    input: bamsplit='alignments/{sample}.split/done'
+    output: 'erroranalyses/{sample}.nonzero.real.gz', \
+            'erroranalyses/{sample}.del.real.gz', \
+            'erroranalyses/{sample}.mod.real.gz', \
+            'erroranalyses/{sample}.moddel.real.gz', \
+            'erroranalyses/{sample}.entropy.real.gz'
+    threads: {( THREADS )}
+    version: "1"
+    run:
+        bamdir = os.path.dirname(input[0])
+        outputprefix = os.path.commonprefix(output)
+        species = SAMPLE_SPECIES[wildcards.sample]
+        shell('{MEASURE_CLUSTERED_ERRORS_CMD} {bamdir} \
+                    resources/{species}/genome.fa {outputprefix} {threads}')
 

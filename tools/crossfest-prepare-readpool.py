@@ -162,7 +162,7 @@ def run_parallel(bamsplitdir, refseqfile, finaloutput, maxworkers=8):
     files = glob.glob(os.path.join(bamsplitdir, '*.bam'))
 
     with futures.ProcessPoolExecutor(maxworkers) as executor, TemporaryDirectory() as tmpdir:
-        for fname in files:
+        for fname in sorted(files, key=os.path.getsize, reverse=True):
             chrom = os.path.basename(fname).replace('.bam', '')
             for strand in '+-':
                 outputpath = os.path.join(tmpdir, chrom + strand)
