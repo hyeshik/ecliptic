@@ -45,8 +45,14 @@
 
 #define MAXSEQLEN       1048576 /* change this if you see a larger cluster */
 #define MAXFRAGNUM      32      /* change this if more spliced reads are read */
+
 #define NUMBASES        5
+#define BASE_A          0
+#define BASE_C          1
+#define BASE_G          2
+#define BASE_T          3
 #define BASEDELETION    4
+
 static const int nucleobase2int[256] = { 
     9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
     9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
@@ -525,7 +531,7 @@ simulate_sequencing(gzFile *inputf, READ_QUEUE_SET *queueset, CLIPSTATS_TREES *t
         for (i = 0; i < header.seqlength; i++, cntptr += NUMBASES) {
             int j;
             uint32_t postotalreads, refbaseread;
-            double delrate, modrate, moddelrate, entropy;
+            double delrate, modrate, moddelrate, entropy, t2crate;
             uint8_t basetype;
 
             postotalreads = 0;
@@ -542,15 +548,13 @@ simulate_sequencing(gzFile *inputf, READ_QUEUE_SET *queueset, CLIPSTATS_TREES *t
             moddelrate = (postotalreads - refbaseread) / (double)postotalreads;
             entropy = shannon_entropy(cntptr);
             basetype = refseq[i];
+            t2crate = (basetype == BASE_T) ? (cntptr[BASE_C] / (double)postotalreads) : 0.;
 
-            clipstats_add(trees, &trees->del, postotalreads, basetype,
-                          delrate);
-            clipstats_add(trees, &trees->mod, postotalreads, basetype,
-                          modrate);
-            clipstats_add(trees, &trees->moddel, postotalreads, basetype,
-                          moddelrate);
-            clipstats_add(trees, &trees->entropy, postotalreads, basetype,
-                          entropy);
+            clipstats_add(trees, &trees->del, postotalreads, basetype, delrate);
+            clipstats_add(trees, &trees->mod, postotalreads, basetype, modrate);
+            clipstats_add(trees, &trees->moddel, postotalreads, basetype, moddelrate);
+            clipstats_add(trees, &trees->entropy, postotalreads, basetype, entropy);
+            clipstats_add(trees, &trees->t2crate, postotalreads, basetype, t2crate);
         }
     }
 
@@ -904,7 +908,7 @@ main(int argc, char *argv[])
     {
         WORKER *workers;
         CLIPSTATS_ARRAY *result_del, *result_mod;
-        CLIPSTATS_ARRAY *result_moddel, *result_entropy;
+        CLIPSTATS_ARRAY *result_moddel, *result_entropy, *result_t2crate;
 
         workers = malloc(sizeof(WORKER) * nthreads);
         if (workers == NULL)
@@ -915,12 +919,14 @@ main(int argc, char *argv[])
         result_mod = clipstatsarray_new(32768);
         result_moddel = clipstatsarray_new(32768);
         result_entropy = clipstatsarray_new(32768);
+        result_t2crate = clipstatsarray_new(32768);
         if (result_del == NULL || result_mod == NULL || result_moddel == NULL ||
-                result_entropy == NULL) {
+                result_entropy == NULL || result_t2crate == NULL) {
             if (result_del != NULL) clipstatsarray_destroy(result_del);
             if (result_entropy != NULL) clipstatsarray_destroy(result_entropy);
             if (result_moddel != NULL) clipstatsarray_destroy(result_moddel);
             if (result_mod != NULL) clipstatsarray_destroy(result_mod);
+            if (result_t2crate != NULL) clipstatsarray_destroy(result_t2crate);
             goto onError;
         }
 
@@ -951,7 +957,7 @@ main(int argc, char *argv[])
 
         for (i = 0; i < nthreads; i++) {
             CLIPSTATS_ARRAY *merged_del, *merged_mod;
-            CLIPSTATS_ARRAY *merged_moddel, *merged_entropy;
+            CLIPSTATS_ARRAY *merged_moddel, *merged_entropy, *merged_t2crate;
             CLIPSTATS_TREES *trees;
 
             if (pthread_join(workers[i].thread, (void **)&trees) != 0) {
@@ -970,18 +976,16 @@ main(int argc, char *argv[])
 
             merged_del = clipstatsarray_mergetree(result_del, &trees->del);
             merged_mod = clipstatsarray_mergetree(result_mod, &trees->mod);
-            merged_moddel = clipstatsarray_mergetree(result_moddel,
-                                                     &trees->moddel);
-            merged_entropy = clipstatsarray_mergetree(result_entropy,
-                                                      &trees->entropy);
-            if (merged_del == NULL || merged_mod == NULL ||
+            merged_moddel = clipstatsarray_mergetree(result_moddel, &trees->moddel);
+            merged_entropy = clipstatsarray_mergetree(result_entropy, &trees->entropy);
+            merged_t2crate = clipstatsarray_mergetree(result_t2crate, &trees->t2crate);
+            if (merged_del == NULL || merged_mod == NULL || merged_t2crate == NULL ||
                     merged_moddel == NULL || merged_entropy == NULL) {
                 if (merged_del != NULL) clipstatsarray_destroy(merged_del);
-                if (merged_entropy != NULL)
-                    clipstatsarray_destroy(merged_entropy);
-                if (merged_moddel != NULL)
-                    clipstatsarray_destroy(merged_moddel);
+                if (merged_entropy != NULL) clipstatsarray_destroy(merged_entropy);
+                if (merged_moddel != NULL) clipstatsarray_destroy(merged_moddel);
                 if (merged_mod != NULL) clipstatsarray_destroy(merged_mod);
+                if (merged_t2crate!= NULL) clipstatsarray_destroy(merged_t2crate);
                 /* TODO: destroy result buffers too. */
                 goto onError;
             }
@@ -990,9 +994,11 @@ main(int argc, char *argv[])
             clipstatsarray_destroy(result_mod);
             clipstatsarray_destroy(result_moddel);
             clipstatsarray_destroy(result_entropy);
+            clipstatsarray_destroy(result_t2crate);
 
             result_del = merged_del; result_mod = merged_mod;
             result_moddel = merged_moddel; result_entropy = merged_entropy;
+            result_t2crate = merged_t2crate;
 
             clipstatstrees_destroy(trees);
 
@@ -1005,11 +1011,13 @@ main(int argc, char *argv[])
         write_permutation_result(output_prefix, "mod", result_mod);
         write_permutation_result(output_prefix, "moddel", result_moddel);
         write_permutation_result(output_prefix, "entropy", result_entropy);
+        write_permutation_result(output_prefix, "t2crate", result_t2crate);
 
         clipstatsarray_destroy(result_del);
         clipstatsarray_destroy(result_mod);
         clipstatsarray_destroy(result_moddel);
         clipstatsarray_destroy(result_entropy);
+        clipstatsarray_destroy(result_t2crate);
 
         pthread_mutex_destroy(&jobcounter.lock);
 

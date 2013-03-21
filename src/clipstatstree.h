@@ -28,6 +28,7 @@ typedef struct {
     struct clipstatstree del;
     struct clipstatstree moddel;
     struct clipstatstree entropy;
+    struct clipstatstree t2crate;
 } CLIPSTATS_TREES;
 
 typedef struct {
