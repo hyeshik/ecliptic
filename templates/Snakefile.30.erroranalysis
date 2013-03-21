@@ -25,7 +25,7 @@ rule count_errors_{(sample_name|rule_name)}:
                  {errorprof_prefix} {(sample.maximum_length + 1)} {threads}')
 {% endfor %}
 
-rule preprare_readpool:
+rule prepare_readpool:
     input: 'alignments/{sample}.split/done'
     output: 'erroranalyses/{sample}.readpool'
     threads: 12 # somewhat I/O bound task
