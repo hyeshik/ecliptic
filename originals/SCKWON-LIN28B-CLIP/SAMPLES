@@ -1,0 +1,15 @@
+CLIP-K562:
+    SRAno:          SCKwon-K562-LIN28B
+    GEOno:          VNK000000 # unpublished data
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # K562
+    first_base:     1
+    last_base:      38
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
+    description:    "Sung-Chul Kwon's LIN28B CLIP-seq on K562"
+
+# ex: syntax=yaml et sts=4 sw=4
