@@ -1,16 +1,8 @@
 # Snakefile.30.erroranalysis
 
-targets(expand('erroranalyses/{sample}.del.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.mod.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.moddel.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.entropy.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.t2c.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.nonzero.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.mod.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.moddel.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.del.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.entropy.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.t2c.real.gz', sample=list(CLIP_SAMPLES)))
+{% for method in 'del mod moddel entropy t2c'.split() %}
+targets(expand('erroranalyses/{sample}.{(method)}.fdr_cutoffs', sample=list(CLIP_SAMPLES)))
+{% endfor %}
 
 
 {% for sample_name, sample in SAMPLES.items() %}
@@ -74,3 +66,24 @@ rule measure_error_rates:
         shell('{MEASURE_CLUSTERED_ERRORS_CMD} {bamdir} \
                     resources/{species}/genome.fa {outputprefix} {threads}')
 
+{#
+{% for method in 'del mod moddel entropy t2c'.split() %}
+rule calculate_error_fdr_cutoffs_{( method )}:
+    input: permutation='erroranalyses/{sample}.{(method)}.perm.gz', \
+           measurement='erroranalyses/{sample}.{(method)}.real.gz'
+    output: 'erroranalyses/{sample}.{(method)}.fdr_cutoffs'
+    version: "1"
+    run:
+        inputprefix = os.path.commonprefix(input)
+        shell('{CALC_CROSSLINKING_FDR_CUTOFFS_CMD} {inputprefix} {output}')
+{% endfor %}
+ #}
+
+rule calculate_error_fdr_cutoffs:
+    input: permutation='erroranalyses/{sample}.{method}.perm.gz', \
+           measurement='erroranalyses/{sample}.{method}.real.gz'
+    output: 'erroranalyses/{sample}.{method}.fdr_cutoffs'
+    version: "1"
+    run:
+        inputprefix = os.path.commonprefix(input)
+        shell('{CALC_CROSSLINKING_FDR_CUTOFFS_CMD} {inputprefix} {output}')
