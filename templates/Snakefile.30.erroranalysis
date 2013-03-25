@@ -4,11 +4,13 @@ targets(expand('erroranalyses/{sample}.del.perm.gz', sample=list(CLIP_SAMPLES)) 
         expand('erroranalyses/{sample}.mod.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.moddel.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.entropy.perm.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.t2crate.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.nonzero.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.mod.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.moddel.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.del.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.entropy.real.gz', sample=list(CLIP_SAMPLES)))
+        expand('erroranalyses/{sample}.entropy.real.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.t2crate.real.gz', sample=list(CLIP_SAMPLES)))
 
 
 {% for sample_name, sample in SAMPLES.items() %}
@@ -43,16 +45,16 @@ rule run_alnerror_simulation:
     output: simout_del='erroranalyses/{sample}.del.perm.gz', \
             simout_mod='erroranalyses/{sample}.mod.perm.gz', \
             simout_moddel='erroranalyses/{sample}.moddel.perm.gz', \
-            simout_entropy='erroranalyses/{sample}.entropy.perm.gz'
+            simout_entropy='erroranalyses/{sample}.entropy.perm.gz', \
+            simout_t2crate='erroranalyses/{sample}.t2crate.perm.gz'
     threads: {( THREADS )}
-    version: "1"
+    version: "2"
     run:
-        outputprefix = os.path.commonprefix([output.simout_del, output.simout_mod,
-                                             output.simout_moddel, output.simout_entropy])
+        outputprefix = os.path.commonprefix(output)
         species = SAMPLE_SPECIES[wildcards.sample]
         read_depth = unpickle(input.errorprofile_pickle)[0].sum()
         simulation_depth = crossfest_determine_simulation_depth(read_depth)
-        shell('{CROSSFEST_CMD} -i {input.readpool} -e {input.errorprofile_array} \
+        shell('{CROSSFEST_CMD} -q -i {input.readpool} -e {input.errorprofile_array} \
                -o {outputprefix} -t {threads} -d {simulation_depth}')
 
 rule measure_error_rates:
@@ -61,9 +63,10 @@ rule measure_error_rates:
             'erroranalyses/{sample}.del.real.gz', \
             'erroranalyses/{sample}.mod.real.gz', \
             'erroranalyses/{sample}.moddel.real.gz', \
-            'erroranalyses/{sample}.entropy.real.gz'
+            'erroranalyses/{sample}.entropy.real.gz', \
+            'erroranalyses/{sample}.t2crate.real.gz'
     threads: {( THREADS )}
-    version: "1"
+    version: "2"
     run:
         bamdir = os.path.dirname(input[0])
         outputprefix = os.path.commonprefix(output)

@@ -138,6 +138,7 @@ typedef struct _worker {
     double last_consumed;
     struct timeval last_started;
     int status;
+    int show_progression;
 } WORKER;
 #define WORKER_STATUS_NOT_RUNNING           '/'
 #define WORKER_STATUS_READ_QUEUE_SHUFFLING  'r'
@@ -588,16 +589,19 @@ update_progression(WORKER *worker)
     ran_threads = 0;
     total_job_time = 0.;
 
-    printf("\r%5.1f%% done  [", (100. * jc->done) / jc->total);
+    if (worker->show_progression)
+        printf("\r%5.1f%% done  [", (100. * jc->done) / jc->total);
 
     for (i = 0; i < jc->nthreads; i++) {
-        printf("%c", worker->workers[i].status);
+        if (worker->show_progression)
+            printf("%c", worker->workers[i].status);
         if (worker->workers[i].last_consumed >= 0.) {
             total_job_time += worker->workers[i].last_consumed;
             ran_threads++;
         }
     }
-    printf("]");
+    if (worker->show_progression)
+        printf("]");
 
     if (ran_threads >= 1) {
         double mean_job_time, eta_waiting_jobs, eta_running_jobs, eta;
@@ -632,11 +636,13 @@ update_progression(WORKER *worker)
             eft_timestamp += eta;
             eft_tm = localtime(&eft_timestamp);
             strftime(eft_asc, BUFSIZ-1, "%b %d %H:%M:%S", eft_tm);
-            printf("  Est.Fin. %s   ", eft_asc);
+            if (worker->show_progression)
+                printf("  Est.Fin. %s   ", eft_asc);
         }
     }
 
-    fflush(stdout);
+    if (worker->show_progression)
+        fflush(stdout);
 }
 
 static void *
@@ -828,12 +834,13 @@ main(int argc, char *argv[])
     int nthreads, i, c, iterations;
     uint64_t coverage_gb=500;
     uint64_t totalbases;
+    int quiet=0;
 
     readpool_input_path = profile_input_path = output_prefix = NULL;
     nthreads = 8;
     iterations = 1000;
 
-    while ((c = getopt(argc, argv, "i:e:m:o:t:d:h")) != -1)
+    while ((c = getopt(argc, argv, "i:e:m:o:t:d:qh")) != -1)
         switch (c) {
         case 'i':
             readpool_input_path = optarg;
@@ -849,6 +856,9 @@ main(int argc, char *argv[])
             break;
         case 'd':
             coverage_gb = atol(optarg);
+            break;
+        case 'q':
+            quiet = 1;
             break;
         default:
             usage(argv[0]);
@@ -939,6 +949,7 @@ main(int argc, char *argv[])
             workers[i].threadid = i;
             workers[i].last_consumed = -1;
             workers[i].status = WORKER_STATUS_NOT_RUNNING;
+            workers[i].show_progression = !quiet;
         }
 
         pthread_mutex_init(&jobcounter.lock, NULL);
