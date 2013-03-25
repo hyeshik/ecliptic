@@ -4,13 +4,13 @@ targets(expand('erroranalyses/{sample}.del.perm.gz', sample=list(CLIP_SAMPLES)) 
         expand('erroranalyses/{sample}.mod.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.moddel.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.entropy.perm.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.t2crate.perm.gz', sample=list(CLIP_SAMPLES)) +
+        expand('erroranalyses/{sample}.t2c.perm.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.nonzero.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.mod.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.moddel.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.del.real.gz', sample=list(CLIP_SAMPLES)) +
         expand('erroranalyses/{sample}.entropy.real.gz', sample=list(CLIP_SAMPLES)) +
-        expand('erroranalyses/{sample}.t2crate.real.gz', sample=list(CLIP_SAMPLES)))
+        expand('erroranalyses/{sample}.t2c.real.gz', sample=list(CLIP_SAMPLES)))
 
 
 {% for sample_name, sample in SAMPLES.items() %}
@@ -46,7 +46,7 @@ rule run_alnerror_simulation:
             simout_mod='erroranalyses/{sample}.mod.perm.gz', \
             simout_moddel='erroranalyses/{sample}.moddel.perm.gz', \
             simout_entropy='erroranalyses/{sample}.entropy.perm.gz', \
-            simout_t2crate='erroranalyses/{sample}.t2crate.perm.gz'
+            simout_t2c='erroranalyses/{sample}.t2c.perm.gz'
     threads: {( THREADS )}
     version: "2"
     run:
@@ -64,7 +64,7 @@ rule measure_error_rates:
             'erroranalyses/{sample}.mod.real.gz', \
             'erroranalyses/{sample}.moddel.real.gz', \
             'erroranalyses/{sample}.entropy.real.gz', \
-            'erroranalyses/{sample}.t2crate.real.gz'
+            'erroranalyses/{sample}.t2c.real.gz'
     threads: {( THREADS )}
     version: "2"
     run:
