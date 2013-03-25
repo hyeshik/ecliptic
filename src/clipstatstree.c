@@ -40,7 +40,7 @@ clipstatstrees_new(void)
         SPLAY_INIT(&trees->del);
         SPLAY_INIT(&trees->moddel);
         SPLAY_INIT(&trees->entropy);
-        SPLAY_INIT(&trees->t2crate);
+        SPLAY_INIT(&trees->t2c);
         trees->bulktail = NULL;
     }
 

@@ -25,7 +25,8 @@ def shannon_entropy(counts):
 
 class SAMMeasureClusteredError(object):
 
-    def __init__(self, samfile, seqfile, outnzname, outmname, outdname, outmdname, outename):
+    def __init__(self, samfile, seqfile, outnzname, outmname, outdname, outmdname, outename,
+                       outt2cname):
         self.samfile = samfile
         self.seqs = sequtils.GiantFASTAFile(seqfile)
 
@@ -37,6 +38,7 @@ class SAMMeasureClusteredError(object):
         self.outd = self.open_intermediate_summary_output(outdname)
         self.outmd = self.open_intermediate_summary_output(outmdname)
         self.oute = self.open_intermediate_summary_output(outename)
+        self.outt2c = self.open_intermediate_summary_output(outt2cname)
 
     def iter_sam(self, strand):
         filterarg = '-f 16' if strand == '-' else '-F 16'
@@ -59,7 +61,8 @@ class SAMMeasureClusteredError(object):
         return gzip.open(filename, 'w')
 
     def close(self):
-        [f.close() for f in (self.outnz, self.outd, self.outm, self.outmd, self.oute)]
+        [f.close() for f in (self.outnz, self.outd, self.outm, self.outmd,
+                             self.oute, self.outt2c)]
 
     def countup_seqreads(self, start, stop, refseq, readseq, cigar, nreads, posreads, strand,
                        cigar_pattern=sam.cigar_pattern):
@@ -119,6 +122,11 @@ class SAMMeasureClusteredError(object):
             else:
                 mod_ratio = moddel_ratio = 0.
 
+            if refbase == 'T':
+                t2c_ratio = simcnt[1] / kcnt
+            else:
+                t2c_ratio = 0.
+
             sentropy = shannon_entropy(simcnt)
 
             if 0 < del_ratio < 0.9 or 0 < mod_ratio < 0.9:
@@ -130,6 +138,7 @@ class SAMMeasureClusteredError(object):
             print >> self.outm, kcnt, refbase, '%.6f' % mod_ratio
             print >> self.outmd, kcnt, refbase, '%.6f' % moddel_ratio
             print >> self.oute, kcnt, refbase, '%.6f' % sentropy
+            print >> self.outt2c, kcnt, refbase, '%.6f' % t2c_ratio
 
     def process(self, strand):
         clustered = []
@@ -164,7 +173,7 @@ class SAMMeasureClusteredError(object):
 
 def run_job(samfile, refseqfile, outputprefix, strand):
     output_files = [outputprefix + '-' + suffix
-                    for suffix in ['nonzero', 'mod', 'del', 'moddel', 'entropy']]
+                    for suffix in ['nonzero', 'mod', 'del', 'moddel', 'entropy', 't2c']]
 
     try:
         proc = SAMMeasureClusteredError(samfile, refseqfile, *output_files)
@@ -189,7 +198,7 @@ def merge_outputs(tmpdir, outputprefix, threads=8):
                 tmpdir=tmpdir, threads=threads, output=outputprefix+'nonzero.real.gz'))
 
     # merge metric-specific summarized outputs
-    for suffix in ['mod', 'del', 'moddel', 'entropy']:
+    for suffix in ['mod', 'del', 'moddel', 'entropy', 't2c']:
         cmdout = os.popen("cd '{tmpdir}' && sort -k2,2n -k3,3 -k4,4n *-{suffix}".format(
                           tmpdir=tmpdir, suffix=suffix))
         cmdoutiter = (line.split(None, 1) for line in cmdout)
