@@ -1,0 +1,15 @@
+# Snakefile.40.piranha
+
+targets(expand('peaks/{sample}.piranha.gz', sample=list(CLIP_SAMPLES)))
+
+
+{% for sample_name, sample in SAMPLES.items() %}
+
+rule run_piranha_{(sample_name|rule_name)}:
+    input: 'alignments/{(sample_name)}.sorted.uncollapsed.bam'
+    output: 'peaks/{(sample_name)}.piranha.gz'
+    version: "1"
+    run:
+        shell('Piranha -s -z {(sample.piranha_bin_size)} {input} | gzip -c - > {output}')
+
+{% endfor %}

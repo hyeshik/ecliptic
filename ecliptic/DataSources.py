@@ -84,7 +84,8 @@ class Sample:
 
     attribute_names = [
         'label', 'SRAno', 'GEOno', 'species', 'workflows', 'source', 'first_base', 'last_base',
-        'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description'
+        'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description',
+        'piranha_bin_size',
     ]
 
     def __init__(self, project, **attrs):

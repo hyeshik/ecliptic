@@ -46,6 +46,8 @@ executable "snakemake"
 executable "echidna"
 executable "bamtools"
 executable "bam2fastx" "TopHat"
+executable "Piranha" "Piranha"
+executable "Simulate" "Piranha"
 
 # UCSC Genome Browser tools
 for name in pslCDnaFilter faSomeRecords twoBitToFa pslCDnaFilter pslToBed blat; do

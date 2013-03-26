@@ -4,7 +4,7 @@ targets(expand('annotations/{sample}.anno.gz',
                sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)) +
         expand('alignments/{sample}.split/done',
                sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)) +
-        expand('alignments/{sample}.sorted.bam',
+        expand('alignments/{sample}.sorted.uncollapsed.bam',
                sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)))
 
 
@@ -181,4 +181,11 @@ rule sort_bam:
     run:
         outputprefix = output[0].replace('.bam', '')
         shell('samtools sort {input} {outputprefix}')
+
+
+rule uncollapse_bam:
+    input: '{name}.bam'
+    output: '{name}.uncollapsed.bam'
+    version: "1"
+    shell: '{BAM_UNCOLLAPSE_CMD} {input} {output}'
 

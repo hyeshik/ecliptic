@@ -12,6 +12,7 @@ rule _dummy:
 {% include "Snakefile.10.fundamental" %}
 {% include "Snakefile.20.quantitation" %}
 {% include "Snakefile.30.erroranalysis" %}
+{% include "Snakefile.40.piranha" %}
 {% include "Snakefile.100.stats" %}
 
 rule all:
