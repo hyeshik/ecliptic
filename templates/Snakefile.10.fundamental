@@ -3,6 +3,8 @@
 targets(expand('annotations/{sample}.anno.gz',
                sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)) +
         expand('alignments/{sample}.split/done',
+               sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)) +
+        expand('alignments/{sample}.sorted.bam',
                sample=list(CLIP_SAMPLES | RNAseq_SAMPLES)))
 
 
@@ -79,14 +81,6 @@ rule align_reference_reads_to_genome:
         shell('gsnap -D resources/{species} -d genome -B 4 -A sam -m 0.05 --gunzip \
                     -t {threads} --terminal-threshold=9999 -s {splice_index} {input} | \
                {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
-
-rule sort_sam:
-    input: '{name}.bam'
-    output: '{name}.sorted.bam'
-    version: "1"
-    run:
-        outprefix = output[0].replace('.bam', '')
-        shell('samtools sort {input} {outprefix}')
 
 rule call_variants:
     input: 'bg_variations/{source}.sorted.bam'
@@ -178,4 +172,13 @@ rule summarize_annotation:
         species = SAMPLE_SPECIES[wildcards.sample]
         shell('{SUMMARIZE_ANNOTATIONS_CMD} {input.bam} {input.bedintersect} | \
                gzip -c - > {output}')
+
+
+rule sort_bam:
+    input: '{name}.bam'
+    output: '{name}.sorted.bam'
+    version: "1"
+    run:
+        outputprefix = output[0].replace('.bam', '')
+        shell('samtools sort {input} {outputprefix}')
 
