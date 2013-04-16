@@ -132,7 +132,7 @@ class SAMMeasureClusteredError(object):
             if 0 < del_ratio < 0.9 or 0 < mod_ratio < 0.9:
                 abspos = leftend + pos if strand == '+' else 1 - leftend - pos
                 print >> self.outnz, chrom, strand, abspos, refbase, kcnt, ' '.join(
-                 map(str, simcnt)), del_ratio, mod_ratio, moddel_ratio, sentropy
+                 map(str, simcnt)), del_ratio, mod_ratio, moddel_ratio, sentropy, t2c_ratio
 
             print >> self.outd, kcnt, refbase, '%.6f' % del_ratio
             print >> self.outm, kcnt, refbase, '%.6f' % mod_ratio

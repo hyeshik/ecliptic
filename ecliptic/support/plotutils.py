@@ -28,6 +28,7 @@ __all__ = [
     'LinearToHeatRGB',
     'iwork_colors',
     'prepare_cumulative',
+    'ntile_color',
 ]
 
 import matplotlib.lines as mpllines
@@ -122,6 +123,15 @@ def prepare_cumulative(grp, width=100, reverse=False):
     if reverse:
         yvalues = yvalues[::-1]
     return xvalues, yvalues
+
+
+def ntile_color(n):
+    colors = []
+    for i in range(n):
+        r, g, b = colorsys.hsv_to_rgb(i / (n - 1) * 0.95, 0.92, 0.75)
+        colors.append('#%02x%02x%02x' % (int(r * 255), int(g * 255),
+                                         int(b * 255)))
+    return colors
 
 
 if __name__ == '__main__':

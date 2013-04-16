@@ -1,7 +1,8 @@
 # Snakefile.30.erroranalysis
 
 {% for method in 'del mod moddel entropy t2c'.split() %}
-targets(expand('erroranalyses/{sample}.{(method)}.fdr_cutoffs', sample=list(CLIP_SAMPLES)))
+targets(expand('erroranalyses/{sample}.significant_sites/{(method)}-{fdrlevel}.gz',
+                 sample=list(CLIP_SAMPLES), fdrlevel=CROSSFEST_FDR_LEVELS))
 {% endfor %}
 
 
@@ -66,19 +67,6 @@ rule measure_error_rates:
         shell('{MEASURE_CLUSTERED_ERRORS_CMD} {bamdir} \
                     resources/{species}/genome.fa {outputprefix} {threads}')
 
-{#
-{% for method in 'del mod moddel entropy t2c'.split() %}
-rule calculate_error_fdr_cutoffs_{( method )}:
-    input: permutation='erroranalyses/{sample}.{(method)}.perm.gz', \
-           measurement='erroranalyses/{sample}.{(method)}.real.gz'
-    output: 'erroranalyses/{sample}.{(method)}.fdr_cutoffs'
-    version: "1"
-    run:
-        inputprefix = os.path.commonprefix(input)
-        shell('{CALC_CROSSLINKING_FDR_CUTOFFS_CMD} {inputprefix} {output}')
-{% endfor %}
- #}
-
 rule calculate_error_fdr_cutoffs:
     input: permutation='erroranalyses/{sample}.{method}.perm.gz', \
            measurement='erroranalyses/{sample}.{method}.real.gz'
@@ -87,3 +75,12 @@ rule calculate_error_fdr_cutoffs:
     run:
         inputprefix = os.path.commonprefix(input)
         shell('{CALC_CROSSLINKING_FDR_CUTOFFS_CMD} {inputprefix} {output}')
+
+rule pick_significant_crosslinking_sites:
+    input: candidates='erroranalyses/{sample}.nonzero.real.gz', \
+           cutoffs='erroranalyses/{sample}.{method}.fdr_cutoffs'
+    output: 'erroranalyses/{sample}.significant_sites/{method}-{fdrlevel}.gz'
+    version: "1"
+    shell: '{PICK_SIGNIFICANTLY_CROSSLINKED_SITES_CMD} {input.candidates} \
+                {input.cutoffs} {wildcards.fdrlevel} {wildcards.method} | gzip -c - > {output}'
+
