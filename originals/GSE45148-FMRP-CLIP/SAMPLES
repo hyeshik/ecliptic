@@ -1,6 +1,5 @@
 CLIP-FMRP-P14-mAb:
-    SRAno:          SRR772116
-    GEOno:          GSM1098051
+    runs:           SRR772116
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -12,8 +11,7 @@ CLIP-FMRP-P14-mAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098051: FMRP HITS-CLIP from age P14 mouse brain polysomes, IPed with mixed monoclonal antibodies; Mus musculus; RNA-Seq"
 CLIP-FMRP-P14-pAb:
-    SRAno:          SRR772117
-    GEOno:          GSM1098052
+    runs:           SRR772117
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -25,8 +23,7 @@ CLIP-FMRP-P14-pAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098052: FMRP HITS-CLIP from age P14 mouse brain polysomes, IPed with a polyclonal antibody; Mus musculus; RNA-Seq"
 CLIP-FMRP-P15-mAb:
-    SRAno:          SRR772118
-    GEOno:          GSM1098053
+    runs:           SRR772118
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -38,8 +35,7 @@ CLIP-FMRP-P15-mAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098053: FMRP HITS-CLIP from age P15 mouse brain polysomes, IPed with mixed monoclonal antibodies; Mus musculus; RNA-Seq"
 CLIP-FMRP-P25-mAb:
-    SRAno:          SRR772119
-    GEOno:          GSM1098054
+    runs:           SRR772119
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -51,8 +47,7 @@ CLIP-FMRP-P25-mAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098054: FMRP HITS-CLIP from age P25 mouse brain polysomes, IPed with mixed monoclonal antibodies; Mus musculus; RNA-Seq"
 CLIP-FMRP-P25-pAb:
-    SRAno:          SRR772120
-    GEOno:          GSM1098055
+    runs:           SRR772120
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -64,8 +59,7 @@ CLIP-FMRP-P25-pAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098055: FMRP HITS-CLIP from age P25 mouse brain polysomes, IPed with a polyclonal antibody; Mus musculus; RNA-Seq"
 CLIP-FMRP-P11-pAb:
-    SRAno:          SRR772121
-    GEOno:          GSM1098056
+    runs:           SRR772121
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -77,8 +71,7 @@ CLIP-FMRP-P11-pAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098056: FMRP HITS-CLIP from age P11 mouse brain polysomes, IPed with a polyclonal antibody; Mus musculus; RNA-Seq"
 CLIP-FMRP-P13-pAb:
-    SRAno:          SRR772122
-    GEOno:          GSM1098057
+    runs:           SRR772122
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -90,8 +83,7 @@ CLIP-FMRP-P13-pAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098057: FMRP HITS-CLIP from age P13 mouse brain polysomes, IPed with a polyclonal antibody; Mus musculus; RNA-Seq"
 CLIP-Hu-P11-pAb:
-    SRAno:          SRR772123
-    GEOno:          GSM1098058
+    runs:           SRR772123
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain
@@ -103,8 +95,7 @@ CLIP-Hu-P11-pAb:
     threep_adapter: GTGTCAGTCACTTCCAGCGG
     description:    "GSM1098058: Hu HITS-CLIP from age P11 mouse brain polysomes, IPed with anti-Hu antisera; Mus musculus; RNA-Seq"
 CLIP-Hu-P13-pAb:
-    SRAno:          SRR772124
-    GEOno:          GSM1098059
+    runs:           SRR772124
     species:        mmu
     workflows:      [CLIP]
     source:         "" # mouse brain

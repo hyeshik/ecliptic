@@ -1,6 +1,5 @@
 CLIP-1:
-    SRAno:          SRR452496
-    GEOno:          GSM908088
+    runs:           SRR452496
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -12,8 +11,7 @@ CLIP-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM908088: PAPD5_PAR-CLIP_rep1; Homo sapiens; OTHER"
 CLIP-2:
-    SRAno:          SRR452497
-    GEOno:          GSM908089
+    runs:           SRR452497
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293

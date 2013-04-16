@@ -1,6 +1,5 @@
 CLIP-ES-r1:
-    SRAno:          SRR531463
-    GEOno:          GSM980593
+    runs:           SRR531463
     species:        hsa
     workflows:      [CLIP]
     source:         H9
@@ -12,8 +11,7 @@ CLIP-ES-r1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM980593: LIN28ES CLIPseq; Homo sapiens; RNA-Seq"
 CLIP-ES-r2:
-    SRAno:          SRR531464
-    GEOno:          GSM980593
+    runs:           SRR531464
     species:        hsa
     workflows:      [CLIP]
     source:         H9
@@ -25,8 +23,7 @@ CLIP-ES-r2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM980593: LIN28ES CLIPseq; Homo sapiens; RNA-Seq"
 CLIP-293V5:
-    SRAno:          SRR531465
-    GEOno:          GSM980594
+    runs:           SRR531465
     species:        hsa
     workflows:      [CLIP]
     source:         "" # 293, no reference RNA-seq.
@@ -38,8 +35,7 @@ CLIP-293V5:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM980594: LIN28V5 CLIPseq; Homo sapiens; RNA-Seq"
 RNAseq-ES-uninfected:
-    SRAno:          SRR531466
-    GEOno:          GSM980595
+    runs:           SRR531466
     species:        hsa
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         H9
@@ -51,8 +47,7 @@ RNAseq-ES-uninfected:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM980595: uninfected H9 RNAseq; Homo sapiens; RNA-Seq"
 RNAseq-ES-siLin28a:
-    SRAno:          SRR531467
-    GEOno:          GSM980596
+    runs:           SRR531467
     species:        hsa
     workflows:      [RNAseq, SNPreference]
     source:         H9
@@ -64,8 +59,7 @@ RNAseq-ES-siLin28a:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM980596: LIN28KD H9 RNAseq; Homo sapiens; RNA-Seq"
 RNAseq-ES-siCtrl:
-    SRAno:          SRR531468
-    GEOno:          GSM980597
+    runs:           SRR531468
     species:        hsa
     workflows:      [RNAseq, SNPreference]
     source:         H9

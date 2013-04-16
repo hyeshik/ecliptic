@@ -1,6 +1,5 @@
 CLIP-PTB:
-    SRAno:          SRR628446
-    GEOno:          GSM1048186
+    runs:           SRR628446
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -12,8 +11,7 @@ CLIP-PTB:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1048186: Hela_PTB_CLIP_2nd; Homo sapiens; RNA-Seq"
 CLIP-AGO2-Ctl-36:
-    SRAno:          [SRR628447, SRR628448, SRR628449]
-    GEOno:          GSM1048187
+    runs:           [SRR628447, SRR628448, SRR628449]
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -25,8 +23,7 @@ CLIP-AGO2-Ctl-36:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1048187: Hela_AGO2_CLIP_control; Homo sapiens; RNA-Seq"
 CLIP-AGO2-Ctl-50:
-    SRAno:          SRR628450
-    GEOno:          GSM1048187
+    runs:           SRR628450
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -38,8 +35,7 @@ CLIP-AGO2-Ctl-50:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1048187: Hela_AGO2_CLIP_control; Homo sapiens; RNA-Seq"
 CLIP-AGO2-PTBKD-36:
-    SRAno:          [SRR628451, SRR628452, SRR628453]
-    GEOno:          GSM1048188
+    runs:           [SRR628451, SRR628452, SRR628453]
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -51,8 +47,7 @@ CLIP-AGO2-PTBKD-36:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1048188: Hela_AGO2_CLIP_ptb_knockdown; Homo sapiens; RNA-Seq"
 CLIP-AGO2-PTBKD-50:
-    SRAno:          SRR628454
-    GEOno:          GSM1048188
+    runs:           SRR628454
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -64,8 +59,7 @@ CLIP-AGO2-PTBKD-50:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1048188: Hela_AGO2_CLIP_ptb_knockdown; Homo sapiens; RNA-Seq"
 RNAseq-siControl:
-    SRAno:          SRR628455
-    GEOno:          GSM1048189
+    runs:           SRR628455
     species:        hsa
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         HeLa
@@ -77,8 +71,7 @@ RNAseq-siControl:
     threep_adapter: ""
     description:    "GSM1048189: Hela_PTB_RNAseq_control; Homo sapiens; RNA-Seq"
 RNAseq-siPTB:
-    SRAno:          SRR628456
-    GEOno:          GSM1048190
+    runs:           SRR628456
     species:        hsa
     workflows:      [RNAseq]
     source:         HeLa

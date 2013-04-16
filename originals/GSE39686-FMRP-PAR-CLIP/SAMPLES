@@ -1,6 +1,5 @@
 PARCLIP-FMR1-WT-iso1:
-    SRAno:          SRR527727
-    GEOno:          GSM977615
+    runs:           SRR527727
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -12,8 +11,7 @@ PARCLIP-FMR1-WT-iso1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977615: wt FLAG-HA FMR1 iso1; Homo sapiens; RNA-Seq"
 PARCLIP-FMR1-WT-iso7:
-    SRAno:          SRR527728
-    GEOno:          GSM977616
+    runs:           SRR527728
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -25,8 +23,7 @@ PARCLIP-FMR1-WT-iso7:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977616: wt FLAG-HA FMR1 iso7; Homo sapiens; RNA-Seq"
 PARCLIP-FMR1-I304N-iso1:
-    SRAno:          SRR527729
-    GEOno:          GSM977617
+    runs:           SRR527729
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -38,8 +35,7 @@ PARCLIP-FMR1-I304N-iso1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977617: I304N FLAG-HA FMR1 iso1; Homo sapiens; RNA-Seq"
 PARCLIP-FMR1-I304N-iso7:
-    SRAno:          SRR527730
-    GEOno:          GSM977618
+    runs:           SRR527730
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -51,8 +47,7 @@ PARCLIP-FMR1-I304N-iso7:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977618: I304N FLAG-HA FMR1 iso7; Homo sapiens; RNA-Seq"
 PARCLIP-FXR1-WT:
-    SRAno:          SRR527731
-    GEOno:          GSM977619
+    runs:           SRR527731
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -64,8 +59,7 @@ PARCLIP-FXR1-WT:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977619: wt FLAG-HA FXR1; Homo sapiens; RNA-Seq"
 PARCLIP-FXR2-WT:
-    SRAno:          SRR527732
-    GEOno:          GSM977620
+    runs:           SRR527732
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293

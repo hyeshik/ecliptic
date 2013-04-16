@@ -1,6 +1,5 @@
 CLIP-MmTDP43:
-    SRAno:          SRR556762
-    GEOno:          GSM998871
+    runs:           SRR556762
     species:        mmu
     workflows:      [CLIP]
     source:         mouse_brain
@@ -12,8 +11,7 @@ CLIP-MmTDP43:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998871: Mouse CLIPseq Tdp43; Mus musculus; RNA-Seq"
 CLIP-MmFUSTLS-1:
-    SRAno:          SRR556763
-    GEOno:          GSM998872
+    runs:           SRR556763
     species:        mmu
     workflows:      [CLIP]
     source:         mouse_brain
@@ -25,8 +23,7 @@ CLIP-MmFUSTLS-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998872: Mouse CLIPseq Fus/Tls rep1; Mus musculus; RNA-Seq"
 CLIP-MmFUSTLS-2:
-    SRAno:          SRR556764
-    GEOno:          GSM998873
+    runs:           SRR556764
     species:        mmu
     workflows:      [CLIP]
     source:         mouse_brain
@@ -38,8 +35,7 @@ CLIP-MmFUSTLS-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998873: Mouse CLIPseq Fus/Tls rep2; Mus musculus; RNA-Seq"
 CLIP-MmFUSTLS-3:
-    SRAno:          SRR556765
-    GEOno:          GSM998874
+    runs:           SRR556765
     species:        mmu
     workflows:      [CLIP]
     source:         mouse_brain
@@ -51,8 +47,7 @@ CLIP-MmFUSTLS-3:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998874: Mouse CLIPseq Fus/Tls rep3; Mus musculus; RNA-Seq"
 CLIP-HsFUSTLS:
-    SRAno:          SRR556766
-    GEOno:          GSM998875
+    runs:           SRR556766
     species:        hsa
     workflows:      [CLIP]
     source:         "" # human_brain
@@ -64,8 +59,7 @@ CLIP-HsFUSTLS:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998875: Human CLIPseq FUS/TLS; Homo sapiens; RNA-Seq"
 RNAseq-ctl-r1-1:
-    SRAno:          SRR556767
-    GEOno:          GSM998876
+    runs:           SRR556767
     species:        mmu
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         mouse_brain # human_brain
@@ -77,8 +71,7 @@ RNAseq-ctl-r1-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998876: brain RNAseq control-oligo rep1.1; Mus musculus; RNA-Seq"
 RNAseq-ctl-r1-2:
-    SRAno:          SRR556768
-    GEOno:          GSM998877
+    runs:           SRR556768
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -90,8 +83,7 @@ RNAseq-ctl-r1-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998877: brain RNAseq control-oligo rep1.2; Mus musculus; RNA-Seq"
 RNAseq-ctl-r2-1:
-    SRAno:          SRR556769
-    GEOno:          GSM998878
+    runs:           SRR556769
     species:        mmu
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         mouse_brain # human_brain
@@ -103,8 +95,7 @@ RNAseq-ctl-r2-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998878: brain RNAseq control-oligo rep2.1; Mus musculus; RNA-Seq"
 RNAseq-ctl-r2-2:
-    SRAno:          SRR556770
-    GEOno:          GSM998879
+    runs:           SRR556770
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -116,8 +107,7 @@ RNAseq-ctl-r2-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998879: brain RNAseq control-oligo rep2.2; Mus musculus; RNA-Seq"
 RNAseq-ctl-r2-3:
-    SRAno:          SRR556771
-    GEOno:          GSM998880
+    runs:           SRR556771
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -129,8 +119,7 @@ RNAseq-ctl-r2-3:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998880: brain RNAseq control-oligo rep2.3; Mus musculus; RNA-Seq"
 RNAseq-ctl-r3-1:
-    SRAno:          SRR556772
-    GEOno:          GSM998881
+    runs:           SRR556772
     species:        mmu
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         mouse_brain # human_brain
@@ -142,8 +131,7 @@ RNAseq-ctl-r3-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998881: brain RNAseq control-oligo rep3.1; Mus musculus; RNA-Seq"
 RNAseq-ctl-r3-2:
-    SRAno:          SRR556773
-    GEOno:          GSM998882
+    runs:           SRR556773
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -155,8 +143,7 @@ RNAseq-ctl-r3-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998882: brain RNAseq control-oligo rep3.2; Mus musculus; RNA-Seq"
 RNAseq-ctl-r3-3:
-    SRAno:          SRR556774
-    GEOno:          GSM998883
+    runs:           SRR556774
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -168,8 +155,7 @@ RNAseq-ctl-r3-3:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998883: brain RNAseq control-oligo rep3.3; Mus musculus; RNA-Seq"
 RNAseq-ctl-r4-1:
-    SRAno:          SRR556775
-    GEOno:          GSM998884
+    runs:           SRR556775
     species:        mmu
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         mouse_brain # human_brain
@@ -181,8 +167,7 @@ RNAseq-ctl-r4-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998884: brain RNAseq control-oligo rep4.1; Mus musculus; RNA-Seq"
 RNAseq-ctl-r4-2:
-    SRAno:          SRR556776
-    GEOno:          GSM998885
+    runs:           SRR556776
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -194,8 +179,7 @@ RNAseq-ctl-r4-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998885: brain RNAseq control-oligo rep4.2; Mus musculus; RNA-Seq"
 RNAseq-ctl-r4-3:
-    SRAno:          SRR556777
-    GEOno:          GSM998886
+    runs:           SRR556777
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -207,8 +191,7 @@ RNAseq-ctl-r4-3:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998886: brain RNAseq control-oligo rep4.3; Mus musculus; RNA-Seq"
 RNAseq-fustls-r1-1:
-    SRAno:          SRR556778
-    GEOno:          GSM998887
+    runs:           SRR556778
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -220,8 +203,7 @@ RNAseq-fustls-r1-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998887: brain RNAseq Fus/Tls-oligo rep1.1; Mus musculus; RNA-Seq"
 RNAseq-fustls-r1-2:
-    SRAno:          SRR556779
-    GEOno:          GSM998888
+    runs:           SRR556779
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -233,8 +215,7 @@ RNAseq-fustls-r1-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998888: brain RNAseq Fus/Tls-oligo rep1.2; Mus musculus; RNA-Seq"
 RNAseq-fustls-r2-1:
-    SRAno:          SRR556780
-    GEOno:          GSM998889
+    runs:           SRR556780
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -246,8 +227,7 @@ RNAseq-fustls-r2-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998889: brain RNAseq Fus/Tls-oligo rep2.1; Mus musculus; RNA-Seq"
 RNAseq-fustls-r2-2:
-    SRAno:          SRR556781
-    GEOno:          GSM998890
+    runs:           SRR556781
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -259,8 +239,7 @@ RNAseq-fustls-r2-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998890: brain RNAseq Fus/Tls-oligo rep2.2; Mus musculus; RNA-Seq"
 RNAseq-fustls-r3-1:
-    SRAno:          SRR556782
-    GEOno:          GSM998891
+    runs:           SRR556782
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -272,8 +251,7 @@ RNAseq-fustls-r3-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998891: brain RNAseq Fus/Tls-oligo rep3.1; Mus musculus; RNA-Seq"
 RNAseq-fustls-r4-1:
-    SRAno:          SRR556783
-    GEOno:          GSM998892
+    runs:           SRR556783
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain
@@ -285,8 +263,7 @@ RNAseq-fustls-r4-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM998892: brain RNAseq Fus/Tls-oligo rep4.1; Mus musculus; RNA-Seq"
 RNAseq-fustls-r4-2:
-    SRAno:          SRR556784
-    GEOno:          GSM998893
+    runs:           SRR556784
     species:        mmu
     workflows:      [CLIP, RNAseq]
     source:         mouse_brain # human_brain

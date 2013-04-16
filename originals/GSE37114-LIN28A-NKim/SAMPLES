@@ -1,6 +1,5 @@
 RNAseq-uninfected-1:
-    SRAno:          SRR458753
-    GEOno:          GSM910950
+    runs:           SRR458753
     species:        mmu
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         A3-1
@@ -12,8 +11,7 @@ RNAseq-uninfected-1:
     threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
     description:    "GSM910950: A3-1 PolyA+ RNA-seq - untreated; Mus musculus; RNA-Seq"
 RNAseq-siLuc-1:
-    SRAno:          SRR458754
-    GEOno:          GSM910951
+    runs:           SRR458754
     species:        mmu
     workflows:      [RNAseq, SNPreference]
     source:         A3-1
@@ -25,8 +23,7 @@ RNAseq-siLuc-1:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM910951: A3-1 PolyA+ RNA-seq - siLuc; Mus musculus; RNA-Seq"
 RNAseq-siLin28a-1:
-    SRAno:          SRR458755
-    GEOno:          GSM910952
+    runs:           SRR458755
     species:        mmu
     workflows:      [RNAseq, SNPreference]
     source:         A3-1
@@ -38,8 +35,7 @@ RNAseq-siLin28a-1:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM910952: A3-1 PolyA+ RNA-seq - siLin28a; Mus musculus; RNA-Seq"
 RNAseqRPFCtl-siLuc-1:
-    SRAno:          SRR458754
-    GEOno:          GSM910951
+    runs:           SRR458754
     species:        mmu
     workflows:      [RPF]
     source:         A3-1
@@ -51,8 +47,7 @@ RNAseqRPFCtl-siLuc-1:
     threep_adapter: ""
     description:    "GSM910951: A3-1 PolyA+ RNA-seq - siLuc; Mus musculus; RNA-Seq"
 RNAseqRPFCtl-siLin28a-1:
-    SRAno:          SRR458755
-    GEOno:          GSM910952
+    runs:           SRR458755
     species:        mmu
     workflows:      [RPF]
     source:         A3-1
@@ -64,8 +59,7 @@ RNAseqRPFCtl-siLin28a-1:
     threep_adapter: ""
     description:    "GSM910952: A3-1 PolyA+ RNA-seq - siLin28a; Mus musculus; RNA-Seq"
 RPF-siLuc-1:
-    SRAno:          SRR458756
-    GEOno:          GSM910953
+    runs:           SRR458756
     species:        mmu
     workflows:      [RPF]
     source:         A3-1
@@ -77,8 +71,7 @@ RPF-siLuc-1:
     threep_adapter: ""
     description:    "GSM910953: A3-1 Ribosome profiling - siLuc; Mus musculus; OTHER"
 RPF-siLin28a-1:
-    SRAno:          SRR458757
-    GEOno:          GSM910954
+    runs:           SRR458757
     species:        mmu
     workflows:      [RPF]
     source:         A3-1
@@ -90,8 +83,7 @@ RPF-siLin28a-1:
     threep_adapter: ""
     description:    "GSM910954: A3-1 Ribosome profiling - siLin28a; Mus musculus; OTHER"
 CLIP-35L33G:
-    SRAno:          SRR458758
-    GEOno:          GSM910955
+    runs:           SRR458758
     species:        mmu
     workflows:      [CLIP]
     source:         A3-1
@@ -103,8 +95,7 @@ CLIP-35L33G:
     threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
     description:    "GSM910955: A3-1 LIN28A CLIP - 35L33G (mAb); Mus musculus; OTHER"
 CLIP-2J3:
-    SRAno:          SRR458759
-    GEOno:          GSM910956
+    runs:           SRR458759
     species:        mmu
     workflows:      [CLIP]
     source:         A3-1
@@ -116,8 +107,7 @@ CLIP-2J3:
     threep_adapter: CTGTAGGCACCATCAATTCGTATGCCGTCTTCTGCTTG
     description:    "GSM910956: A3-1 LIN28A CLIP - 2J3 (mAb); Mus musculus; OTHER"
 CLIP-46020:
-    SRAno:          SRR458760
-    GEOno:          GSM910957
+    runs:           SRR458760
     species:        mmu
     workflows:      [CLIP]
     source:         A3-1

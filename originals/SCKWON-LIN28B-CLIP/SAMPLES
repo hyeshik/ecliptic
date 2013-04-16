@@ -1,6 +1,5 @@
 CLIP-K562:
-    SRAno:          SCKwon-K562-LIN28B
-    GEOno:          VNK000000 # unpublished data
+    runs:           SCKwon-K562-LIN28B
     species:        hsa
     workflows:      [CLIP]
     source:         "" # K562

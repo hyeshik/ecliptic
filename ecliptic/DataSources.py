@@ -47,6 +47,8 @@ class DataSources:
 
     def scan(self):
         for dirname in os.listdir(self.datadir):
+            if not os.path.isdir(dirname):
+                continue
             project_name = dirname
             self.projects[dirname] = Project(project_name, os.path.join(self.datadir, dirname))
 
@@ -83,7 +85,7 @@ class Project:
 class Sample:
 
     attribute_names = [
-        'label', 'SRAno', 'GEOno', 'species', 'workflows', 'source', 'first_base', 'last_base',
+        'label', 'runs', 'species', 'workflows', 'source', 'first_base', 'last_base',
         'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description',
         'piranha_bin_size',
     ]
@@ -98,8 +100,8 @@ class Sample:
             if attrname in attrs:
                 setattr(self, attrname, attrs[attrname])
 
-        if isinstance(self.SRAno, str):
-            self.SRAno = [self.SRAno]
+        if isinstance(self.runs, str):
+            self.runs = [self.runs]
         # TODO: check if any mandatory attribute is missing here.
 
     @classmethod

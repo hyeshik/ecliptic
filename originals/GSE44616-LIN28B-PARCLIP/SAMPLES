@@ -1,6 +1,5 @@
 RNAseq-Mock-1:
-    SRAno:          SRR764657
-    GEOno:          GSM1087023
+    runs:           SRR764657
     species:        hsa
     workflows:      [RNAseq, SNPreference]
     source:         HEK293
@@ -12,8 +11,7 @@ RNAseq-Mock-1:
     threep_adapter: TCACTTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087023: LIN28B_not_induced_rep1; Homo sapiens; RNA-Seq"
 RNAseq-Mock-2:
-    SRAno:          SRR764658
-    GEOno:          GSM1087024
+    runs:           SRR764658
     species:        hsa
     workflows:      [RNAseq, SNPreference]
     source:         HEK293
@@ -25,8 +23,7 @@ RNAseq-Mock-2:
     threep_adapter: TCCGTTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087024: LIN28B_not_induced_rep2; Homo sapiens; RNA-Seq"
 RNAseq-LIN28B-1:
-    SRAno:          SRR764659
-    GEOno:          GSM1087025
+    runs:           SRR764659
     species:        hsa
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         HEK293
@@ -38,8 +35,7 @@ RNAseq-LIN28B-1:
     threep_adapter: TCATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087025: LIN28B_induced_rep1; Homo sapiens; RNA-Seq"
 RNAseq-LIN28B-2:
-    SRAno:          SRR764660
-    GEOno:          GSM1087026
+    runs:           SRR764660
     species:        hsa
     workflows:      [CLIP, RNAseq, SNPreference]
     source:         HEK293
@@ -51,8 +47,7 @@ RNAseq-LIN28B-2:
     threep_adapter: TCCTATCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087026: LIN28B_induced_rep2; Homo sapiens; RNA-Seq"
 RNAseq-KD-1:
-    SRAno:          SRR764661
-    GEOno:          GSM1087027
+    runs:           SRR764661
     species:        hsa
     workflows:      [RNAseq]
     source:         HEK293
@@ -64,8 +59,7 @@ RNAseq-KD-1:
     threep_adapter: TCCACTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087027: LIN28B_knockdown_rep1; Homo sapiens; RNA-Seq"
 RNAseq-KD-2:
-    SRAno:          SRR764662
-    GEOno:          GSM1087028
+    runs:           SRR764662
     species:        hsa
     workflows:      [RNAseq]
     source:         HEK293
@@ -77,8 +71,7 @@ RNAseq-KD-2:
     threep_adapter: TCGATTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087028: LIN28B_knockdown_rep2; Homo sapiens; RNA-Seq"
 CLIP-LIN28A:
-    SRAno:          SRR764666
-    GEOno:          GSM1087848
+    runs:           SRR764666
     species:        hsa
     workflows:      [CLIP]
     source:         HEK293
@@ -90,8 +83,7 @@ CLIP-LIN28A:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087848: LIN28A PAR-CLIP; Homo sapiens; RNA-Seq"
 CLIP-LIN28B-1:
-    SRAno:          SRR764667
-    GEOno:          GSM1087849
+    runs:           SRR764667
     species:        hsa
     workflows:      [CLIP]
     source:         HEK293
@@ -103,8 +95,7 @@ CLIP-LIN28B-1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087849: LIN28B_rep1 PAR-CLIP; Homo sapiens; RNA-Seq"
 CLIP-LIN28B-2:
-    SRAno:          SRR764668
-    GEOno:          GSM1087850
+    runs:           SRR764668
     species:        hsa
     workflows:      [CLIP]
     source:         HEK293
@@ -116,8 +107,7 @@ CLIP-LIN28B-2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087850: LIN28B_rep2 PAR-CLIP; Homo sapiens; RNA-Seq"
 CLIP-LIN28B-3:
-    SRAno:          SRR764669
-    GEOno:          GSM1087851
+    runs:           SRR764669
     species:        hsa
     workflows:      [CLIP]
     source:         HEK293

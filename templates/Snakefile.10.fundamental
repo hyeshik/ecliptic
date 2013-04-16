@@ -11,7 +11,7 @@ targets(expand('annotations/{sample}.anno.gz',
 {% for sample_name, sample in SAMPLES.items() %}
 
 rule prepare_processed_sequences_{(sample_name|rule_name)}:
-    input: "{% for acc in sample.SRAno %}original/{(acc)}.fq.gz {% endfor %}".split()
+    input: "{% for acc in sample.runs %}original/{(acc)}.fq.gz {% endfor %}".split()
     output: "sequences/{( sample_name )}.primary.fq.gz"
     #threads: {% if sample.threep_adapter %}{( THREADS )}{% else %}2{% endif %}
     # temporarily lowered due to suspected bug in echidna

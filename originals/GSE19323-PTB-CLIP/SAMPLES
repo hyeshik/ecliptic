@@ -1,6 +1,5 @@
 CLIP-M1:
-    SRAno:          SRR034466
-    GEOno:          GSM480476
+    runs:           SRR034466
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HeLa
@@ -12,8 +11,7 @@ CLIP-M1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM480476: Human_PTB_CLIP-seq_M1"
 CLIP-M2:
-    SRAno:          SRR034467
-    GEOno:          GSM480477
+    runs:           SRR034467
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HeLa
@@ -25,8 +23,7 @@ CLIP-M2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM480477: Human_PTB_CLIP-seq_M2"
 CLIP-D1:
-    SRAno:          SRR034468
-    GEOno:          GSM480478
+    runs:           SRR034468
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HeLa
@@ -38,8 +35,7 @@ CLIP-D1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM480478: Human_PTB_CLIP-seq_D1"
 CLIP-D2:
-    SRAno:          SRR034469
-    GEOno:          GSM480479
+    runs:           SRR034469
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HeLa

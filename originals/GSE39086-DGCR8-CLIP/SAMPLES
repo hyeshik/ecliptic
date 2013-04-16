@@ -1,6 +1,5 @@
 CLIP_D8_1:
-    SRAno:          SRR518495
-    GEOno:          GSM955510
+    runs:           SRR518495
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293T
@@ -12,8 +11,7 @@ CLIP_D8_1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM955510: D8.1 (endogenous DGCR8 IP); Homo sapiens; RNA-Seq"
 CLIP_T7_1:
-    SRAno:          SRR518496
-    GEOno:          GSM955511
+    runs:           SRR518496
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293T
@@ -25,8 +23,7 @@ CLIP_T7_1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM955511: T7.1 (overexpressed DGCR8 IP); Homo sapiens; RNA-Seq"
 CLIP_D8_2:
-    SRAno:          SRR518497
-    GEOno:          GSM955512
+    runs:           SRR518497
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293T
@@ -38,8 +35,7 @@ CLIP_D8_2:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM955512: D8.2 (overexpressed DGCR8 IP); Homo sapiens; RNA-Seq"
 CLIP_T7_2:
-    SRAno:          SRR518498
-    GEOno:          GSM955513
+    runs:           SRR518498
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293T

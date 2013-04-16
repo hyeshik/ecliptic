@@ -1,6 +1,5 @@
 CLIP1:
-    SRAno:          SRR408236
-    GEOno:          GSM875073
+    runs:           SRR408236
     species:        hsa
     workflows:      [CLIP]
     source:         "" #"MDA-MB-231"
@@ -12,8 +11,7 @@ CLIP1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM875073: HNRPA2B1_HITSCLIP_1; Homo sapiens; OTHER"
 CLIP2:
-    SRAno:          SRR408237
-    GEOno:          GSM875074
+    runs:           SRR408237
     species:        hsa
     workflows:      [CLIP]
     source:         "" #"MDA-MB-231"

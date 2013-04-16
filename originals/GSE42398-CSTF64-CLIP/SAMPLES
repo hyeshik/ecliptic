@@ -1,6 +1,5 @@
 CLIP1:
-    SRAno:          SRR618490
-    GEOno:          GSM1039197
+    runs:           SRR618490
     species:        mmu
     workflows:      [CLIP]
     source:         "" #C2C12
@@ -12,8 +11,7 @@ CLIP1:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1039197: CLIP-seq Cstf64 replicate 1 (CLIP-seq); Mus musculus; RNA-Seq"
 CLIP2:
-    SRAno:          SRR618491
-    GEOno:          GSM1039198
+    runs:           SRR618491
     species:        mmu
     workflows:      [CLIP]
     source:         "" #C2C12

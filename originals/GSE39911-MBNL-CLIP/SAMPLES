@@ -1,6 +1,5 @@
 CLIP-B6Brain:
-    SRAno:          SRR533660
-    GEOno:          GSM981226
+    runs:           SRR533660
     species:        mmu
     workflows:      [CLIP]
     source:         "" #C56BL6_brain
@@ -12,8 +11,7 @@ CLIP-B6Brain:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981226: CLIP-B6Brain; Mus musculus; OTHER"
 CLIP-129Brain:
-    SRAno:          SRR533661
-    GEOno:          GSM981227
+    runs:           SRR533661
     species:        mmu
     workflows:      [CLIP]
     source:         "" #129_brain
@@ -25,8 +23,7 @@ CLIP-129Brain:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981227: CLIP-129Brain; Mus musculus; OTHER"
 CLIP-B6Heart:
-    SRAno:          SRR533662
-    GEOno:          GSM981228
+    runs:           SRR533662
     species:        mmu
     workflows:      [CLIP]
     source:         "" #C56BL6_heart
@@ -38,8 +35,7 @@ CLIP-B6Heart:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981228: CLIP-B6Heart; Mus musculus; OTHER"
 CLIP-B6Muscle:
-    SRAno:          SRR533663
-    GEOno:          GSM981229
+    runs:           SRR533663
     species:        mmu
     workflows:      [CLIP]
     source:         "" #C56BL6_muscle
@@ -51,8 +47,7 @@ CLIP-B6Muscle:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981229: CLIP-B6Muscle; Mus musculus; OTHER"
 CLIP-C2C12:
-    SRAno:          SRR533664
-    GEOno:          GSM981230
+    runs:           SRR533664
     species:        mmu
     workflows:      [CLIP]
     source:         C2C12
@@ -64,8 +59,7 @@ CLIP-C2C12:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981230: CLIP-C2C12; Mus musculus; OTHER"
 RNAseq-C2C12-Ctl:
-    SRAno:          SRR533665
-    GEOno:          GSM981231
+    runs:           SRR533665
     species:        mmu
     workflows:      [RNAseq, CLIP, SNPreference]
     source:         C2C12
@@ -77,8 +71,7 @@ RNAseq-C2C12-Ctl:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981231: C2C12ribo-control; Mus musculus; RNA-Seq"
 RNAseq-C2C12-shMbnl1:
-    SRAno:          SRR533666
-    GEOno:          GSM981232
+    runs:           SRR533666
     species:        mmu
     workflows:      [RNAseq]
     source:         C2C12
@@ -90,8 +83,7 @@ RNAseq-C2C12-shMbnl1:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981232: C2C12ribo-shMbnl1; Mus musculus; RNA-Seq"
 RNAseq-C2C12-shMbnl2:
-    SRAno:          SRR533667
-    GEOno:          GSM981233
+    runs:           SRR533667
     species:        mmu
     workflows:      [RNAseq]
     source:         C2C12
@@ -103,8 +95,7 @@ RNAseq-C2C12-shMbnl2:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM981233: C2C12ribo-shMbnl2; Mus musculus; RNA-Seq"
 RNAseq-C2C12-shMbnl12:
-    SRAno:          SRR533668
-    GEOno:          GSM981234
+    runs:           SRR533668
     species:        mmu
     workflows:      [RNAseq]
     source:         C2C12

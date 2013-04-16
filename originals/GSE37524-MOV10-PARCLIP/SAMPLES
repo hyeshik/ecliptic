@@ -1,6 +1,5 @@
 CLIP:
-    SRAno:          SRR490650
-    GEOno:          GSM921128
+    runs:           SRR490650
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293
@@ -12,8 +11,7 @@ CLIP:
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM921128: MOV10 PAR-CLIP; Homo sapiens; RNA-Seq"
 RNAseq:
-    SRAno:          SRR490651
-    GEOno:          GSM921129
+    runs:           SRR490651
     species:        hsa
     workflows:      [CLIP]
     source:         "" # HEK293

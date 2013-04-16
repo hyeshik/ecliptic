@@ -1,6 +1,5 @@
 CLIP1:
-    SRAno:          SRR567525
-    GEOno:          GSM1001330
+    runs:           SRR567525
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -12,8 +11,7 @@ CLIP1:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1001330: HeLa eIF4AIII CLIP-seq 1; Homo sapiens; OTHER"
 CLIP2:
-    SRAno:          SRR567526
-    GEOno:          GSM1001331
+    runs:           SRR567526
     species:        hsa
     workflows:      [CLIP]
     source:         HeLa
@@ -25,8 +23,7 @@ CLIP2:
     threep_adapter: ATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1001331: HeLa eIF4AIII CLIP-seq 2; Homo sapiens; OTHER"
 CLIPCtl:
-    SRAno:          SRR567527
-    GEOno:          GSM850172
+    runs:           SRR567527
     species:        hsa
     workflows:      [CLIP, SNPreference]
     source:         HeLa
