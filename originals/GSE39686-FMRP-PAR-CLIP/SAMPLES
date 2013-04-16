@@ -1,0 +1,80 @@
+PARCLIP-FMR1-WT-iso1:
+    SRAno:          SRR527727
+    GEOno:          GSM977615
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM977615: wt FLAG-HA FMR1 iso1; Homo sapiens; RNA-Seq"
+PARCLIP-FMR1-WT-iso7:
+    SRAno:          SRR527728
+    GEOno:          GSM977616
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  64
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM977616: wt FLAG-HA FMR1 iso7; Homo sapiens; RNA-Seq"
+PARCLIP-FMR1-I304N-iso1:
+    SRAno:          SRR527729
+    GEOno:          GSM977617
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      51
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM977617: I304N FLAG-HA FMR1 iso1; Homo sapiens; RNA-Seq"
+PARCLIP-FMR1-I304N-iso7:
+    SRAno:          SRR527730
+    GEOno:          GSM977618
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      51
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM977618: I304N FLAG-HA FMR1 iso7; Homo sapiens; RNA-Seq"
+PARCLIP-FXR1-WT:
+    SRAno:          SRR527731
+    GEOno:          GSM977619
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM977619: wt FLAG-HA FXR1; Homo sapiens; RNA-Seq"
+PARCLIP-FXR2-WT:
+    SRAno:          SRR527732
+    GEOno:          GSM977620
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM977620: wt FLAG-HA FXR2; Homo sapiens; RNA-Seq"
+
+# ex: syntax=yaml et sts=4 sw=4

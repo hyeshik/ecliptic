@@ -1,0 +1,8 @@
+#!/bin/sh
+
+mv "SRR527727.fq.gz" "SRR527727.fastq.gz"
+mv "SRR527728.fq.gz" "SRR527728.fastq.gz"
+mv "SRR527729.fq.gz" "SRR527729.fastq.gz"
+mv "SRR527730.fq.gz" "SRR527730.fastq.gz"
+mv "SRR527731.fq.gz" "SRR527731.fastq.gz"
+mv "SRR527732.fq.gz" "SRR527732.fastq.gz"

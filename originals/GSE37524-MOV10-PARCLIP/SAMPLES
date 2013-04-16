@@ -1,0 +1,28 @@
+CLIP:
+    SRAno:          SRR490650
+    GEOno:          GSM921128
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM921128: MOV10 PAR-CLIP; Homo sapiens; RNA-Seq"
+RNAseq:
+    SRAno:          SRR490651
+    GEOno:          GSM921129
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: ""
+    description:    "GSM921129: HEK293 4SU nuclear RNA-seq; Homo sapiens; RNA-Seq"
+
+# ex: syntax=yaml et sts=4 sw=4

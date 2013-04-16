@@ -1,0 +1,197 @@
+IGF2BP1:
+    SRAno:          [SRR048950, SRR048951, SRR048952, SRR048953, SRR048954, SRR048955]
+    GEOno:          GSM545206
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545206: IGF2BP1"
+IGF2BP1_6SG:
+    SRAno:          SRR048956
+    GEOno:          GSM545207
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545207: IGF2BP1_6SG"
+IGF2BP2:
+    SRAno:          [SRR048957, SRR048958, SRR048959, SRR048960, SRR048961]
+    GEOno:          GSM545208
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545208: IGF2BP2"
+IGF2BP3:
+    SRAno:          [SRR048962, SRR048963, SRR048964, SRR048965, SRR048966]
+    GEOno:          GSM545209
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545209: IGF2BP3"
+Pumilio2:
+    SRAno:          [SRR048967, SRR048968]
+    GEOno:          GSM545210
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545210: Pumilio2"
+QKI:
+    SRAno:          [SRR048969, SRR048970, SRR048971, SRR048972]
+    GEOno:          GSM545211
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545211: QKI"
+AGO1:
+    SRAno:          SRR048973
+    GEOno:          GSM545212
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545212: AGO1"
+AGO2:
+    SRAno:          [SRR048974, SRR048975]
+    GEOno:          GSM545213
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545213: AGO2"
+AGO3:
+    SRAno:          [SRR048976, SRR048977]
+    GEOno:          GSM545214
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545214: AGO3"
+AGO4:
+    SRAno:          [SRR048978, SRR048979]
+    GEOno:          GSM545215
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545215: AGO4"
+AGO2_miR124:
+    SRAno:          SRR048980
+    GEOno:          GSM545216
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545216: AGO2, miR124"
+AGO2_miR7:
+    SRAno:          SRR048981
+    GEOno:          GSM545217
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545217: AGO2, miR7"
+TNRC6A:
+    SRAno:          [SRR048982, SRR048983]
+    GEOno:          GSM545218
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545218: TNRC6A"
+TNRC6B:
+    SRAno:          [SRR048984, SRR048985]
+    GEOno:          GSM545219
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545219: TNRC6B"
+TNRC6C:
+    SRAno:          [SRR048986, SRR048987]
+    GEOno:          GSM545220
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      32
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM545220: TNRC6C"
+
+# ex: syntax=yaml et sts=4 sw=4

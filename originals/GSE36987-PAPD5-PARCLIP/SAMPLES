@@ -1,0 +1,28 @@
+CLIP-1:
+    SRAno:          SRR452496
+    GEOno:          GSM908088
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM908088: PAPD5_PAR-CLIP_rep1; Homo sapiens; OTHER"
+CLIP-2:
+    SRAno:          SRR452497
+    GEOno:          GSM908089
+    species:        hsa
+    workflows:      [CLIP]
+    source:         "" # HEK293
+    first_base:     1
+    last_base:      36
+    minimum_length: 20
+    quality_scale:  33
+    strand:         +
+    threep_adapter: TCGTATGCCGTCTTCTGCTTG
+    description:    "GSM908089: PAPD5_PAR-CLIP_rep2; Homo sapiens; OTHER"
+
+# ex: syntax=yaml et sts=4 sw=4
