@@ -50,7 +50,7 @@ executable "Piranha" "Piranha"
 executable "Simulate" "Piranha"
 
 # UCSC Genome Browser tools
-for name in pslCDnaFilter faSomeRecords twoBitToFa pslCDnaFilter pslToBed blat; do
+for name in pslCDnaFilter faSomeRecords twoBitToFa pslCDnaFilter pslToBed pslToChain blat liftOver; do
   executable "$name" "Jim Kent's tools"
 done
 

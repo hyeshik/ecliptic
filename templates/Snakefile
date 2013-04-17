@@ -1,6 +1,10 @@
 {# ecliptic: work -#}
 {% extends "Snakefile.base" %}
 
+{% block settings %}
+{% include "Snakefile.settings" %}
+{% endblock %}
+
 {% block rules %}
 
 all_targets = []

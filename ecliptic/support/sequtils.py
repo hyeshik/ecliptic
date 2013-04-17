@@ -62,7 +62,7 @@ class GiantFASTAFile(object):
             index[fields[0]] = tuple(map(int, fields[1:]))
         return index
 
-    def get(self, seqid, start=None, stop=None): # zero-based, half-open
+    def get(self, seqid, start=None, stop=None, strand='+'): # zero-based, half-open
         length, filepos, colwidth, linesize = self.index[seqid]
 
         if start is None and stop is None:
@@ -76,7 +76,8 @@ class GiantFASTAFile(object):
             offset_en = filepos + stop + linenum_en * (linesize - colwidth)
 
         self.fasta.seek(offset_st, 0)
-        return whitespace.sub('', self.fasta.read(offset_en - offset_st))
+        seq = whitespace.sub('', self.fasta.read(offset_en - offset_st))
+        return seq if strand == '+' else reverse_complement(seq)
 
 
 revcmptrans = string.maketrans('ATUGCatugc', 'TAACGtaacg')

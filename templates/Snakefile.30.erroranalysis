@@ -1,7 +1,7 @@
 # Snakefile.30.erroranalysis
 
 {% for method in 'del mod moddel entropy t2c'.split() %}
-targets(expand('erroranalyses/{sample}.significant_sites/{(method)}-{fdrlevel}.gz',
+targets(expand('erroranalyses/{sample}.significant_sites/{(method)}-{fdrlevel}.txt.gz',
                  sample=list(CLIP_SAMPLES), fdrlevel=CROSSFEST_FDR_LEVELS))
 {% endfor %}
 
@@ -79,8 +79,14 @@ rule calculate_error_fdr_cutoffs:
 rule pick_significant_crosslinking_sites:
     input: candidates='erroranalyses/{sample}.nonzero.real.gz', \
            cutoffs='erroranalyses/{sample}.{method}.fdr_cutoffs'
-    output: 'erroranalyses/{sample}.significant_sites/{method}-{fdrlevel}.gz'
+    output: 'erroranalyses/{sample}.significant_sites/{method}-{fdrlevel}.txt.gz'
     version: "1"
-    shell: '{PICK_SIGNIFICANTLY_CROSSLINKED_SITES_CMD} {input.candidates} \
-                {input.cutoffs} {wildcards.fdrlevel} {wildcards.method} | gzip -c - > {output}'
+    run:
+        species = SAMPLE_SPECIES[wildcards.sample]
+        shell('{PICK_SIGNIFICANTLY_CROSSLINKED_SITES_CMD} {input.candidates} \
+                  {input.cutoffs} {wildcards.fdrlevel} {wildcards.method} \
+                  resources/{species}/genomeToRefSeq.chain \
+                  resources/{species}/genome.fa resources/{species}/nrRefSeq.fa \
+                  {BINDING_SITES_CATALOG_FLANKING_WIDTH} \
+                  resources/{species}/nrRefSeq-genome.bed.gz | gzip -c - > {output}')
 

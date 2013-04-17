@@ -12,13 +12,15 @@ SUBDIRS = ['downloaded', 'tmp']
 RFAM_FASTA_URL = 'ftp://ftp.sanger.ac.uk/pub/databases/Rfam/CURRENT/Rfam.fasta.gz'
 RFAM_FULL_URL = 'ftp://ftp.sanger.ac.uk/pub/databases/Rfam/CURRENT/Rfam.fasta.gz'
 GENOME_2BIT_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/bigZips/{genome}.2bit'
-REFGENE_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/refGene.txt.gz'
-REFFLAT_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/refFlat.txt.gz'
-REFLINK_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/refLink.txt.gz'
-KNOWNGENE_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/knownGene.txt.gz'
+REFGENE_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/refGene.txt.gz'
+REFFLAT_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/refFlat.txt.gz'
+REFLINK_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/refLink.txt.gz'
+KNOWNGENE_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/knownGene.txt.gz'
 MIRBASE_URL = 'ftp://mirbase.org/pub/mirbase/CURRENT/genomes/{species}.gff3'
 REPEATMASKER_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/rmsk.txt.gz'
-TRNADB_URL = 'http://hgdownload.cse.ucsc.edu/goldenPath/{genome}/database/tRNAs.txt.gz'
+TRNADB_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/tRNAs.txt.gz'
+REFSEQALI_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/database/refSeqAli.txt.gz'
+REFMRNA_URL = 'http://hgdownload.soe.ucsc.edu/goldenPath/{genome}/bigZips/refMrna.fa.gz'
 
 GENBANK_EFETCH_URL = (
     'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore'
@@ -39,7 +41,9 @@ rule all:
     input: expand('{genome}/contaminants/contaminants.genomecomp', genome=GENOMES), \
            expand('{genome}/genome/genome.maps/genome.splicesites.iit', genome=GENOMES), \
            expand('{genome}/nrRefSeq-genome.bed.gz', genome=GENOMES), \
-           expand('{genome}/annotations.bed.gz', genome=GENOMES)
+           expand('{genome}/annotations.bed.gz', genome=GENOMES), \
+           expand('{genome}/genomeToRefSeq.chain', genome=GENOMES), \
+           expand('{genome}/nrRefSeq.fa.fai', genome=GENOMES)
 
 
 rule download_rfam_fasta:
@@ -114,6 +118,45 @@ rule download_knowngene:
     run:
         url = KNOWNGENE_URL.format(genome=wildcards.genome)
         shell('wget -O {output} {url}')
+
+rule download_refseq_fasta:
+    output: '{genome}/downloaded/refMrna.fa.gz'
+    run:
+        url = REFMRNA_URL.format(genome=wildcards.genome)
+        shell('wget -O {output} {url}')
+
+rule download_refseqali:
+    output: '{genome}/downloaded/refSeqAli.psl'
+    run:
+        url = REFSEQALI_URL.format(genome=wildcards.genome)
+        shell('wget -O - {url} | gzip -d - | sed -n -e "s/^[0-9]*\t//p" > {output}')
+
+rule build_refseq_chain:
+    input: alignment='{genome}/downloaded/refSeqAli.psl', \
+           nrlist='{genome}/nrRefSeq.list'
+    output: '{genome}/genomeToRefSeq.chain'
+    run:
+        nrlist = set(open(input.nrlist).read().split())
+
+        with TemporaryDirectory() as tmpdir:
+            filtered_name = os.path.join(tmpdir, 'filtered.bed')
+            with open(filtered_name, 'w') as filtered_file:
+                for line in open(input.alignment):
+                    if line.split()[9] in nrlist:
+                        filtered_file.write(line)
+            shell('pslToChain {filtered_name} {output}')
+
+rule filter_refseq_fasta:
+    input: fain='{genome}/downloaded/refMrna.fa.gz', \
+           nrlist='{genome}/nrRefSeq.list'
+    output: faout='{genome}/nrRefSeq.fa', faidx='{genome}/nrRefSeq.fa.fai'
+    run:
+        with TemporaryDirectory() as tmpdir:
+            refmrnatmp = os.path.join(tmpdir, 'refMrna.fa')
+            shell('gzip -cd {input.fain} > {refmrnatmp}')
+
+            shell('faSomeRecords {refmrnatmp} {input.nrlist} {output.faout}')
+            shell('samtools faidx {output.faout}')
 
 rule build_gsnap_splice_index:
     input: refgene='{genome}/downloaded/refGene.txt.gz', \

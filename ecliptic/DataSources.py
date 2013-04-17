@@ -47,7 +47,7 @@ class DataSources:
 
     def scan(self):
         for dirname in os.listdir(self.datadir):
-            if not os.path.isdir(dirname):
+            if not os.path.isdir(os.path.join(self.datadir, dirname)):
                 continue
             project_name = dirname
             self.projects[dirname] = Project(project_name, os.path.join(self.datadir, dirname))
