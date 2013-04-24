@@ -1,5 +1,9 @@
 import os
 import sys; sys.path.append(os.getcwd())
+from itertools import groupby
+import csv
+from subprocess import PIPE, Popen
+from collections import defaultdict
 from snakesupport import *
 
 REPEATMASKER_IGNORE_CLASSES = 'tRNA snRNA scRNA srpRNA'.split()
@@ -133,17 +137,49 @@ rule download_refseqali:
 
 rule build_refseq_chain:
     input: alignment='{genome}/downloaded/refSeqAli.psl', \
-           nrlist='{genome}/nrRefSeq.list'
+           nrlist='{genome}/nrRefSeq.list', \
+           nrbed='{genome}/nrRefSeq-genome.bed.gz'
     output: '{genome}/genomeToRefSeq.chain'
     run:
         nrlist = set(open(input.nrlist).read().split())
 
+        def get_nr_matches(regions, acc):
+            with Popen('bedtools intersect -wa -wb -a - -b {input.nrbed}'.format(input=input),
+                    shell=True, stdin=PIPE, stdout=PIPE, close_fds=True) as p:
+                for i, (chrom, start, end, strand) in enumerate(regions):
+                    pos = '{}\t{}\t{}\t{}\t.\t{}\n'.format(chrom, start, end, i, strand)
+                    p.stdin.write(pos.encode('utf-8'))
+                p.stdin.close()
+
+                overlapcnt = defaultdict(int)
+                for row in csv.reader(p.stdout.read().decode('utf-8').splitlines(),
+                                      dialect='excel-tab'):
+                    if row[9].split('/')[0] == acc:
+                        overlapcnt[int(row[3])] += int(row[2]) - int(row[1])
+
+                return [overlapcnt[i] for i in range(len(regions))]
+
         with TemporaryDirectory() as tmpdir:
             filtered_name = os.path.join(tmpdir, 'filtered.bed')
             with open(filtered_name, 'w') as filtered_file:
-                for line in open(input.alignment):
-                    if line.split()[9] in nrlist:
-                        filtered_file.write(line)
+                inp = os.popen('sort -k10,10 {}'.format(input.alignment))
+                for acc, line in groupby(inp, lambda L: L.split('\t')[9]):
+                    if acc not in nrlist:
+                        continue
+
+                    lines = list(line)
+                    if len(lines) == 1:
+                        filtered_file.write(lines[0])
+                        continue
+
+                    # multiple alignments available for a single RefSeq entry
+                    rows = list(csv.reader(lines, dialect='excel-tab'))
+                    matches = get_nr_matches([(row[13], row[15], row[16], row[8])
+                                              for row in rows], acc)
+                    rows_with_matches = sorted(zip(matches, rows), reverse=True)
+                    if rows_with_matches[0][0] > 0:
+                        filtered_file.write('\t'.join(rows_with_matches[0][1]) + '\n')
+
             shell('pslToChain {filtered_name} {output}')
 
 rule filter_refseq_fasta:
