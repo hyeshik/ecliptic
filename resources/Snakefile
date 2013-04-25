@@ -46,7 +46,7 @@ rule all:
            expand('{genome}/genome/genome.maps/genome.splicesites.iit', genome=GENOMES), \
            expand('{genome}/nrRefSeq-genome.bed.gz', genome=GENOMES), \
            expand('{genome}/annotations.bed.gz', genome=GENOMES), \
-           expand('{genome}/genomeToRefSeq.chain', genome=GENOMES), \
+           expand('{genome}/nrRefSeq-alignment.db', genome=GENOMES), \
            expand('{genome}/nrRefSeq.fa.fai', genome=GENOMES)
 
 
@@ -135,52 +135,14 @@ rule download_refseqali:
         url = REFSEQALI_URL.format(genome=wildcards.genome)
         shell('wget -O - {url} | gzip -d - | sed -n -e "s/^[0-9]*\t//p" > {output}')
 
-rule build_refseq_chain:
+rule build_refseqali_db:
     input: alignment='{genome}/downloaded/refSeqAli.psl', \
            nrlist='{genome}/nrRefSeq.list', \
            nrbed='{genome}/nrRefSeq-genome.bed.gz'
-    output: '{genome}/genomeToRefSeq.chain'
+    output: '{genome}/nrRefSeq-alignment.db'
     run:
-        nrlist = set(open(input.nrlist).read().split())
-
-        def get_nr_matches(regions, acc):
-            with Popen('bedtools intersect -wa -wb -a - -b {input.nrbed}'.format(input=input),
-                    shell=True, stdin=PIPE, stdout=PIPE, close_fds=True) as p:
-                for i, (chrom, start, end, strand) in enumerate(regions):
-                    pos = '{}\t{}\t{}\t{}\t.\t{}\n'.format(chrom, start, end, i, strand)
-                    p.stdin.write(pos.encode('utf-8'))
-                p.stdin.close()
-
-                overlapcnt = defaultdict(int)
-                for row in csv.reader(p.stdout.read().decode('utf-8').splitlines(),
-                                      dialect='excel-tab'):
-                    if row[9].split('/')[0] == acc:
-                        overlapcnt[int(row[3])] += int(row[2]) - int(row[1])
-
-                return [overlapcnt[i] for i in range(len(regions))]
-
-        with TemporaryDirectory() as tmpdir:
-            filtered_name = os.path.join(tmpdir, 'filtered.bed')
-            with open(filtered_name, 'w') as filtered_file:
-                inp = os.popen('sort -k10,10 {}'.format(input.alignment))
-                for acc, line in groupby(inp, lambda L: L.split('\t')[9]):
-                    if acc not in nrlist:
-                        continue
-
-                    lines = list(line)
-                    if len(lines) == 1:
-                        filtered_file.write(lines[0])
-                        continue
-
-                    # multiple alignments available for a single RefSeq entry
-                    rows = list(csv.reader(lines, dialect='excel-tab'))
-                    matches = get_nr_matches([(row[13], row[15], row[16], row[8])
-                                              for row in rows], acc)
-                    rows_with_matches = sorted(zip(matches, rows), reverse=True)
-                    if rows_with_matches[0][0] > 0:
-                        filtered_file.write('\t'.join(rows_with_matches[0][1]) + '\n')
-
-            shell('pslToChain {filtered_name} {output}')
+        shell('python tools/build-refSeqAli-database.py {input.nrlist} {input.nrbed} \
+                    {input.alignment} {output}')
 
 rule filter_refseq_fasta:
     input: fain='{genome}/downloaded/refMrna.fa.gz', \
