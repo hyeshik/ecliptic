@@ -70,6 +70,9 @@ class GiantFASTAFile(object):
             linenum_en = length // colwidth
             offset_en = filepos + length + linenum_en * (linesize - colwidth)
         else:
+            start = max(0, start)
+            stop = min(length, stop)
+
             linenum_st = start // colwidth
             offset_st = filepos + start + linenum_st * (linesize - colwidth)
             linenum_en = stop // colwidth

@@ -85,7 +85,7 @@ rule pick_significant_crosslinking_sites:
         species = SAMPLE_SPECIES[wildcards.sample]
         shell('{PICK_SIGNIFICANTLY_CROSSLINKED_SITES_CMD} {input.candidates} \
                   {input.cutoffs} {wildcards.fdrlevel} {wildcards.method} \
-                  resources/{species}/genomeToRefSeq.chain \
+                  resources/{species}/nrRefSeq-alignment.db \
                   resources/{species}/genome.fa resources/{species}/nrRefSeq.fa \
                   {BINDING_SITES_CATALOG_FLANKING_WIDTH} \
                   resources/{species}/nrRefSeq-genome.bed.gz | gzip -c - > {output}')
