@@ -1,10 +1,8 @@
 # Snakefile.30.erroranalysis
 
-{% for method in 'del mod moddel entropy t2c'.split() %}
-targets(expand('erroranalyses/{sample}.significant_sites/{(method)}-{fdrlevel}.txt.gz',
-                 sample=list(CLIP_SAMPLES), fdrlevel=CROSSFEST_FDR_LEVELS))
-{% endfor %}
+ERROR_QUANT_METHODS = 'del mod moddel entropy t2c'.split()
 
+targets(expand('erroranalyses/{sample}.catalog.gz', sample=list(CLIP_SAMPLES)))
 
 {% for sample_name, sample in SAMPLES.items() %}
 rule count_errors_{(sample_name|rule_name)}:
@@ -76,17 +74,21 @@ rule calculate_error_fdr_cutoffs:
         inputprefix = os.path.commonprefix(input)
         shell('{CALC_CROSSLINKING_FDR_CUTOFFS_CMD} {inputprefix} {output}')
 
-rule pick_significant_crosslinking_sites:
+rule generate_candidate_sites_catalogue:
     input: candidates='erroranalyses/{sample}.nonzero.real.gz', \
-           cutoffs='erroranalyses/{sample}.{method}.fdr_cutoffs'
-    output: 'erroranalyses/{sample}.significant_sites/{method}-{fdrlevel}.txt.gz'
+           cutoffs=expand('erroranalyses/{{sample}}.{method}.fdr_cutoffs',
+                          method=ERROR_QUANT_METHODS)
+    output: 'erroranalyses/{sample}.catalog.gz'
     version: "1"
     run:
         species = SAMPLE_SPECIES[wildcards.sample]
-        shell('{PICK_SIGNIFICANTLY_CROSSLINKED_SITES_CMD} {input.candidates} \
-                  {input.cutoffs} {wildcards.fdrlevel} {wildcards.method} \
+        cutoffs_prefix = os.path.commonprefix(input.cutoffs)
+        fdrs = ','.join(map(str, CROSSFEST_FDR_LEVELS))
+
+        shell('{GENERATE_CANDIDATE_SITES_CATALOGUE_CMD} {input.candidates} \
+                  {cutoffs_prefix} {fdrs} \
                   resources/{species}/nrRefSeq-alignment.db \
                   resources/{species}/genome.fa resources/{species}/nrRefSeq.fa \
-                  {BINDING_SITES_CATALOG_FLANKING_WIDTH} \
-                  resources/{species}/nrRefSeq-genome.bed.gz | gzip -c - > {output}')
+                  resources/{species}/nrRefSeq-genome.bed.gz \
+                  {BINDING_SITES_CATALOG_FLANKING_WIDTH} | gzip -c - > {output}')
 
