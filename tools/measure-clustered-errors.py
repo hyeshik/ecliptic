@@ -51,7 +51,7 @@ class SAMMeasureClusteredError(object):
         if start >= 0:
             return self.seqs.get(chrom, start, stop).upper()
 
-        start, stop = 1 - stop, 1 - start
+        start, stop = -stop, -start
         return sequtils.reverse_complement(self.seqs.get(chrom, start, stop).upper())
 
     def open_intermediate_summary_output(self, filename):
@@ -130,7 +130,7 @@ class SAMMeasureClusteredError(object):
             sentropy = shannon_entropy(simcnt)
 
             if 0 < del_ratio < 0.9 or 0 < mod_ratio < 0.9:
-                abspos = leftend + pos if strand == '+' else 1 - leftend - pos
+                abspos = leftend + pos if strand == '+' else -1 - leftend - pos
                 print >> self.outnz, chrom, strand, abspos, refbase, kcnt, ' '.join(
                  map(str, simcnt)), del_ratio, mod_ratio, moddel_ratio, sentropy, t2c_ratio
 
@@ -151,7 +151,7 @@ class SAMMeasureClusteredError(object):
             nreads = int(l['qname'].split('-')[1])
             chrom, start, stop, strand, mismatches, cigar = l['mapped'][0]
             if strand == '-':
-                start, stop = 1 - stop, 1 - start
+                start, stop = -stop, -start # 0 maps to -1, 1 maps to -2, ...
             markset = (chrom, start, stop, cigar, nreads, l['seq'])
 
             if not clustered: # at the beginning
