@@ -32,6 +32,7 @@ from collections import defaultdict
 from .Utils import TokensDictParser, iter_tab_separated
 from .Paths import Paths
 from .Settings import settings
+from .support.yaml_ordereddict import OrderedDictYAMLLoader
 
 __all__ = [
     'DataSources', 'Project',
@@ -109,7 +110,8 @@ class Sample:
         samples_list_fn = os.path.join(datadir, 'SAMPLES')
 
         samples = {}
-        for label, record in yaml.load(open(samples_list_fn)).items():
+        for label, record in yaml.load(open(samples_list_fn),
+                                       Loader=OrderedDictYAMLLoader).items():
             samples[label] = cls(project, label=label, **record)
 
         return samples

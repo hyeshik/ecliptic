@@ -2,22 +2,26 @@ from __future__ import division
 from itertools import groupby
 
 __all__ = [
-    'LineParser', 'ParsedLine',
+    'LineParser', 'ParsedLine', 'ParsedLineComment',
 ]
 
 class LineParser(object):
 
-    def __init__(self, fields_spec, separator='\t', linefeed='\n'):
+    def __init__(self, fields_spec, separator='\t', linefeed='\n', comment=None):
         self.field2index = dict((field[0], i) for i, field in enumerate(fields_spec))
         self.fields_spec = fields_spec
         self.separator = separator
         self.linefeed = linefeed
+        self.comment = comment
 
     def parse(self, line):
+        if self.comment is not None and line.startswith(self.comment):
+            return ParsedLineComment(line.rstrip(self.linefeed), line)
+
         fields = line.rstrip(self.linefeed).split(self.separator)
         return ParsedLine(self.field2index, [
-            (data if adapter is None else adapter(data))
-            for data, (name, adapter) in zip(fields, self.fields_spec)])
+            (data if adapter is None else (adapter(data) if data else None))
+            for data, (name, adapter) in zip(fields, self.fields_spec)], line)
 
         return ParsedLine(self, line)
 
@@ -25,12 +29,26 @@ class LineParser(object):
         for line in it:
             yield self.parse(line)
 
+    def __call__(self, it):
+        return self.iter_parse(it)
+
+
+class ParsedLineComment(object):
+
+    def __init__(self, data, line):
+        self.data = data
+        self.line = line
+
+    def __str__(self):
+        return self.line
+
 
 class ParsedLine(object):
 
-    def __init__(self, field2index, data):
+    def __init__(self, field2index, data, line):
         self.field2index = field2index
         self.data = data
+        self.line = line
 
     def __getitem__(self, index):
         return self.data[index]
@@ -44,10 +62,16 @@ class ParsedLine(object):
         else:
             return self.data[self.field2index[name]]
 
+    def __getitem__(self, name):
+        return self.data.__getitem__(name)
+
     def __repr__(self):
         return '<ParsedLine %s>' % ' '.join(
             '%s=%s' % (name, repr(self.data[idx]))
             for name, idx in sorted(self.field2index.iteritems(), key=lambda x: x[1]))
+
+    def __str__(self):
+        return self.line
 
 
 class ParallelMatchingReader(object):

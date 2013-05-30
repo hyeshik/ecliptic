@@ -56,6 +56,7 @@
 """
 
 __all__ = [
+    'parse_sam_simple',
     'calculate_cigar_length', 'SAMParser', 'trim_cigar',
     'generate_cigar_map', 'CIGARCachedRefMap', 'CIGARMAP_READ2REF',
     'CIGARMAP_REF2READ',
@@ -68,7 +69,8 @@ __all__ = [
 import re
 from itertools import groupby
 from collections import deque
-from ecliptic.support.sequtils import reverse_complement, GiantFASTAFile
+from .sequtils import reverse_complement, GiantFASTAFile
+from .fileutils import LineParser
 
 F_PAIRED            = 0x0001
 F_PROPER_PAIR       = 0x0002
@@ -81,6 +83,20 @@ F_SECOND_READ       = 0x0080
 F_NOT_PRIMARY       = 0x0100
 F_QC_FAILURE        = 0x0200
 F_TECH_DUPLICATE    = 0x0400
+
+parse_sam_simple = LineParser([
+    ('qname', None),
+    ('flag', int),
+    ('rname', None),
+    ('pos', int),
+    ('mapq', int),
+    ('cigar', None),
+    ('rnext', None),
+    ('pnext', None),
+    ('tlen', int),
+    ('seq', None),
+    ('qual', None),
+], comment='@')
 
 cigar_pattern = re.compile('(\d+)([MIDNSHP])')
 def calculate_cigar_length(cigar):
