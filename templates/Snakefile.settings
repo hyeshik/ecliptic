@@ -11,3 +11,23 @@ CROSSFEST_OBJECTIVE_DEPTH = 2000 # Gb
 CROSSFEST_FDR_LEVELS = [0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
 
 BINDING_SITES_CATALOG_FLANKING_WIDTH = 50
+
+DELETION_ADJUSTMENT_DIRECTION = '5'
+
+#
+# Options for reporting
+#
+
+BRANDING = 'Ecliptic {( ECLIPTIC_VERSION )}' # change to '' if you want to remove this
+READ_CLASS_PROP_TABLE_CLASSES = """
+    rRNA CDS 5'UTR 3'UTR intron tRNA miRNA Repeats Others
+""".split()
+READ_CLASS_PROP_PLOT_CLASSES = READ_CLASS_PROP_TABLE_CLASSES
+READ_CLASS_PROP_MAPPINGS = {
+    "5'UTR": ('UTR5',),
+    "3'UTR": ('UTR3',),
+    "Repeats": ('SINE', 'LINE', 'LTR', 'Simple_repeat', 'DNA', 'Satellite',
+                'RC', 'LTR?', 'DNA?', 'RC?', 'Low_complexity', 'SINE?', 'LINE?'),
+}
+READ_CLASS_PROP_DEFAULT = 'Others'
+

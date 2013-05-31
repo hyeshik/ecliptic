@@ -1,0 +1,35 @@
+# Snakefile.200.report
+
+PLOT_FORMATS = ['png', 'pdf']
+TABLE_TYPES = ['percentages', 'reads']
+
+targets(expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS))
+targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES))
+
+STATS_SAMPLES_SET = set(CLIP_SAMPLES | RNAseq_SAMPLES)
+STATS_SAMPLES = [s for s in ALL_SAMPLES_ORDER if s in STATS_SAMPLES_SET] # to the original order
+
+
+rule prep_report_class_assignment_props:
+    input: expand('stats/classprop.{sample}.csv', sample=STATS_SAMPLES)
+    output: plots=expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS), \
+            table=expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES)
+    version: "1"
+    run:
+        samplespecs = ['{s}:stats/classprop.{s}.csv'.format(s=s) for s in STATS_SAMPLES]
+        brandingopt = "--branding '{BRANDING}'" if BRANDING else ''
+        plotopts = ' '.join('--write-plot "{}"'.format(f) for f in output.plots)
+        tableopts = ' '.join('--write-{type}-csv "report/tables/read-class-proportions.{type}.csv"'.format(type=t) for t in TABLE_TYPES)
+        tableclsopts = '--table-classes "{}"'.format(','.join(READ_CLASS_PROP_TABLE_CLASSES))
+        plotclsopts = '--plot-classes "{}"'.format(','.join(READ_CLASS_PROP_PLOT_CLASSES))
+        classmappings = dict((origcls, (origcls,))
+          for origcls in set(READ_CLASS_PROP_TABLE_CLASSES) | set(READ_CLASS_PROP_PLOT_CLASSES))
+        classmappings.update(READ_CLASS_PROP_MAPPINGS)
+        classmappingopts = ' '.join('--class-mapping "{label}={classes}"'.format(
+                                    label=label, classes=','.join(classes))
+                                    for label, classes in classmappings.items())
+
+        shell('{REPORT_PLOT_CLASS_PROPORTIONS_CMD} --default-class {READ_CLASS_PROP_DEFAULT} \
+            {brandingopt} {plotopts} {tableopts} {plotclsopts} {tableclsopts} \
+            {classmappingopts} {samplespecs}')
+

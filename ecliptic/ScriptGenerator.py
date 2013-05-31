@@ -141,5 +141,8 @@ class ScriptGenerator:
         variables['WORKDIR'] = project.workdir
         variables['THREADS'] = 32 # XXX: change this to detect machine configuration
 
+        from ecliptic import VERSION_STRING
+        variables['ECLIPTIC_VERSION'] = VERSION_STRING
+
         return variables
 

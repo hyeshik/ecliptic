@@ -84,7 +84,7 @@ class ColorSet(object):
         self.byiter = [color for k, color in colors]
 
     def __getitem__(self, key):
-        return self.byiter[key]
+        return self.byiter[key % len(self.byiter)]
 
     def __iter__(self):
         return iter(self.byiter)

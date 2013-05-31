@@ -7,7 +7,7 @@ import numpy as np
 from collections import defaultdict
 from ecliptic.support.plotutils import iwork_colors, adjust_numbers_style
 
-def load_original_stats(samples, class_mapping):
+def load_original_stats(samples, class_mapping, default_class):
     reads = defaultdict(lambda: defaultdict(int))
     percentages = defaultdict(lambda: defaultdict(float))
 
@@ -15,7 +15,7 @@ def load_original_stats(samples, class_mapping):
         sample = smpspec['name']
 
         for row in csv.DictReader(open(smpspec['file'])):
-            for mapped_class in class_mapping[row['class']] or [row['class']]:
+            for mapped_class in class_mapping[row['class']] or [default_class]:
                 reads[mapped_class][sample] += int(row['reads'])
                 percentages[mapped_class][sample] += float(row['proportion'])
 
@@ -97,6 +97,8 @@ def parse_arguments():
                         default=[], help='file path to write a bar chart')
     parser.add_argument('--class-mapping', dest='class_mappings', action='append',
                         default=[], help='rename or merge classes into a class')
+    parser.add_argument('--default-class', dest='default_class', action='store',
+                        default='Others', help='default class name for unspecified classes')
     parser.add_argument('--branding', dest='branding', action='store',
                         default=None, help='text for branding on the left bottom corner')
     args = parser.parse_args()
@@ -112,6 +114,7 @@ def parse_arguments():
         'plot_classes': args.plot_classes.split(','),
         'table_classes': args.table_classes.split(','),
         'class_mappings': class_mappings,
+        'default_class': args.default_class,
         'write_reads_csv': args.write_reads_csv,
         'write_percentages_csv': args.write_percentages_csv,
         'write_plot': args.write_plot,
@@ -121,7 +124,8 @@ def parse_arguments():
 if __name__ == '__main__':
     options = parse_arguments()
 
-    stats = load_original_stats(options['samples'], options['class_mappings'])
+    stats = load_original_stats(options['samples'], options['class_mappings'],
+                                options['default_class'])
 
     if options['write_reads_csv'] is not None:
         opt = options['write_reads_csv']

@@ -46,7 +46,8 @@ class TemporaryDirectory(object):
 
 # Sample translation tables
 
-ALL_SAMPLES = set("""{%- for name in SAMPLES -%}{(name)} {% endfor %}""".split())
+ALL_SAMPLES_ORDER = """{%- for name in SAMPLES -%}{(name)} {% endfor %}""".split()
+ALL_SAMPLES = set(ALL_SAMPLES_ORDER)
 CLIP_SAMPLES = RNAseq_SAMPLES = SNPreference_SAMPLES = set() # safeguard for unused workflows
 {% for workflow in WORKFLOWS -%}
 {(workflow)}_SAMPLES = set("""

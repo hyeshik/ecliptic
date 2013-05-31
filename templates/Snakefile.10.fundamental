@@ -74,13 +74,16 @@ rule align_reference_reads_to_genome:
     input: 'bg_variations/{source}.fq.gz'
     output: 'bg_variations/{source}.bam'
     threads: {(THREADS)}
-    version: "1"
+    version: "2"
     run:
         species = SOURCE_SPECIES[wildcards.source]
         splice_index = GSNAP_SPLICE_INDEX.format(species=species)
         shell('gsnap -D resources/{species} -d genome -B 4 -A sam -m 0.05 --gunzip \
                     -t {threads} --terminal-threshold=9999 -s {splice_index} {input} | \
-               {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
+               {SAM_MULTIHIT_RESOLVE_CMD} 2 | \
+               {ADJUST_DELETION_POSITIONS_CMD} resources/{species}/genome.fa \
+                    {DELETION_ADJUSTMENT_DIRECTION} | \
+               samtools view -bS - > {output}')
 
 rule call_variants:
     input: 'bg_variations/{source}.sorted.bam'
@@ -121,7 +124,7 @@ rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
             {%- endif %}
     output: 'alignments/{(sample_name)}.bam'
     threads: {(THREADS)}
-    version: "1"
+    version: "2"
     run:
         species = '{(sample.species)}'
         splice_index = GSNAP_SPLICE_INDEX.format(species=species)
@@ -129,7 +132,10 @@ rule align_sample_reads_to_genome_{(sample_name|rule_name)}:
         shell('gsnap -D resources/{species} -d genome -B 4 -O -A sam -m 0.1 --gunzip \
                     -t {threads} --terminal-threshold=9999 -s {splice_index} \
                     {snp_index} {input.fasta} | \
-               {SAM_MULTIHIT_RESOLVE_CMD} 2 | samtools view -bS - > {output}')
+               {SAM_MULTIHIT_RESOLVE_CMD} 2 | \
+               {ADJUST_DELETION_POSITIONS_CMD} resources/{species}/genome.fa \
+                    {DELETION_ADJUSTMENT_DIRECTION} | \
+               samtools view -bS - > {output}')
 
 {% endfor %}
 
