@@ -28,7 +28,7 @@ import os
 import csv
 import yaml
 from weakref import proxy
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from .Utils import TokensDictParser, iter_tab_separated
 from .Paths import Paths
 from .Settings import settings
@@ -42,7 +42,7 @@ class DataSources:
 
     def __init__(self, datadir):
         self.datadir = datadir
-        self.projects = {}
+        self.projects = OrderedDict()
 
         self.scan()
 
@@ -109,7 +109,7 @@ class Sample:
     def scan_samples(cls, project, datadir):
         samples_list_fn = os.path.join(datadir, 'SAMPLES')
 
-        samples = {}
+        samples = OrderedDict()
         for label, record in yaml.load(open(samples_list_fn),
                                        Loader=OrderedDictYAMLLoader).items():
             samples[label] = cls(project, label=label, **record)

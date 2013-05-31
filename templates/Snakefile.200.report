@@ -17,7 +17,8 @@ rule prep_report_class_assignment_props:
     version: "1"
     run:
         samplespecs = ['{s}:stats/classprop.{s}.csv'.format(s=s) for s in STATS_SAMPLES]
-        brandingopt = "--branding '{BRANDING}'" if BRANDING else ''
+        print(samplespecs)
+        brandingopt = "--branding '{}'".format(BRANDING) if BRANDING else ''
         plotopts = ' '.join('--write-plot "{}"'.format(f) for f in output.plots)
         tableopts = ' '.join('--write-{type}-csv "report/tables/read-class-proportions.{type}.csv"'.format(type=t) for t in TABLE_TYPES)
         tableclsopts = '--table-classes "{}"'.format(','.join(READ_CLASS_PROP_TABLE_CLASSES))
