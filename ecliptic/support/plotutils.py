@@ -47,12 +47,14 @@ def adjust_numbers_style(ax, spines=('left', 'bottom'), xgrid=False, smart_bound
     # turn off ticks where there is no spine
     if 'left' in spines:
         ax.yaxis.set_ticks_position('left')
+        ax.yaxis.set_tick_params(pad=9)
     else:
         # no yaxis ticks
         ax.yaxis.set_ticks([])
 
     if 'bottom' in spines:
         ax.xaxis.set_ticks_position('bottom')
+        ax.xaxis.set_tick_params(pad=7)
     else:
         # no xaxis ticks
         ax.xaxis.set_ticks([])
