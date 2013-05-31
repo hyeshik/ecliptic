@@ -2,7 +2,11 @@ import os
 import tempfile
 import shutil
 import pickle
+import csv
 from itertools import *
+from functools import *
+import subprocess
+from concurrent import futures
 
 {% block settings %}{% endblock %}
 
@@ -95,6 +99,19 @@ def unpickle(filename):
         u = pickle._Unpickler(f)
         u.encoding = 'latin1'
         return u.load()
+
+def count_reads_fastq(filename):
+    nl = subprocess.check_output('gzip -dc "{}" | wc -l'.format(filename), shell=True)
+    return int(nl) // 4
+
+def count_unique_reads_fasta(filename):
+    out = subprocess.check_output('cat "{}" | grep "^>" | wc -l'.format(filename), shell=True)
+    return int(out)
+
+def count_uniqmap_alignments_bam(filename):
+    out = subprocess.check_output("samtools view '{}'|cut -f1|awk -F- \
+                '{{x=x+$2}} END {{print x}}'".format(filename), shell=True)
+    return int(out)
 
 
 # Fail if any intermediate process failed in pipelined commands

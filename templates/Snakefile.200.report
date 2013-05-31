@@ -5,9 +5,50 @@ TABLE_TYPES = ['percentages', 'reads']
 
 targets(expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS))
 targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES))
+targets(['report/tables/sequence-processing.csv'])
 
 STATS_SAMPLES_SET = set(CLIP_SAMPLES | RNAseq_SAMPLES)
 STATS_SAMPLES = [s for s in ALL_SAMPLES_ORDER if s in STATS_SAMPLES_SET] # to the original order
+
+ORIGINAL_SEQREAD_PROCESSED_PAIRS = list(filter(lambda x: x[0] in STATS_SAMPLES_SET, [
+{% for sample_name, sample in SAMPLES.items() -%}
+  ('{(sample_name)}',
+   '{% for acc in sample.runs %}original/{(acc)}.fq.gz {% endfor %}'.split(),
+   'sequences/{(sample_name)}.primary.fq.gz',
+   'alignments/{(sample_name)}.bam'),
+{%- endfor %}
+]))
+
+
+rule prep_report_seq_processing:
+    input: list(chain(*[spec[1:] for spec in ORIGINAL_SEQREAD_PROCESSED_PAIRS]))
+    output: 'report/tables/sequence-processing.csv'
+    version: "1"
+    threads: 12
+    run:
+        counting_futures = {}
+
+        with futures.ProcessPoolExecutor(threads) as executor:
+            for name, origseqs, primaryfq, alnbam in ORIGINAL_SEQREAD_PROCESSED_PAIRS:
+                counting_futures[name] = {
+                    'original': [executor.submit(count_reads_fastq, origseqfile)
+                                 for origseqfile in origseqs],
+                    'primary': executor.submit(count_reads_fastq, primaryfq),
+                    'uniqaln': executor.submit(count_uniqmap_alignments_bam, alnbam),
+                }
+
+            writer = csv.writer(open(output[0], 'w'))
+            writer.writerow(['Sample Name', 'Total Reads', 'Remaining Reads After Processing',
+                             'Remaining Reads After Processing (%)',
+                             'Uniquely Mappable Reads To Genome',
+                             'Uniquely Mappable Reads To Genome (%)'])
+
+            for name, _, _, _ in ORIGINAL_SEQREAD_PROCESSED_PAIRS:
+                original = sum(f.result() for f in counting_futures[name]['original'])
+                primary = counting_futures[name]['primary'].result()
+                uniqaln = counting_futures[name]['uniqaln'].result()
+                writer.writerow((name, original, primary, primary / original * 100,
+                                 uniqaln, uniqaln / original * 100))
 
 
 rule prep_report_class_assignment_props:
