@@ -5,7 +5,8 @@ TABLE_TYPES = ['percentages', 'reads']
 
 targets(expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS))
 targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES))
-targets(['report/tables/sequence-processing.csv'])
+targets(['report/tables/sequence-processing.csv',
+         'report/tables/error-profiles-overview.csv'])
 
 STATS_SAMPLES_SET = set(CLIP_SAMPLES | RNAseq_SAMPLES)
 STATS_SAMPLES = [s for s in ALL_SAMPLES_ORDER if s in STATS_SAMPLES_SET] # to the original order
@@ -73,4 +74,14 @@ rule prep_report_class_assignment_props:
         shell('{REPORT_PLOT_CLASS_PROPORTIONS_CMD} --default-class {READ_CLASS_PROP_DEFAULT} \
             {brandingopt} {plotopts} {tableopts} {plotclsopts} {tableclsopts} \
             {classmappingopts} {samplespecs}')
+
+rule prep_report_pertag_error_profiles:
+    input: expand('alignments/{sample}.bam', sample=STATS_SAMPLES)
+    output: 'report/tables/error-profiles-overview.csv'
+    version: "1"
+    threads: 12
+    run:
+        samplespecs = ['{s}:alignments/{s}.bam'.format(s=s) for s in STATS_SAMPLES]
+        shell('{REPORT_OVERALL_ERROR_FREQUENCIES_CMD} --parallel {threads} {samplespecs} \
+                    > {output} ')
 
