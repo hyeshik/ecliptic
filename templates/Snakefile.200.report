@@ -3,13 +3,9 @@
 PLOT_FORMATS = ['png', 'pdf']
 TABLE_TYPES = ['percentages', 'reads']
 
-targets(expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS))
-targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES))
-targets(['report/tables/sequence-processing.csv',
-         'report/tables/error-profiles-overview.csv'])
-
 STATS_SAMPLES_SET = set(CLIP_SAMPLES | RNAseq_SAMPLES)
 STATS_SAMPLES = [s for s in ALL_SAMPLES_ORDER if s in STATS_SAMPLES_SET] # to the original order
+CLIP_SAMPLES_ORDERED = [s for s in ALL_SAMPLES_ORDER if s in CLIP_SAMPLES]
 
 ORIGINAL_SEQREAD_PROCESSED_PAIRS = list(filter(lambda x: x[0] in STATS_SAMPLES_SET, [
 {% for sample_name, sample in SAMPLES.items() -%}
@@ -19,6 +15,15 @@ ORIGINAL_SEQREAD_PROCESSED_PAIRS = list(filter(lambda x: x[0] in STATS_SAMPLES_S
    'alignments/{(sample_name)}.bam'),
 {%- endfor %}
 ]))
+
+
+targets(expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS))
+targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES))
+targets(['report/tables/sequence-processing.csv',
+         'report/tables/error-profiles-overview.csv',
+         'report/tables/error-profiles-byposition.csv'])
+targets(expand('report/plots/error-profile-{sample}.{type}.{format}',
+               sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png')))
 
 
 rule prep_report_seq_processing:
@@ -76,12 +81,26 @@ rule prep_report_class_assignment_props:
             {classmappingopts} {samplespecs}')
 
 rule prep_report_pertag_error_profiles:
-    input: expand('alignments/{sample}.bam', sample=STATS_SAMPLES)
+    input: expand('alignments/{sample}.bam', sample=CLIP_SAMPLES)
     output: 'report/tables/error-profiles-overview.csv'
     version: "1"
     threads: 12
     run:
-        samplespecs = ['{s}:alignments/{s}.bam'.format(s=s) for s in STATS_SAMPLES]
+        samplespecs = ['{s}:alignments/{s}.bam'.format(s=s) for s in CLIP_SAMPLES]
         shell('{REPORT_OVERALL_ERROR_FREQUENCIES_CMD} --parallel {threads} {samplespecs} \
                     > {output} ')
+
+rule prep_report_positional_error_profiles:
+    input: expand('erroranalyses/{sample}.errorprof.pickle', sample=CLIP_SAMPLES)
+    output: 'report/tables/error-profiles-byposition.csv', \
+            expand('report/plots/error-profile-{sample}.{type}.{format}',
+                   sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png'))
+    version: "1"
+    run:
+        samplespecs = ['{s}:erroranalyses/{s}.errorprof.pickle'.format(s=s) \
+                       for s in CLIP_SAMPLES]
+        shell('{REPORT_ERROR_POSITIONAL_DISTRIBUTION_CMD} \
+               --output-csv "report/tables/error-profiles-byposition.csv" \
+               --output-plot "report/plots/error-profile-{{sample}}.{{type}}.{{format}}" \
+               {samplespecs}')
 
