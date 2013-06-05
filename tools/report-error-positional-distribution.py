@@ -5,8 +5,11 @@ import sys
 import os
 import pickle
 from ecliptic.support.plotutils import iwork_colors, adjust_numbers_style
-from matplotlib import pyplot as plt
 import numpy as np
+
+import matplotlib as mpl
+mpl.use('Agg') # to enable plotting without X11
+from matplotlib import pyplot as plt
 
 PLOT_FORMATS = ['png', 'pdf']
 BASES = 'ACGTX'
