@@ -88,6 +88,8 @@ if executable "python" "Python 2.x"; then
   python2mod matplotlib
   python2mod pysam
   python2mod rpy
+  python2mod weblogolib
+  python2mod corebio
 fi
 
 

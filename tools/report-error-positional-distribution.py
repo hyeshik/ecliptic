@@ -4,12 +4,12 @@ import csv
 import sys
 import os
 import pickle
-from ecliptic.support.plotutils import iwork_colors, adjust_numbers_style
 import numpy as np
 
 import matplotlib as mpl
 mpl.use('Agg') # to enable plotting without X11
 from matplotlib import pyplot as plt
+from ecliptic.support.plotutils import iwork_colors, adjust_numbers_style
 
 PLOT_FORMATS = ['png', 'pdf']
 BASES = 'ACGTX'

@@ -2,6 +2,8 @@
 
 PLOT_FORMATS = ['png', 'pdf']
 TABLE_TYPES = ['percentages', 'reads']
+WEBLOGO_UNIT_TYPES = ['probability', 'bits']
+FLANKING_SEQUENCE_SOURCES = ['genome', 'transcriptome']
 
 STATS_SAMPLES_SET = set(CLIP_SAMPLES | RNAseq_SAMPLES)
 STATS_SAMPLES = [s for s in ALL_SAMPLES_ORDER if s in STATS_SAMPLES_SET] # to the original order
@@ -24,7 +26,10 @@ targets(['report/tables/sequence-processing.csv',
          'report/tables/error-profiles-byposition.csv'])
 targets(expand('report/plots/error-profile-{sample}.{type}.{format}',
                sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png')))
-
+targets(expand('report/plots/bindingsite-logo-{sample}-{source}-{score_type}-{unit_type}.{format}',
+                format=PLOT_FORMATS, sample=CLIP_SAMPLES,
+                score_type=BINDINGSITE_LOGO_SCORE_TYPES,
+                unit_type=WEBLOGO_UNIT_TYPES, source=FLANKING_SEQUENCE_SOURCES))
 
 rule prep_report_seq_processing:
     input: list(chain(*[spec[1:] for spec in ORIGINAL_SEQREAD_PROCESSED_PAIRS]))
@@ -103,4 +108,19 @@ rule prep_report_positional_error_profiles:
                --output-csv "report/tables/error-profiles-byposition.csv" \
                --output-plot "report/plots/error-profile-{{sample}}.{{type}}.{{format}}" \
                {samplespecs}')
+
+rule prep_report_binding_site_weblogos:
+    input: 'erroranalyses/{sample}.catalog.gz'
+    output: expand('report/plots/bindingsite-logo-{{sample}}-{{seqsource}}-{{score_type}}-{{unit_type}}.{format}',
+                    format=PLOT_FORMATS)
+    version: '1'
+    run:
+        mindepth, minscore = BINDINGSITE_LOGO_CUTOFFS[wildcards.score_type]
+        output_prefix = os.path.commonprefix(output)
+        shell('{REPORT_PLOT_WEBLOGO_FROM_BINDING_SITES_CMD} --score-type {wildcards.score_type} \
+                --minimum-depth {mindepth} --minimum-score {minscore} \
+                --window {BINDINGSITE_LOGO_WINDOW} --logo-type {wildcards.unit_type} \
+                --seq-source {wildcards.seqsource} \
+                --output-pdf {output_prefix}df --output-png {output_prefix}ng \
+                {input}')
 

@@ -31,3 +31,15 @@ READ_CLASS_PROP_MAPPINGS = {
 }
 READ_CLASS_PROP_DEFAULT = 'Others'
 
+BINDINGSITE_LOGO_SCORE_TYPES = ['del', 'moddel', 'mod', 'entropy', 't2c']
+# The ranges of scores vary depending on protein, crosslinking environments.
+# Tune these cutoffs for your own experiment.
+BINDINGSITE_LOGO_CUTOFFS = { # 'type': (depth, score),
+    'del':      (50, 0.1),
+    'moddel':   (50, 0.2),
+    'mod':      (50, 0.2),
+    'entropy':  (50, 0.8),
+    't2c':      (50, 0.3),
+}
+BINDINGSITE_LOGO_WINDOW = 10
+

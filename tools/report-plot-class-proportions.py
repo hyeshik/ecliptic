@@ -4,11 +4,11 @@ import csv
 import sys
 import numpy as np
 from collections import defaultdict
-from ecliptic.support.plotutils import iwork_colors, adjust_numbers_style
 
 import matplotlib as mpl
 mpl.use('Agg') # to generate plots without a X11 display
 from matplotlib import pyplot as plt
+from ecliptic.support.plotutils import iwork_colors, adjust_numbers_style
 
 def load_original_stats(samples, class_mapping, default_class):
     reads = defaultdict(lambda: defaultdict(int))
