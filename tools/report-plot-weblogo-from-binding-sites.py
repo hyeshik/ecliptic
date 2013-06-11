@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 from StringIO import StringIO
 from ecliptic.FormattedParsers import BindingSiteCatalogParser
-from ecliptic.support.plotutils import iwork_colors
 from operator import attrgetter
 import gzip
 import csv
+
+import matplotlib as mpl
+mpl.use('Agg')
+from ecliptic.support.plotutils import iwork_colors
 
 #<ParsedLine chrom='chr1' strand='+' pos=3532312 base='G' depth=10 del_score=0.7 mod_score=0.3 moddel_score=1.0 entropy_score=0.610864302055 t2c_score=0.0 del_fdr=0.0001 mod_fdr=1.0 moddel_fdr=0.0001 entropy_fdr=1.0 t2c_fdr=1.0 genome_seq='TGTTTGCCACCCTTGGTGTGGTAGTCACGTCCCTTTAACAAGTGTGGGTCGGAGCCAAGCAGCACGAACTGCAGGTGAACTCCATACAGCTACTTTACTAC' transcript_seq='' transcript_acc='' transcript_pos=None>
 

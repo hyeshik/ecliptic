@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from __future__ import division
-from StringIO import StringIO
 from ecliptic.FormattedParsers import BindingSiteCatalogParser
 from operator import attrgetter
 from collections import Counter
