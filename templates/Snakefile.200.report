@@ -24,12 +24,20 @@ targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYP
 targets(['report/tables/sequence-processing.csv',
          'report/tables/error-profiles-overview.csv',
          'report/tables/error-profiles-byposition.csv'])
-targets(expand('report/plots/error-profile-{sample}.{type}.{format}',
+targets(expand('report/plots/error-profile/error-profile-{sample}.{type}.{format}',
                sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png')))
-targets(expand('report/plots/bindingsite-logo-{sample}-{source}-{score_type}-{unit_type}.{format}',
+targets(expand('report/plots/binding-site/logo-{sample}-{source}-{score_type}-{unit_type}.{format}',
                 format=PLOT_FORMATS, sample=CLIP_SAMPLES,
                 score_type=BINDINGSITE_LOGO_SCORE_TYPES,
                 unit_type=WEBLOGO_UNIT_TYPES, source=FLANKING_SEQUENCE_SOURCES))
+targets(expand('report/plots/nmer-enrichment/histogram-{sample}-{source}-{score_type}.{format}',
+                format=PLOT_FORMATS, sample=CLIP_SAMPLES,
+                score_type=BINDINGSITE_LOGO_SCORE_TYPES,
+                source=FLANKING_SEQUENCE_SOURCES))
+targets(expand('report/tables/nmer-enrichment/nmer-enrichment-{sample}-{source}-{score_type}.csv',
+                sample=CLIP_SAMPLES, score_type=BINDINGSITE_LOGO_SCORE_TYPES,
+                source=FLANKING_SEQUENCE_SOURCES))
+
 
 rule prep_report_seq_processing:
     input: list(chain(*[spec[1:] for spec in ORIGINAL_SEQREAD_PROCESSED_PAIRS]))
@@ -98,20 +106,20 @@ rule prep_report_pertag_error_profiles:
 rule prep_report_positional_error_profiles:
     input: expand('erroranalyses/{sample}.errorprof.pickle', sample=CLIP_SAMPLES)
     output: 'report/tables/error-profiles-byposition.csv', \
-            expand('report/plots/error-profile-{sample}.{type}.{format}',
-                   sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png'))
+            expand('report/plots/error-profile/error-profile-{sample}.{type}.{format}',
+                   sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=PLOT_FORMATS)
     version: "1"
     run:
         samplespecs = ['{s}:erroranalyses/{s}.errorprof.pickle'.format(s=s) \
                        for s in CLIP_SAMPLES]
         shell('{REPORT_ERROR_POSITIONAL_DISTRIBUTION_CMD} \
                --output-csv "report/tables/error-profiles-byposition.csv" \
-               --output-plot "report/plots/error-profile-{{sample}}.{{type}}.{{format}}" \
+               --output-plot "report/plots/error-profile/error-profile-{{sample}}.{{type}}.{{format}}" \
                {samplespecs}')
 
 rule prep_report_binding_site_weblogos:
     input: 'erroranalyses/{sample}.catalog.gz'
-    output: expand('report/plots/bindingsite-logo-{{sample}}-{{seqsource}}-{{score_type}}-{{unit_type}}.{format}',
+    output: expand('report/plots/binding-site/logo-{{sample}}-{{seqsource}}-{{score_type}}-{{unit_type}}.{format}',
                     format=PLOT_FORMATS)
     version: '1'
     run:
@@ -123,4 +131,21 @@ rule prep_report_binding_site_weblogos:
                 --seq-source {wildcards.seqsource} \
                 --output-pdf {output_prefix}df --output-png {output_prefix}ng \
                 {input}')
+
+rule prep_report_nmer_enrichment:
+    input: 'erroranalyses/{sample}.catalog.gz'
+    output: plotoutputs=expand('report/plots/nmer-enrichment/histogram-{{sample}}-{{seqsource}}-{{score_type}}.{format}', \
+                format=PLOT_FORMATS), \
+            csv='report/tables/nmer-enrichment/nmer-enrichment-{sample}-{seqsource}-{score_type}.csv'
+    version: '1'
+    run:
+        mindepth, minscore = FLANKING_NMER_ENRICHMENT_CUTOFFS[wildcards.score_type]
+        output_prefix = os.path.commonprefix(output.plotoutputs)
+        shell('{REPORT_NMER_ENRICHMENT_CMD} --score-type {wildcards.score_type} \
+                --minimum-depth {mindepth} --minimum-score {minscore} \
+                --flanking-window {FLANKING_NMER_ENRICHMENT_WINDOW} \
+                --nmer-width {FLANKING_NMER_ENRICHMENT_SIZE} \
+                --seq-source {wildcards.seqsource} \
+                --output-pdf {output_prefix}df --output-png {output_prefix}ng \
+                --output-csv {output.csv} {input}')
 
