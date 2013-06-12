@@ -1,3 +1,4 @@
+{# ecliptic: setting -#}
 #---
 # tunable parameters
 
@@ -18,7 +19,7 @@ DELETION_ADJUSTMENT_DIRECTION = '5'
 # Options for reporting
 #
 
-BRANDING = 'Ecliptic {( ECLIPTIC_VERSION )}' # change to '' if you want to remove this
+BRANDING = 'Ecliptic {( ECLIPTIC_VERSION )}' # change this to '' if you want to remove this
 READ_CLASS_PROP_TABLE_CLASSES = """
     rRNA CDS 5'UTR 3'UTR intron tRNA miRNA Repeats Others
 """.split()
@@ -43,7 +44,14 @@ BINDINGSITE_LOGO_CUTOFFS = { # 'type': (depth, score),
 }
 BINDINGSITE_LOGO_WINDOW = 10
 
+FLANKING_NMER_ENRICHMENT_SCORE_TYPES = BINDINGSITE_LOGO_SCORE_TYPES
 FLANKING_NMER_ENRICHMENT_CUTOFFS = BINDINGSITE_LOGO_CUTOFFS
 FLANKING_NMER_ENRICHMENT_WINDOW = 8 # nt in one direction. 8 makes 8 * 2 + 1 = 17 nt seq.
 FLANKING_NMER_ENRICHMENT_SIZE = 6   # nt of `N'-mer to test
+
+BASEPAIRING_PROPENSITY_WINDOW = 10 # nt in one direction. 10 makes 10 * 2 + 1 = 21 nt seq.
+BASEPAIRING_PROPENSITY_MINIMUM_ITERATION = 100 # minimum number of shuffling iterations
+BASEPAIRING_PROPENSITY_MINIMUM_SCAN = 10000 # minimum number of #seq * iterations
+BASEPAIRING_PROPENSITY_SCORE_TYPES = BINDINGSITE_LOGO_SCORE_TYPES
+BASEPAIRING_PROPENSITY_CUTOFFS = BINDINGSITE_LOGO_CUTOFFS
 

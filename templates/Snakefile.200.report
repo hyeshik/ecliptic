@@ -32,10 +32,10 @@ targets(expand('report/plots/binding-site/logo-{sample}-{source}-{score_type}-{u
                 unit_type=WEBLOGO_UNIT_TYPES, source=FLANKING_SEQUENCE_SOURCES))
 targets(expand('report/plots/nmer-enrichment/histogram-{sample}-{source}-{score_type}.{format}',
                 format=PLOT_FORMATS, sample=CLIP_SAMPLES,
-                score_type=BINDINGSITE_LOGO_SCORE_TYPES,
+                score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
                 source=FLANKING_SEQUENCE_SOURCES))
 targets(expand('report/tables/nmer-enrichment/nmer-enrichment-{sample}-{source}-{score_type}.csv',
-                sample=CLIP_SAMPLES, score_type=BINDINGSITE_LOGO_SCORE_TYPES,
+                sample=CLIP_SAMPLES, score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
                 source=FLANKING_SEQUENCE_SOURCES))
 
 

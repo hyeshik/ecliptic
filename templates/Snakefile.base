@@ -9,6 +9,7 @@ import subprocess
 from concurrent import futures
 
 {% block settings %}{% endblock %}
+include: '{( Paths.workdir )}/{( NAME )}/Snakefile.settings' # load customized settings
 
 #---
 # directories

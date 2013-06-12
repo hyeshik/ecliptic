@@ -90,6 +90,8 @@ if executable "python" "Python 2.x"; then
   python2mod rpy
   python2mod weblogolib
   python2mod corebio
+  python2mod wx "wxPython >= 2.8"
+  python2mod futures
 fi
 
 
