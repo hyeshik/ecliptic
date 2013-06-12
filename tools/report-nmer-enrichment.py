@@ -27,8 +27,8 @@ def load_sequences(inp, scoretype, mindepth, minscore, seqwidth, is_transcriptom
     getfdr = attrgetter(scoretype + '_fdr')
 
     for i, row in enumerate(BindingSiteCatalogParser(inp)):
-        if row.strand == '-':
-            continue
+        #if row.strand == '-':
+        #    continue
         if row.depth >= mindepth and getscore(row) >= minscore:
         #if getfdr(row) < 0.0011:
             if not is_transcriptome:

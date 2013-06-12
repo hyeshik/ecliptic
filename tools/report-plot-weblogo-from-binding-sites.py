@@ -25,8 +25,8 @@ def load_sequences(inp, scoretype, mindepth, minscore, seqwidth):
     genome_nseqs = transcript_nseqs = 0
 
     for i, row in enumerate(BindingSiteCatalogParser(inp)):
-        if row.strand == '-':
-            continue
+        #if row.strand == '-':
+        #    continue
         if row.depth >= mindepth and getscore(row) >= minscore:
         #if getfdr(row) < 0.0011:
             genome_seqs.write('>%d\n%s\n' % (i, get_center_seq(row.genome_seq, seqwidth)))

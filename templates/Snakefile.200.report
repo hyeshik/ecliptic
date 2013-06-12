@@ -37,6 +37,12 @@ targets(expand('report/plots/nmer-enrichment/histogram-{sample}-{source}-{score_
 targets(expand('report/tables/nmer-enrichment/nmer-enrichment-{sample}-{source}-{score_type}.csv',
                 sample=CLIP_SAMPLES, score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
                 source=FLANKING_SEQUENCE_SOURCES))
+targets(expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}-preview.png',
+                sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
+                source=FLANKING_SEQUENCE_SOURCES))
+targets(expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}.zip',
+                sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
+                source=FLANKING_SEQUENCE_SOURCES))
 
 
 rule prep_report_seq_processing:
@@ -148,4 +154,18 @@ rule prep_report_nmer_enrichment:
                 --seq-source {wildcards.seqsource} \
                 --output-pdf {output_prefix}df --output-png {output_prefix}ng \
                 --output-csv {output.csv} {input}')
+
+rule prep_report_base_pairing_propensity:
+    input: 'erroranalyses/{sample}.catalog.gz'
+    output: preview='report/plots/base-pairing/pairing-{sample}-{seqsource}-{score_type}-preview.png', \
+            package='report/plots/base-pairing/pairing-{sample}-{seqsource}-{score_type}.zip'
+    version: '1'
+    run:
+        mindepth, minscore = BASEPAIRING_PROPENSITY_CUTOFFS[wildcards.score_type]
+        shell('{REPORT_BASE_PAIRING_PROPENSITY_CMD} --score-type {wildcards.score_type} \
+                --minimum-depth {mindepth} --minimum-score {minscore} \
+                --flanking-window {BASEPAIRING_PROPENSITY_WINDOW} \
+                --seq-source {wildcards.seqsource} \
+                --output-preview-png {output.preview} \
+                --output-package {output.package} {input}')
 
