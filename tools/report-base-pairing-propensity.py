@@ -251,6 +251,33 @@ such as Inkscape or Adobe Illustrator in this order:
 Good luck!
 """.replace('\n', '\r\n')
 
+NODATA_PNG = """\
+iVBORw0KGgoAAAANSUhEUgAAAD8AAAATCAMAAAAQ7yWgAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAFRQTFRF////AAAAxcXFp6enl5eX8fHxVVVVMDAwGhoah4eHQ0NDxMTE
+09PTZmZmVFRUd3d3Ly8vtra2Z2dn1NTU8PDw4uLi4+PjQkJCiIiIlpaWt7e3GxsbP0iKzwAAASBJ
+REFUeNrsk1l2gzAMRfU8Y8CYKUnb/e+zkofARz+6gOiAj5/saw0Goo+RVROPk+Lh0Ebb7mVr82nk
+ieixuqa+UEwDO5ED0ekBBFW8CmKmzDNmIlTTrL3oO+8q7zGMOoRH5Z0ZcjlAjrK06hc2rc+u7zwU
+JfBkY2kwVJ5RG2TjjKWEVS2drek3PyNL/AXfUpxk0zfPWMkiHnhePGt+7rxZYJLwUvpZ1+pmCaT5
+3cA9HisvepaWXbwNPxH0KlntSBfvMNIT0XkpqvERMeVaZOe5aIDXXQvZeQXP9QTvPUI/ckfIueg3
+/yVXxP1P3PMZz6Py3kVp7FCqGrgRlb90s1Xcq/B24zTScd2/463Bi3xwbjX/rtPf3+L5+SH/b78C
+DAAZFAhfR4fkLgAAAABJRU5ErkJggg==
+""".decode('base64')
+
+NODATA_TXT = """\
+Sorry. There was no significant cross-linked sites.
+Try to choose loose criteria in Snakefile.settings in your work directory.
+Then, remove this file, and rerun the pipeline.
+"""
+
+def generate_null_files(options):
+    if options.plot_package is not None:
+        nullpkg = zipfile.ZipFile(options.plot_package, 'w')
+        nullpkg.writestr('README.txt', NODATA_TXT)
+        nullpkg.close()
+
+    if options.preview_png is not None:
+        open(options.preview_png, 'wb').write(NODATA_PNG)
+
 if __name__ == '__main__':
     options = parse_arguments()
 
@@ -265,6 +292,10 @@ if __name__ == '__main__':
     if len(allsequences) >= options.max_seqs:
         random.shuffle(allsequences)
         del allsequences[options.max_seqs:]
+    elif not allsequences:
+        # no sequence found
+        generate_null_files(options)
+        raise SystemExit
 
     maketempfile = lambda suffix: tempfile.NamedTemporaryFile(suffix='.'+suffix)
 
