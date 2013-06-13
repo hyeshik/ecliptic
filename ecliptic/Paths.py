@@ -54,7 +54,7 @@ class Paths:
 
     workdir         = pathgetter('work')
     datasourcedir   = pathgetter('originals')
-    templatesdir    = pathgetter('templates')
+    chainsdir       = pathgetter('chains')
     toolsdir        = pathgetter('tools')
     resourcesdir    = pathgetter('resources')
 

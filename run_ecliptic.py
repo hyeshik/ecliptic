@@ -8,6 +8,6 @@ import sys
 jobs = sys.argv[1:]
 
 ds = DataSources(Paths.datasourcedir)
-ScriptGenerator(Paths.templatesdir).generate_project_scripts(ds)
+ScriptGenerator(Paths.chainsdir).generate_project_scripts(ds)
 ScriptRunner(ds).run(jobs if jobs else None)
 

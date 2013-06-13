@@ -41,8 +41,8 @@ class ScriptGenerator:
 
     tagline = re.compile(r'ecliptic:([A-Za-z0-9 \t]*)')
 
-    def __init__(self, templatedir):
-        self.templatedir = templatedir
+    def __init__(self, chainsdir):
+        self.templatedir = chainsdir
         self.templates = {
             'work': self.scan_templates('work'),
             'setting': self.scan_templates('setting'),
@@ -52,7 +52,7 @@ class ScriptGenerator:
             'Paths': Paths,
         }
         # change variable block markers to enable escaped braces "{{ }}" in str.format strings
-        self.env = Environment(loader=FileSystemLoader(templatedir),
+        self.env = Environment(loader=FileSystemLoader(self.templatedir),
                                variable_start_string='{(',
                                variable_end_string=')}')
         self.env.globals.update(template_global_variables)
