@@ -1,1 +1,12 @@
 *.pyc
+\.AppleDouble
+\.DS_Store
+\._\.DS_Store
+*.o
+.snakemake
+tools/crossfest
+work
+hot
+resources/hg19
+resources/mm10
+resources/gsnap-index-variants
