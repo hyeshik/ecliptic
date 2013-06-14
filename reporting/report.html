@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ecliptic - Result summary for {{project.name}}</title>
+  <link href="http://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,800"
+        rel="stylesheet" type="text/css">
+  <link href="report/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <h1>Ecliptic Analysis Report for {{project.name}}</h1>
+
+  {% include 'sect-information.html' %}
+  {% include 'sect-overview.html' %}
+  {% include 'sect-error-profile.html' %}
+  {% include 'sect-binding-motif.html' %}
+  {% include 'sect-target-sites.html' %}
+  {% include 'sect-target-transcripts.html' %}
+  {% include 'sect-data-files.html' %}
+
+  <div id="footer">
+    Analyzed using <a href="http://github.com/hyeshik/ecliptic">Ecliptic r817</a>
+    by Hyeshik Chang &lt;hyeshik@snu.ac.kr&gt;
+    <img src="http://www.narrykim.org/s/chang-ecliptic-2013/logo_love.png" />
+  </div>
+</body>
+</html>
+{#-
+vim: sts=2 sw=2 et ft=htmljinja
+-#}

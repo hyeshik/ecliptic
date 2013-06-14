@@ -57,6 +57,7 @@ class Paths:
     chainsdir       = pathgetter('chains')
     toolsdir        = pathgetter('tools')
     resourcesdir    = pathgetter('resources')
+    reportingdir    = pathgetter('reporting')
 
 
 Paths = Paths()

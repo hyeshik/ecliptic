@@ -201,6 +201,6 @@ rule generate_report:
             }
             pickle.dump(metainfo, open(metainfo_filename, 'w'))
 
-            shell('{REPORT_FINISH_CMD} --templates-dir "{TOP_DIR}/reporting" \
+            shell('{REPORT_FINISH_CMD} --ecliptic-dir "{TOP_DIR}" \
                     --work-dir "{WORK_DIR}" --meta-info report/metainfo.pickle')
 

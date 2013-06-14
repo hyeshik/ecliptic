@@ -1,0 +1,97 @@
+<div id="information">
+  <h3>Analysis Settings</h3>
+  <table id="project_summary">
+    <tbody>
+      <tr>
+        <th>Project</th>
+        <td>{{project.name}}</td>
+      </tr>
+      <tr>
+        <th>Sample Description Version</th>
+        <td>{{project.sample_description_time.strftime('%b %d, %Y %H:%M:%S')}}
+          by {{project.sample_description_owner}}</td>
+      </tr>
+      <tr>
+        <th>Pair Description Version</th>
+        <td>{{project.pair_description_time.strftime('%b %d, %Y %H:%M:%S')}}
+          by {{project.pair_description_owner}}</td>
+      </tr>
+      <tr>
+        <th>Work Directory</th>
+        <td>{{project.workdir}}</td>
+      </tr>
+      <tr>
+        <th>Analysis Started At</th>
+        <td>May 5, 2013 15:20:43</td>
+      </tr>
+      <tr>
+        <th>Analysis Finished At</th>
+        <td>May 6, 2013 02:49:21</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Samples</h3>
+  <table id="sample_list">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Runs</th>
+        <th>Species</th>
+        <th>Workflows</th>
+        <th>Source</th>
+        <th>Insert Cycles</th>
+        <th>Scoring</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>RNAseq-uninfected-1</th>
+        <td>SRR458753</td>
+        <td>mmu</td>
+        <td>RNAseq<br/>SNPreference</td>
+        <td>A3-1</td>
+        <td>1-54</td>
+        <td>entropy</td>
+        <td>GSM910950: A3-1 PolyA+ RNA-seq - untreated; Mus musculus; RNA-Seq</td>
+      </tr>
+      <tr>
+        <th>CLIP-35L33G</th>
+        <td>SRR458758</td>
+        <td>mmu</td>
+        <td>CLIP</td>
+        <td>A3-1</td>
+        <td>1-78</td>
+        <td>entropy</td>
+        <td>GSM910955: A3-1 LIN28A CLIP - 35L33G (mAb); Mus musculus; OTHER</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Pair Sets for Comparative Analyses</h3>
+  <table id="pair_list">
+    <thead>
+      <tr>
+        <th>Pair Name</th>
+        <th>CLIP Sample</th>
+        <th>Control Sample</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>CLIP-35L33G</th>
+        <td>CLIP-35L33G</td>
+        <td>RNAseq-uninfected-1</td>
+      </tr>
+      <tr>
+        <th>CLIP-2J3</th>
+        <td>CLIP-2J3</td>
+        <td>RNAseq-uninfected-1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{#-
+vim: sts=2 sw=2 et ft=htmljinja
+-#}

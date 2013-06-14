@@ -27,14 +27,19 @@
 from jinja2 import Template, FileSystemLoader, Environment
 import re
 
-__all__ = [
-    'register_filters', 'rule_name',
+__all_filters__ = [
+    'rule_name',
 ]
+
+__all__ = [
+    'register_filters',
+] + __all_filters__
+
 
 def rule_name(value, illegal=re.compile('[^A-Za-z0-9_]')):
     return illegal.sub('_', value)
 
 def register_filters(env):
-    for name in "rule_name".split():
+    for name in __all_filters__:
         env.filters[name] = eval(name)
 

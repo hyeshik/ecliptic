@@ -32,6 +32,7 @@ import os
 
 __all__ = [
     'TokensDictParser', 'iter_tab_separated', 'TemporaryDirectory',
+    'readlink_recursive',
 ]
 
 
@@ -71,4 +72,10 @@ class TemporaryDirectory(object):
     def __exit__(self, type, value, traceback):
         if self.path is not None:
             shutil.rmtree(self.path)
+
+
+def readlink_recursive(path):
+    while os.path.islink(path):
+        path = os.readlink(path)
+    return path
 
