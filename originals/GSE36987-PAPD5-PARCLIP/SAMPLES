@@ -10,6 +10,7 @@ CLIP-1:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM908088: PAPD5_PAR-CLIP_rep1; Homo sapiens; OTHER"
+    crosslink_scoring_method: t2c
 CLIP-2:
     runs:           SRR452497
     species:        hsa
@@ -22,5 +23,6 @@ CLIP-2:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM908089: PAPD5_PAR-CLIP_rep2; Homo sapiens; OTHER"
+    crosslink_scoring_method: t2c
 
 # ex: syntax=yaml et sts=4 sw=4

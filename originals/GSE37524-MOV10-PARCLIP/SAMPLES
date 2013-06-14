@@ -10,6 +10,7 @@ CLIP:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM921128: MOV10 PAR-CLIP; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 RNAseq:
     runs:           SRR490651
     species:        hsa
@@ -22,5 +23,6 @@ RNAseq:
     strand:         +
     threep_adapter: ""
     description:    "GSM921129: HEK293 4SU nuclear RNA-seq; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 
 # ex: syntax=yaml et sts=4 sw=4

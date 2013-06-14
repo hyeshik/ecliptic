@@ -34,6 +34,7 @@ RNAseq-LIN28B-1:
     strand:         +
     threep_adapter: TCATCTCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087025: LIN28B_induced_rep1; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 RNAseq-LIN28B-2:
     runs:           SRR764660
     species:        hsa
@@ -46,6 +47,7 @@ RNAseq-LIN28B-2:
     strand:         +
     threep_adapter: TCCTATCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087026: LIN28B_induced_rep2; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 RNAseq-KD-1:
     runs:           SRR764661
     species:        hsa
@@ -82,6 +84,7 @@ CLIP-LIN28A:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087848: LIN28A PAR-CLIP; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 CLIP-LIN28B-1:
     runs:           SRR764667
     species:        hsa
@@ -94,6 +97,7 @@ CLIP-LIN28B-1:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087849: LIN28B_rep1 PAR-CLIP; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 CLIP-LIN28B-2:
     runs:           SRR764668
     species:        hsa
@@ -106,6 +110,7 @@ CLIP-LIN28B-2:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087850: LIN28B_rep2 PAR-CLIP; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 CLIP-LIN28B-3:
     runs:           SRR764669
     species:        hsa
@@ -118,5 +123,6 @@ CLIP-LIN28B-3:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM1087851: LIN28B_rep3 PAR-CLIP; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 
 # ex: syntax=yaml et sts=4 sw=4

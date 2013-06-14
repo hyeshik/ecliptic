@@ -10,6 +10,7 @@ IGF2BP1:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545206: IGF2BP1"
+    crosslink_scoring_method: t2c
 IGF2BP1_6SG:
     runs:           SRR048956
     species:        hsa
@@ -22,6 +23,7 @@ IGF2BP1_6SG:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545207: IGF2BP1_6SG"
+    crosslink_scoring_method: t2c
 IGF2BP2:
     runs:           [SRR048957, SRR048958, SRR048959, SRR048960, SRR048961]
     species:        hsa
@@ -34,6 +36,7 @@ IGF2BP2:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545208: IGF2BP2"
+    crosslink_scoring_method: t2c
 IGF2BP3:
     runs:           [SRR048962, SRR048963, SRR048964, SRR048965, SRR048966]
     species:        hsa
@@ -46,6 +49,7 @@ IGF2BP3:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545209: IGF2BP3"
+    crosslink_scoring_method: t2c
 Pumilio2:
     runs:           [SRR048967, SRR048968]
     species:        hsa
@@ -58,6 +62,7 @@ Pumilio2:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545210: Pumilio2"
+    crosslink_scoring_method: t2c
 QKI:
     runs:           [SRR048969, SRR048970, SRR048971, SRR048972]
     species:        hsa
@@ -70,6 +75,7 @@ QKI:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545211: QKI"
+    crosslink_scoring_method: t2c
 AGO1:
     runs:           SRR048973
     species:        hsa
@@ -82,6 +88,7 @@ AGO1:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545212: AGO1"
+    crosslink_scoring_method: t2c
 AGO2:
     runs:           [SRR048974, SRR048975]
     species:        hsa
@@ -94,6 +101,7 @@ AGO2:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545213: AGO2"
+    crosslink_scoring_method: t2c
 AGO3:
     runs:           [SRR048976, SRR048977]
     species:        hsa
@@ -106,6 +114,7 @@ AGO3:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545214: AGO3"
+    crosslink_scoring_method: t2c
 AGO4:
     runs:           [SRR048978, SRR048979]
     species:        hsa
@@ -118,6 +127,7 @@ AGO4:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545215: AGO4"
+    crosslink_scoring_method: t2c
 AGO2_miR124:
     runs:           SRR048980
     species:        hsa
@@ -130,6 +140,7 @@ AGO2_miR124:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545216: AGO2, miR124"
+    crosslink_scoring_method: t2c
 AGO2_miR7:
     runs:           SRR048981
     species:        hsa
@@ -142,6 +153,7 @@ AGO2_miR7:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545217: AGO2, miR7"
+    crosslink_scoring_method: t2c
 TNRC6A:
     runs:           [SRR048982, SRR048983]
     species:        hsa
@@ -154,6 +166,7 @@ TNRC6A:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545218: TNRC6A"
+    crosslink_scoring_method: t2c
 TNRC6B:
     runs:           [SRR048984, SRR048985]
     species:        hsa
@@ -166,6 +179,7 @@ TNRC6B:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545219: TNRC6B"
+    crosslink_scoring_method: t2c
 TNRC6C:
     runs:           [SRR048986, SRR048987]
     species:        hsa
@@ -178,5 +192,6 @@ TNRC6C:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM545220: TNRC6C"
+    crosslink_scoring_method: t2c
 
 # ex: syntax=yaml et sts=4 sw=4

@@ -33,6 +33,8 @@ from .Utils import readlink_recursive
 
 __all__ = [
     'ReportTemplateVariablesProvider',
+    'OverviewReporterMixIn',
+    'ProjectWithReporting',
 ]
 
 
@@ -47,7 +49,7 @@ class ReportTemplateVariablesProvider:
         return {'project': self.project}
 
 
-class ProjectWithReporting(Project):
+class OverviewReporterMixIn:
 
     @property
     def sample_description_time(self):
@@ -68,4 +70,18 @@ class ProjectWithReporting(Project):
     def pair_description_owner(self):
         pairdeffn = readlink_recursive(os.path.join(self.workdir, 'PAIRS'))
         return pwd.getpwuid(os.stat(pairdeffn).st_uid).pw_name
+
+    @property
+    def analysis_begin_time(self):
+        tm_begin = float(open(os.path.join(self.workdir, '.time.begin')).read())
+        return datetime.fromtimestamp(tm_begin)
+
+    @property
+    def analysis_finish_time(self):
+        tm_finish = float(open(os.path.join(self.workdir, '.time.finish')).read())
+        return datetime.fromtimestamp(tm_finish)
+
+
+class ProjectWithReporting(Project, OverviewReporterMixIn):
+    pass
 

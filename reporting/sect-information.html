@@ -22,11 +22,11 @@
       </tr>
       <tr>
         <th>Analysis Started At</th>
-        <td>May 5, 2013 15:20:43</td>
+        <td>{{project.analysis_begin_time.strftime('%b %d, %Y %H:%M:%S')}}</td>
       </tr>
       <tr>
         <th>Analysis Finished At</th>
-        <td>May 6, 2013 02:49:21</td>
+        <td>{{project.analysis_finish_time.strftime('%b %d, %Y %H:%M:%S')}}</td>
       </tr>
     </tbody>
   </table>
@@ -46,26 +46,18 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample_name, sample in project.samples.items() %}
       <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>SRR458753</td>
-        <td>mmu</td>
-        <td>RNAseq<br/>SNPreference</td>
-        <td>A3-1</td>
-        <td>1-54</td>
-        <td>entropy</td>
-        <td>GSM910950: A3-1 PolyA+ RNA-seq - untreated; Mus musculus; RNA-Seq</td>
+        <th>{{ sample_name }}</th>
+        <td>{{ sample.runs|join("<br/>") }}</td>
+        <td>{{ sample.species }}</td>
+        <td>{{ sample.workflows|join("<br/>") }}</td>
+        <td>{{ sample.source }}</td>
+        <td>{{ sample.first_base }}-{{ sample.last_base }}</td>
+        <td>{{ sample.crosslink_scoring_method }}</td>
+        <td>{{ sample.description|escape }}</td>
       </tr>
-      <tr>
-        <th>CLIP-35L33G</th>
-        <td>SRR458758</td>
-        <td>mmu</td>
-        <td>CLIP</td>
-        <td>A3-1</td>
-        <td>1-78</td>
-        <td>entropy</td>
-        <td>GSM910955: A3-1 LIN28A CLIP - 35L33G (mAb); Mus musculus; OTHER</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 

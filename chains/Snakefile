@@ -7,6 +7,9 @@
 
 {% block rules %}
 
+BEGINMARK = '.time.begin'
+FINISHMARK = '.time.finish'
+
 all_targets = []
 targets = all_targets.extend
 
@@ -19,6 +22,11 @@ rule _dummy:
 {% include "Snakefile.40.piranha" %}
 {% include "Snakefile.100.stats" %}
 {% include "Snakefile.200.report" %}
+
+rule _beginmark:
+    output: BEGINMARK
+    run:
+        print(time.time(), file=open(output[0], 'w'))
 
 rule all:
     input: all_targets

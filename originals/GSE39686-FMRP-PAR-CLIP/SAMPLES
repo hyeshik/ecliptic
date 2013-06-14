@@ -10,6 +10,7 @@ PARCLIP-FMR1-WT-iso1:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977615: wt FLAG-HA FMR1 iso1; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 PARCLIP-FMR1-WT-iso7:
     runs:           SRR527728
     species:        hsa
@@ -22,6 +23,7 @@ PARCLIP-FMR1-WT-iso7:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977616: wt FLAG-HA FMR1 iso7; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 PARCLIP-FMR1-I304N-iso1:
     runs:           SRR527729
     species:        hsa
@@ -34,6 +36,7 @@ PARCLIP-FMR1-I304N-iso1:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977617: I304N FLAG-HA FMR1 iso1; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 PARCLIP-FMR1-I304N-iso7:
     runs:           SRR527730
     species:        hsa
@@ -46,6 +49,7 @@ PARCLIP-FMR1-I304N-iso7:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977618: I304N FLAG-HA FMR1 iso7; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 PARCLIP-FXR1-WT:
     runs:           SRR527731
     species:        hsa
@@ -58,6 +62,7 @@ PARCLIP-FXR1-WT:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977619: wt FLAG-HA FXR1; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 PARCLIP-FXR2-WT:
     runs:           SRR527732
     species:        hsa
@@ -70,5 +75,6 @@ PARCLIP-FXR2-WT:
     strand:         +
     threep_adapter: TCGTATGCCGTCTTCTGCTTG
     description:    "GSM977620: wt FLAG-HA FXR2; Homo sapiens; RNA-Seq"
+    crosslink_scoring_method: t2c
 
 # ex: syntax=yaml et sts=4 sw=4

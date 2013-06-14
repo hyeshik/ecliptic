@@ -60,10 +60,11 @@ ALL_REPORTING_INGREDIENTS = [
 ]
 
 targets(ALL_REPORTING_INGREDIENTS)
-targets(
+targets([
+    FINISHMARK,
     'report.html',
     'report/style.css',
-)
+])
 
 rule prep_report_seq_processing:
     input: list(chain(*[spec[1:] for spec in ORIGINAL_SEQREAD_PROCESSED_PAIRS]))
@@ -189,8 +190,15 @@ rule prep_report_base_pairing_propensity:
                 --output-preview-png {output.preview} \
                 --output-package {output.package} {input}')
 
-rule generate_report:
+rule mark_finish_time:
     input: ALL_REPORTING_INGREDIENTS
+    output: FINISHMARK
+    version: '1'
+    run:
+        print(time.time(), file=open(output[0], 'w'))
+
+rule generate_report:
+    input: FINISHMARK
     output: 'report.html', 'report/style.css'
     version: '1'
     run:
@@ -199,7 +207,7 @@ rule generate_report:
             metainfo = {
                 'project_name': '{( NAME )}',
             }
-            pickle.dump(metainfo, open(metainfo_filename, 'w'))
+            pickle.dump(metainfo, open(metainfo_filename, 'wb'))
 
             shell('{REPORT_FINISH_CMD} --ecliptic-dir "{TOP_DIR}" \
                     --work-dir "{WORK_DIR}" --meta-info report/metainfo.pickle')

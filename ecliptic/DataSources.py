@@ -47,7 +47,7 @@ class DataSources:
 
     def scan(self):
         for dirname in os.listdir(self.datadir):
-            if not os.path.isdir(os.path.join(self.datadir, dirname)):
+            if dirname[:1] == '.' or not os.path.isdir(os.path.join(self.datadir, dirname)):
                 continue
             project_name = dirname
             self.projects[dirname] = Project(project_name, os.path.join(self.datadir, dirname))
@@ -88,14 +88,15 @@ class Sample:
     attribute_names = [
         'label', 'runs', 'species', 'workflows', 'source', 'first_base', 'last_base',
         'minimum_length', 'quality_scale', 'strand', 'threep_adapter', 'description',
-        'piranha_bin_size',
+        'piranha_bin_size', 'crosslink_scoring_method'
     ]
 
-    # default values
+    # default settings
     minimum_length = 20         # minimum tag length after adapter trimming
     quality_threshold = 25      # okay if `quality_percentage'% of bases in a read are
     quality_percentage = 90     #   as good as `quality_threshold' or better.
     piranha_bin_size = 30
+    crosslink_scoring_method = 'entropy' # entropy, mod, del, moddel or t2c
 
     def __init__(self, project, **attrs):
         self.project = proxy(project)
