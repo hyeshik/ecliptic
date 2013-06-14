@@ -19,31 +19,51 @@ ORIGINAL_SEQREAD_PROCESSED_PAIRS = list(filter(lambda x: x[0] in STATS_SAMPLES_S
 ]))
 
 
-targets(expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS))
-targets(expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES))
-targets(['report/tables/sequence-processing.csv',
-         'report/tables/error-profiles-overview.csv',
-         'report/tables/error-profiles-byposition.csv'])
-targets(expand('report/plots/error-profile/error-profile-{sample}.{type}.{format}',
-               sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png')))
-targets(expand('report/plots/binding-site/logo-{sample}-{source}-{score_type}-{unit_type}.{format}',
-                format=PLOT_FORMATS, sample=CLIP_SAMPLES,
-                score_type=BINDINGSITE_LOGO_SCORE_TYPES,
-                unit_type=WEBLOGO_UNIT_TYPES, source=FLANKING_SEQUENCE_SOURCES))
-targets(expand('report/plots/nmer-enrichment/histogram-{sample}-{source}-{score_type}.{format}',
-                format=PLOT_FORMATS, sample=CLIP_SAMPLES,
-                score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
-                source=FLANKING_SEQUENCE_SOURCES))
-targets(expand('report/tables/nmer-enrichment/nmer-enrichment-{sample}-{source}-{score_type}.csv',
-                sample=CLIP_SAMPLES, score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
-                source=FLANKING_SEQUENCE_SOURCES))
-targets(expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}-preview.png',
-                sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
-                source=FLANKING_SEQUENCE_SOURCES))
-targets(expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}.zip',
-                sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
-                source=FLANKING_SEQUENCE_SOURCES))
+ALL_REPORTING_INGREDIENTS = [
+    # prep_report_seq_processing
+    'report/tables/sequence-processing.csv',
 
+    # prep_report_class_assignment_props
+    expand('report/plots/read-class-proportions.{format}', format=PLOT_FORMATS),
+    expand('report/tables/read-class-proportions.{type}.csv', type=TABLE_TYPES),
+
+    # prep_report_pertag_error_profiles
+    'report/tables/error-profiles-overview.csv',
+
+    # prep_report_positional_error_profiles
+    'report/tables/error-profiles-byposition.csv',
+    expand('report/plots/error-profile/error-profile-{sample}.{type}.{format}',
+           sample=CLIP_SAMPLES, type=('total', 'del', 'subst'), format=('pdf', 'png')),
+
+    # prep_report_binding_site_weblogos
+    expand('report/plots/binding-site/logo-{sample}-{source}-{score_type}-{unit_type}.{format}',
+           format=PLOT_FORMATS, sample=CLIP_SAMPLES,
+           score_type=BINDINGSITE_LOGO_SCORE_TYPES,
+           unit_type=WEBLOGO_UNIT_TYPES, source=FLANKING_SEQUENCE_SOURCES),
+
+    # prep_report_nmer_enrichment
+    expand('report/plots/nmer-enrichment/histogram-{sample}-{source}-{score_type}.{format}',
+           format=PLOT_FORMATS, sample=CLIP_SAMPLES,
+           score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
+           source=FLANKING_SEQUENCE_SOURCES),
+    expand('report/tables/nmer-enrichment/nmer-enrichment-{sample}-{source}-{score_type}.csv',
+           sample=CLIP_SAMPLES, score_type=FLANKING_NMER_ENRICHMENT_SCORE_TYPES,
+           source=FLANKING_SEQUENCE_SOURCES),
+
+    # prep_report_base_pairing_propensity
+    expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}-preview.png',
+           sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
+           source=FLANKING_SEQUENCE_SOURCES),
+    expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}.zip',
+           sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
+           source=FLANKING_SEQUENCE_SOURCES),
+]
+
+targets(ALL_REPORTING_INGREDIENTS)
+targets(
+    'report.html',
+    'report/style.css',
+)
 
 rule prep_report_seq_processing:
     input: list(chain(*[spec[1:] for spec in ORIGINAL_SEQREAD_PROCESSED_PAIRS]))
@@ -168,4 +188,19 @@ rule prep_report_base_pairing_propensity:
                 --seq-source {wildcards.seqsource} \
                 --output-preview-png {output.preview} \
                 --output-package {output.package} {input}')
+
+rule generate_report:
+    input: ALL_REPORTING_INGREDIENTS
+    output: 'report.html', 'report/style.css'
+    version: '1'
+    run:
+        with TemporaryDirectory() as tmpdir:
+            metainfo_filename = os.path.join(tmpdir, 'metainfo.pickle')
+            metainfo = {
+                'project_name': '{( NAME )}',
+            }
+            pickle.dump(metainfo, open(metainfo_filename, 'w'))
+
+            shell('{REPORT_FINISH_CMD} --templates-dir "{TOP_DIR}/reporting" \
+                    --work-dir "{WORK_DIR}" --meta-info report/metainfo.pickle')
 

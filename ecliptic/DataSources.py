@@ -31,7 +31,6 @@ from weakref import proxy
 from collections import defaultdict, OrderedDict
 from .Utils import TokensDictParser, iter_tab_separated
 from .Paths import Paths
-from .Settings import settings
 from .support.yaml_ordereddict import OrderedDictYAMLLoader
 
 __all__ = [
@@ -83,6 +82,7 @@ class Project:
 
         return refsamples
 
+
 class Sample:
 
     attribute_names = [
@@ -91,11 +91,14 @@ class Sample:
         'piranha_bin_size',
     ]
 
+    # default values
+    minimum_length = 20         # minimum tag length after adapter trimming
+    quality_threshold = 25      # okay if `quality_percentage'% of bases in a read are
+    quality_percentage = 90     #   as good as `quality_threshold' or better.
+    piranha_bin_size = 30
+
     def __init__(self, project, **attrs):
         self.project = proxy(project)
-
-        for attrname, defaultvalue in settings['sample'].items():
-            setattr(self, attrname, defaultvalue)
 
         for attrname in self.attribute_names:
             if attrname in attrs:
