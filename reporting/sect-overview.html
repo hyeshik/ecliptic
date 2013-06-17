@@ -12,24 +12,16 @@
       </tr>
     </thead>
     <tbody>
+    {% for sample in table('sequence-processing.csv') %}
       <tr>
-        <th>CLIP-35L33G</th>
-        <td>25,212,399</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
+        <th>{{ sample['Sample Name'] }}</th>
+        <td>{{ sample['Total Reads']|thousand_sep }}</td>
+        <td>{{ sample['Remaining Reads After Processing']|thousand_sep }}
+          {{ '(%.1f%%)'|format(sample['Remaining Reads After Processing (%)']|float) }}</td>
+        <td>{{ sample['Uniquely Mappable Reads To Genome']|thousand_sep }}
+          {{ '(%.1f%%)'|format(sample['Uniquely Mappable Reads To Genome (%)']|float) }}</td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>25,212,399</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>25,212,399</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-      </tr>
+    {% endfor %}
     </tbody>
   </table>
 
@@ -55,62 +47,18 @@
         <th>tRNA</th>
         <th>Repeats</th>
         <th>Others</th>
-        <th>Unannotated</th>
       </tr>
     </thead>
     <tbody>
+    {% for sample in join_tables('sample', 'read-class-proportions.reads.csv', 'read-class-proportions.percentages.csv') %}
       <tr>
-        <th>CLIP-35L33G</th>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>13,153,901 (52.9%)</td>
+        <th>{{ sample['key'] }}</th>
+        {% for cls in "rRNA CDS 5'UTR 3'UTR intron miRNA tRNA Repeats Others".split() %}
+        <td>{{ sample[0, cls]|thousand_sep }}
+          {{ '(%.1f%%)'|format(sample[1, cls]|float) }}</td>
+        {% endfor %}
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>13,153,901 (52.9%)</td>
-      </tr>
-      <tr>
-        <th>CLIP-46020</th>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>13,153,901 (52.9%)</td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>25,212,399 (12.5%)</td>
-        <td>18,552,847 (83.2%)</td>
-        <td>13,153,901 (52.9%)</td>
-        <td>13,153,901 (52.9%)</td>
-      </tr>
+    {% endfor %}
     </tbody>
   </table>
 </div>

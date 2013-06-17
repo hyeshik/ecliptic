@@ -26,15 +26,17 @@
 
 import os
 import pwd
+import csv
 from datetime import datetime
+from collections import OrderedDict
 from .Paths import Paths
 from .DataSources import *
 from .Utils import readlink_recursive
 
 __all__ = [
     'ReportTemplateVariablesProvider',
-    'OverviewReporterMixIn',
     'ProjectWithReporting',
+    'AnalysisResultReporting',
 ]
 
 
@@ -46,10 +48,35 @@ class ReportTemplateVariablesProvider:
         self.project = ProjectWithReporting(project_name, self.work_dir)
 
     def toplevel(self):
-        return {'project': self.project}
+        return {'project': self.project, 'table': self.table,
+                'join_tables': self.join_tables}
+
+    def table(self, name):
+        filename = os.path.join(self.project.datadir, 'report', 'tables', name)
+        return list(csv.DictReader(open(filename)))
+
+    def join_tables(self, join_name, *names):
+        filenames = [os.path.join(self.project.datadir, 'report', 'tables', name)
+                     for name in names]
+        input_contents = [
+            (i, OrderedDict((row[join_name], row) for row in csv.DictReader(open(name))))
+            for i, name in enumerate(filenames)]
+
+        while input_contents:
+            pivot_i, pivot = input_contents.pop(0)
+            for key, pivotv in pivot.iteritems():
+                merged_value = dict(((pivot_i, k), v) for k, v in pivotv.iteritems())
+                for o_i, other in input_contents:
+                    if key in other:
+                        merged_value.update(dict(
+                            ((o_i, k), v) for k, v in other[key].iteritems()))
+                        del other[key]
+
+                merged_value['key'] = key
+                yield merged_value
 
 
-class OverviewReporterMixIn:
+class ProjectWithReporting(Project):
 
     @property
     def sample_description_time(self):
@@ -80,8 +107,4 @@ class OverviewReporterMixIn:
     def analysis_finish_time(self):
         tm_finish = float(open(os.path.join(self.workdir, '.time.finish')).read())
         return datetime.fromtimestamp(tm_finish)
-
-
-class ProjectWithReporting(Project, OverviewReporterMixIn):
-    pass
 
