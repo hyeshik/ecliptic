@@ -16,82 +16,27 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
           <p class="buttons">
-            <a href="report/plots/binding-site/logo-CLIP-35L33G-genome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-CLIP-35L33G-genome-entropy-probability.png" class="link_png">PNG</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-genome-entropy-probability.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-genome-entropy-probability.png" class="link_png">PNG</a>
             <a href="#" class="link_csv">Show more</a>
           </p>
-          <img src="report/plots/binding-site/logo-CLIP-35L33G-genome-entropy-probability.png"/>
+          <img src="report/plots/binding-site/logo-{{ sample.label }}-genome-entropy-probability.png"/>
         </td>
         <td>
           <p class="buttons">
-            <a href="report/plots/binding-site/logo-CLIP-35L33G-transcriptome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-CLIP-35L33G-transcriptome-entropy-probability.png" class="link_png">PNG</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-entropy-probability.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-entropy-probability.png" class="link_png">PNG</a>
             <a href="#" class="link_csv">Show more</a>
           </p>
-          <img src="report/plots/binding-site/logo-CLIP-35L33G-transcriptome-entropy-probability.png"/>
+          <img src="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-entropy-probability.png"/>
         </td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/binding-site/logo-CLIP-2J3-genome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-CLIP-2J3-genome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
-          </p>
-          <img src="report/plots/binding-site/logo-CLIP-2J3-genome-entropy-probability.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/binding-site/logo-CLIP-2J3-transcriptome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-CLIP-2J3-transcriptome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
-          </p>
-          <img src="report/plots/binding-site/logo-CLIP-2J3-transcriptome-entropy-probability.png"/>
-        </td>
-      </tr>
-      <tr>
-        <th>CLIP-46020</th>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/binding-site/logo-CLIP-46020-genome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-CLIP-46020-genome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
-          </p>
-          <img src="report/plots/binding-site/logo-CLIP-46020-genome-entropy-probability.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/binding-site/logo-CLIP-46020-transcriptome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-CLIP-46020-transcriptome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
-          </p>
-          <img src="report/plots/binding-site/logo-CLIP-46020-transcriptome-entropy-probability.png"/>
-        </td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/binding-site/logo-RNAseq-uninfected-1-genome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-RNAseq-uninfected-1-genome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
-          </p>
-          <img src="report/plots/binding-site/logo-RNAseq-uninfected-1-genome-entropy-probability.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/binding-site/logo-RNAseq-uninfected-1-transcriptome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-RNAseq-uninfected-1-transcriptome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
-          </p>
-          <img src="report/plots/binding-site/logo-RNAseq-uninfected-1-transcriptome-entropy-probability.png"/>
-        </td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 

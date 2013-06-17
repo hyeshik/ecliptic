@@ -46,9 +46,9 @@
       </tr>
     </thead>
     <tbody>
-      {% for sample_name, sample in project.samples.items() %}
+      {% for sample in samples() %}
       <tr>
-        <th>{{ sample_name }}</th>
+        <th>{{ sample.label }}</th>
         <td>{{ sample.runs|join("<br/>") }}</td>
         <td>{{ sample.species }}</td>
         <td>{{ sample.workflows|join("<br/>") }}</td>

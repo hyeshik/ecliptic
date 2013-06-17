@@ -17,33 +17,17 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in table('error-profiles-overview.csv') %}
       <tr>
-        <th>CLIP-35L33G</th>
-        <td>5.12</td>
-        <td>1.12</td>
-        <td>3.12</td>
-        <td>0.12</td>
-        <td>0.32</td>
-        <td>0.52</td>
+        <th>{{ sample['Sample'] }}</th>
+        <td>{{ '%.3f'|format(sample['Subst/tag']|float) }}</td>
+        <td>{{ '%.3f'|format(sample['Del/tag']|float) }}</td>
+        <td>{{ '%.3f'|format(sample['Ins/tag']|float) }}</td>
+        <td>{{ '%.3f%%'|format(sample['Subst/nt']|float * 100) }}</td>
+        <td>{{ '%.3f%%'|format(sample['Del/nt']|float * 100) }}</td>
+        <td>{{ '%.3f%%'|format(sample['Ins/nt']|float * 100) }}</td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>5.12</td>
-        <td>1.12</td>
-        <td>3.12</td>
-        <td>0.12</td>
-        <td>0.32</td>
-        <td>0.52</td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>0.12</td>
-        <td>0.12</td>
-        <td>0.12</td>
-        <td>0.12</td>
-        <td>0.32</td>
-        <td>0.52</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
   <!--<p class="note">
@@ -52,6 +36,7 @@
 
   <h3><a name="error_distribution" href="#error_distribution">Positional Distribution of Errors</a></h3>
   <p>
+    **explain why numbers in these profiles are different from the numbers represented above.
     <a class="link_csv" href="report/tables/error-profiles-byposition.csv">Positional Error Frequency Table (csv)</a>
   </p>
   <table>
@@ -64,102 +49,32 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in table('error-profiles-byposition.csv') %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample['Sample'] }}</th>
         <td>
           <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-35L33G.total.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-35L33G.total.png" class="link_png">PNG</a>
+            <a href="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.total.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.total.png" class="link_png">PNG</a>
           </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-35L33G.total.png"/>
+          <img src="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.total.png"/>
         </td>
         <td>
           <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-35L33G.subst.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-35L33G.subst.png" class="link_png">PNG</a>
+            <a href="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.subst.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.subst.png" class="link_png">PNG</a>
           </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-35L33G.subst.png"/>
+          <img src="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.subst.png"/>
         </td>
         <td>
           <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-35L33G.del.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-35L33G.del.png" class="link_png">PNG</a>
+            <a href="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.del.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.del.png" class="link_png">PNG</a>
           </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-35L33G.del.png"/>
+          <img src="report/plots/error-profile/error-profile-{{ sample['Sample'] }}.del.png"/>
         </td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-2J3.total.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-2J3.total.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-2J3.total.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-2J3.subst.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-2J3.subst.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-2J3.subst.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-2J3.del.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-2J3.del.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-2J3.del.png"/>
-        </td>
-      </tr>
-      <tr>
-        <th>CLIP-46020</th>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-46020.total.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-46020.total.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-46020.total.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-46020.subst.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-46020.subst.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-46020.subst.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-CLIP-46020.del.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-CLIP-46020.del.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-CLIP-46020.del.png"/>
-        </td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-RNAseq-uninfected-1.total.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-RNAseq-uninfected-1.total.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-RNAseq-uninfected-1.total.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-RNAseq-uninfected-1.subst.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-RNAseq-uninfected-1.subst.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-RNAseq-uninfected-1.subst.png"/>
-        </td>
-        <td>
-          <p class="buttons">
-            <a href="report/plots/error-profile/error-profile-RNAseq-uninfected-1.del.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/error-profile/error-profile-RNAseq-uninfected-1.del.png" class="link_png">PNG</a>
-          </p>
-          <img src="report/plots/error-profile/error-profile-RNAseq-uninfected-1.del.png"/>
-        </td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

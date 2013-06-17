@@ -49,13 +49,16 @@ class ReportTemplateVariablesProvider:
 
     def toplevel(self):
         return {'project': self.project, 'table': self.table,
-                'join_tables': self.join_tables}
+                'join_tables': self.join_tables, 'samples': self.samples}
 
     def table(self, name):
         filename = os.path.join(self.project.datadir, 'report', 'tables', name)
         return list(csv.DictReader(open(filename)))
 
     def join_tables(self, join_name, *names):
+        # Join multiple tables `names' by key `join_name' by presented orders in
+        # the earliest existing table of each key.
+
         filenames = [os.path.join(self.project.datadir, 'report', 'tables', name)
                      for name in names]
         input_contents = [
@@ -74,6 +77,11 @@ class ReportTemplateVariablesProvider:
 
                 merged_value['key'] = key
                 yield merged_value
+
+    def samples(self, workflow=None):
+        for sample in self.project.samples.itervalues():
+            if workflow is None or workflow in sample.workflows:
+                yield sample
 
 
 class ProjectWithReporting(Project):
