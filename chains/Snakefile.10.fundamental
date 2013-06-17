@@ -188,6 +188,13 @@ rule sort_bam:
         shell('samtools sort {input} {outputprefix}')
 
 
+rule index_bam:
+    input: '{name}.sorted.bam'
+    output: '{name}.sorted.bam.bai'
+    version: "1"
+    shell: 'samtools index {input}'
+
+
 rule uncollapse_bam:
     input: '{name}.bam'
     output: '{name}.uncollapsed.bam'

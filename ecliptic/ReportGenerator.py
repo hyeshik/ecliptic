@@ -49,7 +49,8 @@ class ReportTemplateVariablesProvider:
 
     def toplevel(self):
         return {'project': self.project, 'table': self.table,
-                'join_tables': self.join_tables, 'samples': self.samples}
+                'join_tables': self.join_tables, 'samples': self.samples,
+                'filesize': self.filesize}
 
     def table(self, name):
         filename = os.path.join(self.project.datadir, 'report', 'tables', name)
@@ -67,21 +68,33 @@ class ReportTemplateVariablesProvider:
 
         while input_contents:
             pivot_i, pivot = input_contents.pop(0)
-            for key, pivotv in pivot.iteritems():
-                merged_value = dict(((pivot_i, k), v) for k, v in pivotv.iteritems())
+            for key, pivotv in pivot.items():
+                merged_value = dict(((pivot_i, k), v) for k, v in pivotv.items())
                 for o_i, other in input_contents:
                     if key in other:
                         merged_value.update(dict(
-                            ((o_i, k), v) for k, v in other[key].iteritems()))
+                            ((o_i, k), v) for k, v in other[key].items()))
                         del other[key]
 
                 merged_value['key'] = key
                 yield merged_value
 
     def samples(self, workflow=None):
-        for sample in self.project.samples.itervalues():
-            if workflow is None or workflow in sample.workflows:
+        for sample in self.project.samples.values():
+            if workflow is None or (
+                    workflow in sample.workflows if isinstance(workflow, str)
+                    else any(w in sample.workflows for w in workflow)):
                 yield sample
+
+    def filesize(self, filename):
+        if os.path.isfile(filename):
+            return os.path.getsize(filename)
+        elif os.path.isdir(filename):
+            return sum(
+                sum(os.path.getsize(os.path.join(dirname, f)) for f in files)
+                for dirname, _, files in os.walk(filename))
+        else:
+            return 0
 
 
 class ProjectWithReporting(Project):

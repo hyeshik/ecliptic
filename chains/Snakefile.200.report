@@ -57,6 +57,9 @@ ALL_REPORTING_INGREDIENTS = [
     expand('report/plots/base-pairing/pairing-{sample}-{source}-{score_type}.zip',
            sample=CLIP_SAMPLES, score_type=BASEPAIRING_PROPENSITY_SCORE_TYPES,
            source=FLANKING_SEQUENCE_SOURCES),
+
+    # data files needed to be generated before reporting
+    expand('alignments/{sample}.sorted.bam.bai', sample=CLIP_SAMPLES | RNAseq_SAMPLES),
 ]
 
 targets(ALL_REPORTING_INGREDIENTS)

@@ -11,33 +11,20 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples(('CLIP', 'RNAseq')) %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="sequences/CLIP-35L33G.filtered.fa.gz">CLIP-35L33G.fa.gz</a><br/>
-          <a href="sequences/CLIP-35L33G.filtered.fq.gz">CLIP-35L33G.fq.gz</a>
+          <a href="sequences/{{ sample.label }}.filtered.fa">{{ sample.label }}.fa</a><br/>
+          <a href="sequences/{{ sample.label }}.filtered.fq.gz">{{ sample.label }}.fq.gz</a>
         </td>
-        <td>7.4 MiB<br/>3.7 MiB</td>
+        <td>
+          {{ filesize('sequences/%s.filtered.fa'|format(sample.label))|human_readable_bytes }}<br/>
+          {{ filesize('sequences/%s.filtered.fq.gz'|format(sample.label))|human_readable_bytes }}
+        </td>
         <td><a href="http://genetics.bwh.harvard.edu/pph/FASTA.html">Fasta</a> (collapsed)<br/><a href="http://maq.sourceforge.net/fastq.shtml">FastQ</a></td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="sequences/CLIP-2J3.filtered.fa.gz">CLIP-2J3.fa.gz</a><br/>
-          <a href="sequences/CLIP-2J3.filtered.fq.gz">CLIP-2J3.fq.gz</a>
-        </td>
-        <td>7.4 MiB<br/>3.7 MiB</td>
-        <td><a href="http://genetics.bwh.harvard.edu/pph/FASTA.html">Fasta</a> (collapsed)<br/><a href="http://maq.sourceforge.net/fastq.shtml">FastQ</a></td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="sequences/RNAseq-uninfected-1.filtered.fa.gz">RNAseq-uninfected-1.fa.gz</a><br/>
-          <a href="sequences/RNAseq-uninfected-1.filtered.fq.gz">RNAseq-uninfected-1.fq.gz</a>
-        </td>
-        <td>7.4 MiB<br/>3.7 MiB</td>
-        <td><a href="http://genetics.bwh.harvard.edu/pph/FASTA.html">Fasta</a> (collapsed)<br/><a href="http://maq.sourceforge.net/fastq.shtml">FastQ</a></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -52,33 +39,20 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples(('CLIP', 'RNAseq')) %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="alignments/CLIP-35L33G.sorted.bam">CLIP-35L33G.sorted.bam</a><br/>
-          <a href="alignments/CLIP-35L33G.sorted.bam">CLIP-35L33G.sorted.bam.bai</a>
+          <a href="alignments/{{ sample.label }}.sorted.bam">{{ sample.label }}.sorted.bam</a><br/>
+          <a href="alignments/{{ sample.label }}.sorted.bam.bai">{{ sample.label }}.sorted.bam.bai</a>
         </td>
-        <td>7.4 MiB<br/>0.7 KiB</td>
+        <td>
+          {{ filesize('alignments/%s.sorted.bam'|format(sample.label))|human_readable_bytes }}<br/>
+          {{ filesize('alignments/%s.sorted.bam.bai'|format(sample.label))|human_readable_bytes }}
+        </td>
         <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1">bam</a> (sorted)<br/>bam index</td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="alignments/CLIP-2J3.sorted.bam">CLIP-2J3.sorted.bam</a><br/>
-          <a href="alignments/CLIP-2J3.sorted.bam">CLIP-2J3.sorted.bam.bai</a>
-        </td>
-        <td>7.4 MiB<br/>0.7 KiB</td>
-        <td>bam (sorted)<br/>bam index</td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="alignments/RNAseq-uninfected-1.sorted.bam">RNAseq-uninfected-1.sorted.bam</a><br/>
-          <a href="alignments/RNAseq-uninfected-1.sorted.bam">RNAseq-uninfected-1.sorted.bam.bai</a>
-        </td>
-        <td>7.4 MiB<br/>0.7 KiB</td>
-        <td>bam (sorted)<br/>bam index</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -93,30 +67,16 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples(('CLIP', 'RNAseq')) %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="annotations/CLIP-35L33G.anno.gz">CLIP-35L33G.anno.gz</a>
+          <a href="annotations/{{ sample.label }}.anno.gz">{{ sample.label }}.anno.gz</a>
         </td>
-        <td>9.1 MiB</td>
+        <td>{{ filesize('annotations/%s.anno.gz'|format(sample.label))|human_readable_bytes }}</td>
         <td><a href="report/help/annotations.html" target="_new">(help)</a></td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="annotations/CLIP-2J3.anno.gz">CLIP-2J3.anno.gz</a>
-        </td>
-        <td>9.1 MiB</td>
-        <td><a href="report/help/annotations.html" target="_new">(help)</a></td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="annotations/RNAseq-uninfected-1.anno.gz">RNAseq-uninfected-1.anno.gz</a>
-        </td>
-        <td>9.1 MiB</td>
-        <td><a href="report/help/annotations.html" target="_new">(help)</a></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -132,30 +92,16 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="erroranalyses/CLIP-35L33G.catalog.gz">CLIP-35L33G.catalog.gz</a>
+          <a href="erroranalyses/{{ sample.label }}.catalog.gz">{{ sample.label }}.catalog.gz</a>
         </td>
-        <td>59.1 MiB</td>
+        <td>{{ filesize('erroranalyses/%s.catalog.gz'|format(sample.label))|human_readable_bytes }}</td>
         <td><a href="report/help/site_catalogs.html" target="_new">(help)</a></td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="catalogtations/CLIP-2J3.catalog.gz">CLIP-2J3.catalog.gz</a>
-        </td>
-        <td>9.1 MiB</td>
-        <td><a href="report/help/site_catalogs.html" target="_new">(help)</a></td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="catalogtations/RNAseq-uninfected-1.catalog.gz">RNAseq-uninfected-1.catalog.gz</a>
-        </td>
-        <td>9.1 MiB</td>
-        <td><a href="report/help/site_catalogs.html" target="_new">(help)</a></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -171,42 +117,23 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="erroranalyses/CLIP-35L33G.del.fdr_cutoffs">CLIP-35L33G.del.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-35L33G.mod.fdr_cutoffs">CLIP-35L33G.mod.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-35L33G.moddel.fdr_cutoffs">CLIP-35L33G.moddel.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-35L33G.entropy.fdr_cutoffs">CLIP-35L33G.entropy.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-35L33G.t2c.fdr_cutoffs">CLIP-35L33G.t2c.fdr_cutoffs</a>
+          {% for method in 'del mod moddel entropy t2c'.split() %}
+          <a href="erroranalyses/{{ sample.label }}.{{ method }}.fdr_cutoffs">{{ sample.label }}.{{ method }}.fdr_cutoffs</a><br/>
+          {% endfor %}
         </td>
-        <td>59.1 KiB<br/>12.5 KiB<br/>12.5 KiB<br/>12.5 KiB<br/>12.5 KiB</td>
+        <td>
+          {% for method in 'del mod moddel entropy t2c'.split() %}
+          {{ filesize('erroranalyses/%s.%s.fdr_cutoffs'|format(sample.label, method))|human_readable_bytes }}
+          {%- if not loop.last %}<br/>{% endif -%}
+          {% endfor %}
+        </td>
         <td><a href="report/help/site_catalogs.html" target="_new">(help)</a></td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="erroranalyses/CLIP-2J3.del.fdr_cutoffs">CLIP-2J3.del.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-2J3.mod.fdr_cutoffs">CLIP-2J3.mod.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-2J3.moddel.fdr_cutoffs">CLIP-2J3.moddel.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-2J3.entropy.fdr_cutoffs">CLIP-2J3.entropy.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/CLIP-2J3.t2c.fdr_cutoffs">CLIP-2J3.t2c.fdr_cutoffs</a>
-        </td>
-        <td>59.1 KiB<br/>12.5 KiB<br/>12.5 KiB<br/>12.5 KiB<br/>12.5 KiB</td>
-        <td><a href="report/help/site_catalogs.html" target="_new">(help)</a></td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="erroranalyses/RNAseq-uninfected-1.del.fdr_cutoffs">RNAseq-uninfected-1.del.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/RNAseq-uninfected-1.mod.fdr_cutoffs">RNAseq-uninfected-1.mod.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/RNAseq-uninfected-1.moddel.fdr_cutoffs">RNAseq-uninfected-1.moddel.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/RNAseq-uninfected-1.entropy.fdr_cutoffs">RNAseq-uninfected-1.entropy.fdr_cutoffs</a><br/>
-          <a href="erroranalyses/RNAseq-uninfected-1.t2c.fdr_cutoffs">RNAseq-uninfected-1.t2c.fdr_cutoffs</a>
-        </td>
-        <td>59.1 KiB<br/>12.5 KiB<br/>12.5 KiB<br/>12.5 KiB<br/>12.5 KiB</td>
-        <td><a href="report/help/site_catalogs.html" target="_new">(help)</a></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -222,30 +149,16 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="peaks/CLIP-35L33G.piranha.gz">CLIP-35L33G.piranha.gz</a>
+          <a href="peaks/{{ sample.label }}.piranha.gz">{{ sample.label }}.piranha.gz</a>
         </td>
-        <td>59.1 MiB</td>
+        <td>{{ filesize('peaks/%s.piranha.gz'|format(sample.label))|human_readable_bytes }}</td>
         <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">gzipped bed</a></td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="peaks/CLIP-2J3.piranha.gz">CLIP-2J3.piranha.gz</a>
-        </td>
-        <td>9.1 MiB</td>
-        <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">gzipped bed</a></td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="peaks/RNAseq-uninfected-1.piranha.gz">RNAseq-uninfected-1.piranha.gz</a>
-        </td>
-        <td>9.1 MiB</td>
-        <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">gzipped bed</a></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
@@ -292,30 +205,16 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
+        <th>{{ sample.label }}</th>
         <td>
-          <a href="quantitations/CLIP-35L33G.gspace">CLIP-35L33G.gspace</a> (dir)
+          <a href="quantitations/{{ sample.label }}.gspace">{{ sample.label }}.gspace</a> (dir)
         </td>
-        <td>59.1 MiB</td>
+        <td>{{ filesize('quantitations/%s.gspace'|format(sample.label))|human_readable_bytes }}</td>
         <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">(help)</a></td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>
-          <a href="quantitations/CLIP-2J3.gspace">CLIP-2J3.gspace</a> (dir)
-        </td>
-        <td>59.1 MiB</td>
-        <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">(help)</a></td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>
-          <a href="quantitations/RNAseq-uninfected-1.gspace">RNAseq-uninfected-1.gspace</a> (dir)
-        </td>
-        <td>59.1 MiB</td>
-        <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">(help)</a></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

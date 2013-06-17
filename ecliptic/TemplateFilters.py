@@ -28,7 +28,7 @@ from jinja2 import Template, FileSystemLoader, Environment
 import re
 
 __all_filters__ = [
-    'rule_name', 'thousand_sep',
+    'rule_name', 'thousand_sep', 'human_readable_bytes',
 ]
 
 __all__ = [
@@ -41,6 +41,15 @@ def rule_name(value, illegal=re.compile('[^A-Za-z0-9_]')):
 
 def thousand_sep(value):
     return '{:,d}'.format(int(value))
+
+def human_readable_bytes(value):
+    num = value
+    for x in ('bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'):
+        if num < 1024.:
+            return '{:.1f} {}'.format(num, x)
+        num /= 1024.
+
+    raise ValueError('Bytes too big: {}'.format(value))
 
 def register_filters(env):
     for name in __all_filters__:
