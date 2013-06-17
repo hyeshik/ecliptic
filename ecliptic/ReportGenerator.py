@@ -87,12 +87,14 @@ class ReportTemplateVariablesProvider:
                 yield sample
 
     def filesize(self, filename):
-        if os.path.isfile(filename):
-            return os.path.getsize(filename)
-        elif os.path.isdir(filename):
+        fullpath = os.path.join(self.project.datadir, filename)
+
+        if os.path.isfile(fullpath):
+            return os.path.getsize(fullpath)
+        elif os.path.isdir(fullpath):
             return sum(
                 sum(os.path.getsize(os.path.join(dirname, f)) for f in files)
-                for dirname, _, files in os.walk(filename))
+                for dirname, _, files in os.walk(fullpath))
         else:
             return 0
 
