@@ -91,6 +91,10 @@ td p.buttons {
   text-align: right;
 }
 
+td img {
+  max-width: 300pt;
+}
+
 p.note {
   font-size: 11pt;
   color: #555;

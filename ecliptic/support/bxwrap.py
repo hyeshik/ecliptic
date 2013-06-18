@@ -67,7 +67,7 @@ class SplitBinnedArray(object):
 
 class MultiTrackSplitBinnedArray(object):
 
-    TRACKS = ('X', '5', '3', 'A', 'C', 'G', 'T', 'I', 'D')
+    TRACKS = ('_', '5', '3', 'A', 'C', 'G', 'T', 'I', 'D')
 
     def __init__(self, prefix, tracks=TRACKS):
         self.prefix = prefix
