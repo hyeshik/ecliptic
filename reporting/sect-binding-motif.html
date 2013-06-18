@@ -21,19 +21,19 @@
         <th>{{ sample.label }}</th>
         <td>
           <p class="buttons">
-            <a href="report/plots/binding-site/logo-{{ sample.label }}-genome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-{{ sample.label }}-genome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}-probability.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}-probability.png" class="link_png">PNG</a>
+            <a href="#" class="link_more">Show more</a>
           </p>
-          <img src="report/plots/binding-site/logo-{{ sample.label }}-genome-entropy-probability.png"/>
+          <img src="report/plots/binding-site/logo-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}-probability.png"/>
         </td>
         <td>
           <p class="buttons">
-            <a href="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-entropy-probability.pdf" class="link_pdf">PDF</a>
-            <a href="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-entropy-probability.png" class="link_png">PNG</a>
-            <a href="#" class="link_csv">Show more</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}-probability.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}-probability.png" class="link_png">PNG</a>
+            <a href="#" class="link_more">Show more</a>
           </p>
-          <img src="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-entropy-probability.png"/>
+          <img src="report/plots/binding-site/logo-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}-probability.png"/>
         </td>
       </tr>
       {% endfor %}
@@ -41,6 +41,15 @@
   </table>
 
   <h3><a name="secondary_structure" href="#secondary_structure">Secondary Structure Preference</a></h3>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+    enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+  </p>
   <table>
     <thead>
       <tr>
@@ -50,25 +59,40 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
-        <td>PLOTS HERE (many)</td>
-        <td>PLOTS HERE (many)</td>
+        <th>{{ sample.label }}</th>
+        <td>
+          <p class="buttons">
+            <a href="report/plots/base-pairing/pairing-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}.zip" class="link_csv">Figure Parts (zip)</a>
+            <a href="report/plots/base-pairing/pairing-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}-preview.png" class="link_png">PNG</a>
+            <a href="#" class="link_more">Show more</a>
+          </p>
+          <img src="report/plots/base-pairing/pairing-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}-preview.png" width="360pt"/>
+        </td>
+        <td>
+          <p class="buttons">
+            <a href="report/plots/base-pairing/pairing-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}.zip" class="link_csv">Figure Parts (zip)</a>
+            <a href="report/plots/base-pairing/pairing-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}-preview.png" class="link_png">PNG</a>
+            <a href="#" class="link_more">Show more</a>
+          </p>
+          <img src="report/plots/base-pairing/pairing-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}-preview.png" width="360pt"/>
+        </td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>PLOTS HERE (many)</td>
-        <td>PLOTS HERE (many)</td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>PLOTS HERE (many)</td>
-        <td>PLOTS HERE (many)</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
   <h3><a name="enriched_nmer" href="#enriched_nmer">Enriched N-mer Sequences</a></h3>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+    enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+  </p>
   <table>
     <thead>
       <tr>
@@ -78,21 +102,29 @@
       </tr>
     </thead>
     <tbody>
+      {% for sample in samples('CLIP') %}
       <tr>
-        <th>CLIP-35L33G</th>
-        <td>PLOTS HERE (many)</td>
-        <td>PLOTS HERE (many)</td>
+        <th>{{ sample.label }}</th>
+        <td>
+          <p class="buttons">
+            <a href="report/tables/nmer-enrichment/nmer-enrichment-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}.csv" class="link_csv">Full Table (csv)</a>
+            <a href="report/plots/nmer-enrichment/histogram-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/nmer-enrichment/histogram-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}.png" class="link_png">PNG</a>
+            <a href="#" class="link_more">Show more</a>
+          </p>
+          <img src="report/plots/nmer-enrichment/histogram-{{ sample.label }}-genome-{{ sample.crosslink_scoring_method }}.png" width="300pt"/>
+        </td>
+        <td>
+          <p class="buttons">
+            <a href="report/tables/nmer-enrichment/nmer-enrichment-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}.csv" class="link_csv">Full Table (csv)</a>
+            <a href="report/plots/nmer-enrichment/histogram-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}.pdf" class="link_pdf">PDF</a>
+            <a href="report/plots/nmer-enrichment/histogram-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}.png" class="link_png">PNG</a>
+            <a href="#" class="link_more">Show more</a>
+          </p>
+          <img src="report/plots/nmer-enrichment/histogram-{{ sample.label }}-transcriptome-{{ sample.crosslink_scoring_method }}.png" width="300pt"/>
+        </td>
       </tr>
-      <tr>
-        <th>CLIP-2J3</th>
-        <td>PLOTS HERE (many)</td>
-        <td>PLOTS HERE (many)</td>
-      </tr>
-      <tr>
-        <th>RNAseq-uninfected-1</th>
-        <td>PLOTS HERE (many)</td>
-        <td>PLOTS HERE (many)</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 
