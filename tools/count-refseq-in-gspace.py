@@ -1,21 +1,11 @@
 #!/usr/bin/env python
 from ecliptic.support.bxwrap import MultiTrackSplitBinnedArray
 import shelve
+from itertools import groupby
+from operator import itemgetter
+from functools import partial
+import futures
 import pickle
-
-class ContinuousCache(object):
-
-    def __init__(self, opener):
-        self.curkey = None
-        self.current = None
-        self.opener = opener
-
-    def get(self, key):
-        if self.curkey != key:
-            self.curkey = key
-            self.current = self.opener(key)
-
-        return self.current
 
 BLOCKDEFS = {
     ('NM', '+'): [
@@ -34,33 +24,54 @@ BLOCKDEFS = {
     ('NR', '-'): [('Exon', 'exonBlocks'), ('Intron', 'intronBlocks')],
 }
 
-def process(refdb, arr):
+def process(refdbfile, array_dir, nproc):
+    refdb = shelve.open(refdbfile, 'r')
+    orderedacc = sortbycoord(refdb)
+
+    def iter_refseq():
+        for acc in orderedacc:
+            refinfo = refdb[acc]
+            yield refinfo['chrom'], refinfo['strand'], acc
+
+    counts_all = {}
+
+    with futures.ProcessPoolExecutor(nproc) as executor:
+        jobfun = partial(count_refseq_transcripts, array_dir, refdbfile)
+        for jobret in executor.map(jobfun, (
+                        list(grp) for k, grp in groupby(iter_refseq(), key=lambda x: x[:2]))):
+            counts_all.update(jobret)
+
+    return counts_all
+
+
+def count_refseq_transcripts(array_dir, refdbfile, transcripts):
+    # Open own database handler per process. Sharing database handler results unexpected
+    # errors and various kinds of malfunctions.
+    refdb = shelve.open(refdbfile, 'r')
+
+    arr = MultiTrackSplitBinnedArray(array_dir)
     i_fivep = arr.tracks.index('5')
     i_threep = arr.tracks.index('3')
     i_insertion = arr.tracks.index('I')
     i_deletion = arr.tracks.index('D')
     r = {}
 
-    orderedacc = sortbycoord(rfdb)
-    cachecleaner = ContinuousCache(lambda key: arr.clear_cache())
-
-    for acc in orderedacc:
+    for chrom, strand, acc in transcripts:
         refinfo = refdb[acc]
-        cachecleaner.get((refinfo['chrom'], refinfo['strand']))
 
-        blocks = BLOCKDEFS[acc[:2], refinfo['strand']]
+        blocks = BLOCKDEFS[acc[:2], strand]
         for settitle, label in blocks:
             if not refinfo[label]:
                 continue
 
-            cntarray = arr.get_blocks(refinfo['chrom'], refinfo[label],
-                                      refinfo['strand'])
+            cntarray = arr.get_blocks(chrom, refinfo[label], strand)
             cntsummary = (
                 max(cntarray[i_fivep].sum(), cntarray[i_threep].sum()),
                 cntarray[i_insertion].sum(),
                 cntarray[i_deletion].sum())
 
-            r[acc, settitle] = cntsummary
+            if sum(cntsummary) > 0:
+                r[acc, settitle] = cntsummary
 
     return r
 
@@ -71,15 +82,33 @@ def sortbycoord(refdb):
     return sorted(refdb.keys(), key=sortkey)
 
 
+def parse_arguments():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Counts reads mapped to each RefSeq '
+                                                 'transcripts')
+    parser.add_argument('--refflat-db', metavar='FILE', action='store', dest='refflat_db',
+                        help='path to refflat database of ecliptic resources',
+                        required=True)
+    parser.add_argument('--array-dir', metavar='DIR', dest='array_dir', action='store',
+                        help='path to directory containing BinnedArray track files',
+                        required=True)
+    parser.add_argument('--output', metavar='FILE', dest='output', action='store',
+                        help='path to output pickle file to be created',
+                        required=True)
+    parser.add_argument('--parallel', metavar='N', dest='parallel', action='store',
+                        type=int, help='path to output pickle file to be created',
+                        default=4)
+    args = parser.parse_args()
+
+    return args
+
+
 if __name__ == '__main__':
     import sys
 
-    output = sys.argv[1]
-    refflatdb = sys.argv[2]
-    arrprefix = sys.argv[3]
+    options = parse_arguments()
 
-    rfdb = shelve.open(refflatdb, 'r')
-    arr = MultiTrackSplitBinnedArray(arrprefix)
-    r = process(rfdb, arr)
-    pickle.dump(r, open(output, 'w'))
+    r = process(options.refflat_db, options.array_dir, options.parallel)
+    pickle.dump(r, open(options.output, 'w'))
 

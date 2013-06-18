@@ -21,8 +21,11 @@ rule build_genome_positional_db:
 rule count_refseq_in_gspace:
     input: 'quantitations/{sample}.gspace/done'
     output: 'quantitations/{sample}.gspace/refseq.pickle'
-    version: "1"
+    version: "2"
+    threads: {( THREADS )}
     run:
         gspacedir = os.path.dirname(input[0])
         refseqdb = 'resources/{species}/nrRefSeq.db'.format(species=SAMPLE_SPECIES[wildcards.sample])
-        shell('{COUNT_REFSEQ_IN_GSPACE_CMD} {output} {refseqdb} {gspacedir}')
+        shell('{COUNT_REFSEQ_IN_GSPACE_CMD} --parallel {threads} --output {output} \
+                    --refflat-db {refseqdb} --array-dir {gspacedir}')
+
